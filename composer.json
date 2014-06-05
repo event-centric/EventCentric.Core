@@ -1,9 +1,9 @@
 {
-    "name": "event-centric/protects",
+    "name": "event-centric/protection",
     "description": "Event sourced aggregates that protect invariants",
     "minimum-stability": "dev",
     "license": "MIT",
-    "homepage": "https://github.com/event-centric/protects",
+    "homepage": "https://github.com/event-centric/protection",
     "authors": [
         {
             "name": "Mathias Verraes",
@@ -14,19 +14,19 @@
     "keywords": ["domain-driven design", "cqrs", "event sourcing", "ddd", "reactive"],
 
     "require": {
-        "mathiasverraes/classfunctions": "1.*"
+        "php": "5.5.*",
+        "event-centric/identity": "*",
+        "event-centric/domain-events": "*",
+        "event-centric/when": "*"
     },
-    "require-dev": {
-        "phpspec/phpspec": "2.0.*@dev"
 
-    },
 
     "autoload": {
         "psr-0": {
             "": "src"
         },
         "psr-4": {
-            "Buttercup\\": ["src/EventCentric", "tests/EventCentric"]
+            "EventCentric\\": ["src/EventCentric", "tests/EventCentric", "examples/EventCentric"]
         }
     },
 
