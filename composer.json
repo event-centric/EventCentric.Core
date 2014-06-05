@@ -14,7 +14,7 @@
     "keywords": ["domain-driven design", "cqrs", "event sourcing", "ddd", "reactive"],
 
     "require": {
-        "php": "5.5.*",
+        "php": ">=5.5",
         "event-centric/identity": "*",
         "event-centric/domain-events": "*",
         "event-centric/when": "*"
