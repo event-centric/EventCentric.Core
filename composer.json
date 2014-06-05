@@ -26,8 +26,7 @@
             "": "src"
         },
         "psr-4": {
-            "EventCentric\\Protection\\": ["src/EventCentric/Protection"],
-            "EventCentric\\": ["examples/EventCentric"]
+            "EventCentric\\Protection\\": ["src/EventCentric/Protection", "tests/EventCentric/Protection"]
         }
     },
 

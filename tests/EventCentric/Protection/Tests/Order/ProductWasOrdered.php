@@ -1,6 +1,6 @@
 <?php
 
-namespace EventCentric\Example\Order;
+namespace EventCentric\Protection\Tests\Order;
 
 use EventCentric\DomainEvents\DomainEvent;
 
@@ -15,11 +15,11 @@ final class ProductWasOrdered implements DomainEvent
      */
     private $orderId;
     /**
-     * @var Money
+     * @var int
      */
     private $price;
 
-    public function __construct(OrderId $orderId, ProductId $productId, Money $price)
+    public function __construct(OrderId $orderId, ProductId $productId, $price)
     {
         $this->orderId = $orderId;
         $this->productId = $productId;
@@ -35,7 +35,7 @@ final class ProductWasOrdered implements DomainEvent
     }
 
     /**
-     * @return Money
+     * @return int
      */
     public function getPrice()
     {

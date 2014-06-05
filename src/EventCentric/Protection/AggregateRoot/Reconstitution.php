@@ -3,13 +3,12 @@
 namespace EventCentric\Protection\AggregateRoot;
 
 use EventCentric\DomainEvents\DomainEvents;
-use EventCentric\Protection\AggregateRoot\AggregateRoot;
 
 trait Reconstitution
 {
     /**
      * @param DomainEvents $history
-     * @return AggregateRoot
+     * @return static
      */
     public static function reconstituteFrom(DomainEvents $history)
     {

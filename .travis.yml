@@ -9,4 +9,4 @@ before_script:
     - composer install
 
 script:
-    - php examples/example1.php
+    - php tests/test.php
