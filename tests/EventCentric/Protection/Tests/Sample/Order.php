@@ -14,6 +14,14 @@ final class Order extends AggregateRootEntity
     private $totalPaidAmount;
 
     /**
+     * @return OrderId
+     */
+    public function orderId()
+    {
+        return $this->orderId;
+    }
+
+    /**
      * @param OrderId $orderId
      * @param ProductId $productId
      * @param int $price

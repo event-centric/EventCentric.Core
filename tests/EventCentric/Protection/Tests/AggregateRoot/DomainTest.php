@@ -8,22 +8,27 @@ use EventCentric\Protection\Tests\Sample\OrderWasPaidInFull;
 use EventCentric\Protection\Tests\Sample\PaymentWasMade;
 use EventCentric\Protection\Tests\Sample\ProductId;
 use EventCentric\Protection\Tests\Sample\ProductWasOrdered;
+use PHPUnit_Framework_TestCase;
 
-$test = function(){
-    $orderId = OrderId::generate();
-    $order = Order::orderProduct($orderId, ProductId::generate(), 100);
-    $order->pay(50);
-    $order->pay(50);
-    $changes = $order->getChanges();
+final class DomainTest extends PHPUnit_Framework_TestCase
+{
+    /**
+     * @test
+     */
+    public function it_should_protect_invariants()
+    {
+        $orderId = OrderId::generate();
+        $order = Order::orderProduct($orderId, ProductId::generate(), 100);
+        $order->pay(50);
+        $order->pay(50);
+        $changes = $order->getChanges();
 
-    it("should protect invariants", all([
-        count($changes) == 4,
-        $changes[0] instanceof ProductWasOrdered,
-        $changes[1] instanceof PaymentWasMade,
-        $changes[2] instanceof PaymentWasMade,
-        $changes[3] instanceof OrderWasPaidInFull,
-    ]));
-};
+        $this->assertCount(4, $changes);
+        $this->assertInstanceOf(ProductWasOrdered::class, $changes[0]);
+        $this->assertInstanceOf(PaymentWasMade::class, $changes[1]);
+        $this->assertInstanceOf(PaymentWasMade::class, $changes[2]);
+        $this->assertInstanceOf(OrderWasPaidInFull::class, $changes[3]);
 
-$test();
-
+    }
+}
+ 

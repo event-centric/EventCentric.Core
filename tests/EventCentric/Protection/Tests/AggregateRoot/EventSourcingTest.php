@@ -1,21 +1,55 @@
 <?php
 
+namespace EventCentric\Protection\Tests\AggregateRoot;
+
 use EventCentric\Protection\Tests\Sample\Order;
 use EventCentric\Protection\Tests\Sample\OrderId;
 use EventCentric\Protection\Tests\Sample\ProductId;
+use PHPUnit_Framework_TestCase;
 
-$test = function() {
-    $order = Order::orderProduct(OrderId::generate(), ProductId::generate(), 100);
-    it("should track changes",
-        $order->hasChanges()
-    );
+final class EventSourcingTest extends PHPUnit_Framework_TestCase
+{
+    /** @var Order */
+    private $order;
 
-    $order->clearChanges();
-    it("should clear changes",
-        !$order->hasChanges());
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->order = Order::orderProduct(OrderId::generate(), ProductId::generate(), 100);
 
-    $order->pay(50);
-    it("should record new changes as well",
-        count($order->getChanges()) == 1);
-};
-$test();
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_track_changes()
+    {
+        $this->assertTrue(
+            $this->order->hasChanges()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_clear_changes()
+    {
+        $this->order->clearChanges();
+
+        $this->assertFalse(
+            $this->order->hasChanges()
+        );
+
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_record_new_changes()
+    {
+        $this->order->clearChanges();
+        $this->order->pay(50);
+        $this->assertCount(1, $this->order->getChanges());
+    }
+}
+ 

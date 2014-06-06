@@ -17,7 +17,9 @@
         "php": ">=5.5",
         "event-centric/identity": "*",
         "event-centric/domain-events": "*",
-        "event-centric/when": "*"
+        "event-centric/when": "*",
+        "beberlei/assert": "master",
+        "phpunit/phpunit": "@stable"
     },
 
 

@@ -19,7 +19,7 @@ trait EventSourcing
      */
     public function hasChanges()
     {
-        return count($this->recordedEvents);
+        return !empty($this->recordedEvents);
     }
 
     /**
