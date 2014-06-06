@@ -4,7 +4,7 @@ namespace EventCentric\Protection\EventStore;
 
 use EventCentric\DomainEvents\DomainEvent;
 use EventCentric\Identity\Identity;
-use EventCentric\Protection\Repository\Contract;
+use EventCentric\Protection\EventStore\Contract;
 
 final class EventContext
 {

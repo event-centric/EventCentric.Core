@@ -6,7 +6,7 @@ use EventCentric\Protection\EventStore\CommitId;
 use EventCentric\Protection\EventStore\EventId;
 use EventCentric\Protection\EventStore\EventContext;
 use EventCentric\Protection\EventStore\InMemoryEventStore;
-use EventCentric\Protection\Repository\Contract;
+use EventCentric\Protection\EventStore\Contract;
 use EventCentric\Protection\Tests\Sample\OrderId;
 use EventCentric\Protection\Tests\Sample\PaymentWasMade;
 use EventCentric\Protection\Tests\Sample\ProductId;

@@ -3,7 +3,7 @@
 namespace EventCentric\Protection\EventStore;
 
 use EventCentric\Identity\Identity;
-use EventCentric\Protection\Repository\Contract;
+use EventCentric\Protection\EventStore\Contract;
 
 interface EventStore
 {

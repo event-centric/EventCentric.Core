@@ -6,7 +6,7 @@ namespace EventCentric\Protection\EventStore;
 use EventCentric\DomainEvents\DomainEvents;
 use EventCentric\DomainEvents\Implementations\DomainEventsArray;
 use EventCentric\Identity\Identity;
-use EventCentric\Protection\Repository\Contract;
+use EventCentric\Protection\EventStore\Contract;
 
 final class Stream
 {
