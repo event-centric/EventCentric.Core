@@ -1,13 +1,13 @@
 <?php
 
-namespace EventCentric\Protection\Tests;
+namespace EventCentric\Protection\Tests\AggregateRoot;
 
-use EventCentric\Protection\Tests\Order\Order;
-use EventCentric\Protection\Tests\Order\OrderId;
-use EventCentric\Protection\Tests\Order\OrderWasPaidInFull;
-use EventCentric\Protection\Tests\Order\PaymentWasMade;
-use EventCentric\Protection\Tests\Order\ProductId;
-use EventCentric\Protection\Tests\Order\ProductWasOrdered;
+use EventCentric\Protection\Tests\AggregateRoot\Order\Order;
+use EventCentric\Protection\Tests\AggregateRoot\Order\OrderId;
+use EventCentric\Protection\Tests\AggregateRoot\Order\OrderWasPaidInFull;
+use EventCentric\Protection\Tests\AggregateRoot\Order\PaymentWasMade;
+use EventCentric\Protection\Tests\AggregateRoot\Order\ProductId;
+use EventCentric\Protection\Tests\AggregateRoot\Order\ProductWasOrdered;
 
 $test = function(){
     $orderId = OrderId::generate();

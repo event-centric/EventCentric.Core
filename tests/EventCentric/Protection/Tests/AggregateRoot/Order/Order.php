@@ -1,6 +1,6 @@
 <?php
 
-namespace EventCentric\Protection\Tests\Order;
+namespace EventCentric\Protection\Tests\AggregateRoot\Order;
 
 use EventCentric\Protection\AggregateRoot\AggregateRootEntity;
 

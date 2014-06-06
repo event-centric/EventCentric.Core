@@ -1,8 +1,8 @@
 <?php
 
-use EventCentric\Protection\Tests\Order\Order;
-use EventCentric\Protection\Tests\Order\OrderId;
-use EventCentric\Protection\Tests\Order\ProductId;
+use EventCentric\Protection\Tests\AggregateRoot\Order\Order;
+use EventCentric\Protection\Tests\AggregateRoot\Order\OrderId;
+use EventCentric\Protection\Tests\AggregateRoot\Order\ProductId;
 
 $test = function() {
     $order = Order::orderProduct(OrderId::generate(), ProductId::generate(), 100);
