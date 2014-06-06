@@ -28,7 +28,6 @@ final class DomainTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(PaymentWasMade::class, $changes[1]);
         $this->assertInstanceOf(PaymentWasMade::class, $changes[2]);
         $this->assertInstanceOf(OrderWasPaidInFull::class, $changes[3]);
-
     }
 }
  
