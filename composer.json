@@ -1,9 +1,9 @@
 {
-    "name": "event-centric/protection",
-    "description": "Event sourced aggregates that protect invariants",
+    "name": "event-centric/aggregates",
+    "description": "Event sourced Aggregates",
     "minimum-stability": "dev",
     "license": "MIT",
-    "homepage": "https://github.com/event-centric/protection",
+    "homepage": "https://github.com/event-centric/aggregates",
     "authors": [
         {
             "name": "Mathias Verraes",
@@ -11,7 +11,7 @@
             "homepage": "http://verraes.net"
         }
     ],
-    "keywords": ["domain-driven design", "cqrs", "event sourcing", "ddd", "reactive"],
+    "keywords": ["domain-driven design", "cqrs", "event sourcing", "ddd", "reactive", "aggregates", "event store"],
 
     "require": {
         "php": ">=5.5",
@@ -30,7 +30,7 @@
             "": "src"
         },
         "psr-4": {
-            "EventCentric\\Protection\\": ["src/EventCentric/Protection", "tests/EventCentric/Protection"]
+            "EventCentric\\Aggregates\\": ["src/EventCentric/Aggregates", "tests/EventCentric/Aggregates"]
         }
     },
 

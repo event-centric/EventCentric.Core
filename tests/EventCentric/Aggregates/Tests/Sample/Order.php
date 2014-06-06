@@ -1,8 +1,8 @@
 <?php
 
-namespace EventCentric\Protection\Tests\Sample;
+namespace EventCentric\Aggregates\Tests\Sample;
 
-use EventCentric\Protection\AggregateRoot\AggregateRootEntity;
+use EventCentric\Aggregates\AggregateRoot\AggregateRootEntity;
 
 final class Order extends AggregateRootEntity
 {

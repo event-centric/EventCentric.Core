@@ -1,10 +1,10 @@
 <?php
 
-namespace EventCentric\Protection\Tests\AggregateRoot;
+namespace EventCentric\Aggregates\Tests\AggregateRoot;
 
-use EventCentric\Protection\Tests\Sample\Order;
-use EventCentric\Protection\Tests\Sample\OrderId;
-use EventCentric\Protection\Tests\Sample\ProductId;
+use EventCentric\Aggregates\Tests\Sample\Order;
+use EventCentric\Aggregates\Tests\Sample\OrderId;
+use EventCentric\Aggregates\Tests\Sample\ProductId;
 use PHPUnit_Framework_TestCase;
 
 final class EventSourcingTest extends PHPUnit_Framework_TestCase

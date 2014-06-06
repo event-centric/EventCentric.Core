@@ -1,13 +1,13 @@
 <?php
 
-namespace EventCentric\Protection\Tests\AggregateRoot;
+namespace EventCentric\Aggregates\Tests\AggregateRoot;
 
-use EventCentric\Protection\Tests\Sample\Order;
-use EventCentric\Protection\Tests\Sample\OrderId;
-use EventCentric\Protection\Tests\Sample\OrderWasPaidInFull;
-use EventCentric\Protection\Tests\Sample\PaymentWasMade;
-use EventCentric\Protection\Tests\Sample\ProductId;
-use EventCentric\Protection\Tests\Sample\ProductWasOrdered;
+use EventCentric\Aggregates\Tests\Sample\Order;
+use EventCentric\Aggregates\Tests\Sample\OrderId;
+use EventCentric\Aggregates\Tests\Sample\OrderWasPaidInFull;
+use EventCentric\Aggregates\Tests\Sample\PaymentWasMade;
+use EventCentric\Aggregates\Tests\Sample\ProductId;
+use EventCentric\Aggregates\Tests\Sample\ProductWasOrdered;
 use PHPUnit_Framework_TestCase;
 
 final class DomainTest extends PHPUnit_Framework_TestCase

@@ -24,7 +24,7 @@
         >
 
     <testsuites>
-        <testsuite name="EventCentric.Protection">
+        <testsuite name="EventCentric.Aggregates">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

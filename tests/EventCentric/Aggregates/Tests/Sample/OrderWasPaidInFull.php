@@ -1,6 +1,6 @@
 <?php
 
-namespace EventCentric\Protection\Tests\Sample;
+namespace EventCentric\Aggregates\Tests\Sample;
 
 use EventCentric\DomainEvents\DomainEvent;
 

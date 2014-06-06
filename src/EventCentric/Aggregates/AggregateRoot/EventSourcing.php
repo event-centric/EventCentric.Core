@@ -1,6 +1,6 @@
 <?php
 
-namespace EventCentric\Protection\AggregateRoot;
+namespace EventCentric\Aggregates\AggregateRoot;
 
 use EventCentric\DomainEvents\DomainEvent;
 use EventCentric\DomainEvents\DomainEvents;
