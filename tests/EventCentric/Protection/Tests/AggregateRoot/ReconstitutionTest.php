@@ -1,11 +1,11 @@
 <?php
 use EventCentric\DomainEvents\Implementations\DomainEventsArray;
-use EventCentric\Protection\Tests\AggregateRoot\Order\Order;
-use EventCentric\Protection\Tests\AggregateRoot\Order\OrderId;
-use EventCentric\Protection\Tests\AggregateRoot\Order\OrderWasPaidInFull;
-use EventCentric\Protection\Tests\AggregateRoot\Order\PaymentWasMade;
-use EventCentric\Protection\Tests\AggregateRoot\Order\ProductId;
-use EventCentric\Protection\Tests\AggregateRoot\Order\ProductWasOrdered;
+use EventCentric\Protection\Tests\Sample\Order;
+use EventCentric\Protection\Tests\Sample\OrderId;
+use EventCentric\Protection\Tests\Sample\OrderWasPaidInFull;
+use EventCentric\Protection\Tests\Sample\PaymentWasMade;
+use EventCentric\Protection\Tests\Sample\ProductId;
+use EventCentric\Protection\Tests\Sample\ProductWasOrdered;
 
 $test = function() {
     $orderId = OrderId::generate();

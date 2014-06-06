@@ -1,11 +1,11 @@
 <?php
 
-namespace EventCentric\Protection\Tests\AggregateRoot\Order;
+namespace EventCentric\Protection\Tests\Sample;
 
 use EventCentric\Identity\Identity;
 use EventCentric\Identity\Uuid\UuidIdentity;
 
-final class OrderId implements Identity
+final class ProductId implements Identity
 {
     use UuidIdentity;
 }
