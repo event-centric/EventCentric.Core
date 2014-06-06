@@ -18,10 +18,12 @@
         "event-centric/identity": "*",
         "event-centric/domain-events": "*",
         "event-centric/when": "*",
-        "beberlei/assert": "master",
-        "phpunit/phpunit": "@stable"
+        "beberlei/assert": "master"
     },
 
+    "require-dev": {
+        "phpunit/phpunit": "@stable"
+    },
 
     "autoload": {
         "psr-0": {
