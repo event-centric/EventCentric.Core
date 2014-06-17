@@ -1,7 +1,6 @@
 {
     "name": "event-centric/aggregates",
     "description": "Event sourced Aggregates",
-    "minimum-stability": "dev",
     "license": "MIT",
     "homepage": "https://github.com/event-centric/aggregates",
     "authors": [
@@ -15,26 +14,30 @@
 
     "require": {
         "php": ">=5.5",
-        "event-centric/identity": "*",
-        "event-centric/domain-events": "*",
-        "event-centric/when": "*",
-        "beberlei/assert": "master"
+        "event-centric/identity": "~0.0@dev",
+        "event-centric/domain-events": "~0.0@dev",
+        "event-centric/when": "~0.0@dev"
     },
 
     "require-dev": {
-        "phpunit/phpunit": "@stable"
+        "phpunit/phpunit": "~4.1"
     },
 
     "autoload": {
-        "psr-0": {
-            "": "src"
-        },
         "psr-4": {
-            "EventCentric\\Aggregates\\": ["src/EventCentric/Aggregates", "tests/EventCentric/Aggregates"]
+            "EventCentric\\Aggregates\\": ["src/EventCentric/Aggregates"]
         }
     },
 
-    "config": {
-        "bin-dir": "bin"
+    "autoload-dev": {
+        "psr-4": {
+            "EventCentric\\Aggregates\\": ["tests/EventCentric/Aggregates"]
+        }
+    },
+
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.0.x-dev"
+        }
     }
 }
