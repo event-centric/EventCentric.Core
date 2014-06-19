@@ -2,7 +2,7 @@
 
 namespace EventCentric\Serializer;
 
-use EventCentric\Contract;
+use EventCentric\Contracts\Contract;
 use EventCentric\DomainEvents\DomainEvent;
 
 interface Serializer
@@ -10,7 +10,7 @@ interface Serializer
     public function serialize(DomainEvent $domainEvent);
 
     /**
-     * @param Contract $contract
+     * @param \EventCentric\Contracts\Contract $contract
      * @param $data
      * @return DomainEvent
      */

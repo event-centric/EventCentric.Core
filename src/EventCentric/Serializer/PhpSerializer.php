@@ -2,7 +2,7 @@
 
 namespace EventCentric\Serializer;
 
-use EventCentric\Contract;
+use EventCentric\Contracts\Contract;
 use EventCentric\DomainEvents\DomainEvent;
 
 final class PhpSerializer implements Serializer
@@ -13,7 +13,7 @@ final class PhpSerializer implements Serializer
     }
 
     /**
-     * @param Contract $contract
+     * @param \EventCentric\Contracts\Contract $contract
      * @param $data
      * @return DomainEvent
      */
