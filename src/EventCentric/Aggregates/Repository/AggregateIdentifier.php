@@ -2,7 +2,7 @@
 
 namespace EventCentric\Aggregates\Repository;
 
-use EventCentric\Contract;
+use EventCentric\Contracts\Contract;
 use EventCentric\Identity\Identity;
 
 final class AggregateIdentifier
@@ -17,6 +17,7 @@ final class AggregateIdentifier
      */
     private $identity;
 
+    /** @todo bucket */
     public function __construct(Contract $contract, Identity $identity)
     {
         $this->contract = $contract;
@@ -24,7 +25,7 @@ final class AggregateIdentifier
     }
 
     /**
-     * @return Contract
+     * @return \EventCentric\Contracts\Contract
      */
     public function getContract()
     {
