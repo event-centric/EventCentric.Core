@@ -16,7 +16,7 @@ final class Order extends AggregateRootEntity
     /**
      * @return OrderId
      */
-    public function orderId()
+    public function getOrderId()
     {
         return $this->orderId;
     }
