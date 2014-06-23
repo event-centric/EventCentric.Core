@@ -2,9 +2,9 @@
 
 namespace EventCentric\Aggregates\Tests\AggregateRoot;
 
-use EventCentric\Aggregates\Tests\Sample\Order;
-use EventCentric\Aggregates\Tests\Sample\OrderId;
-use EventCentric\Aggregates\Tests\Sample\ProductId;
+use EventCentric\Fixtures\Order;
+use EventCentric\Fixtures\OrderId;
+use EventCentric\Fixtures\ProductId;
 use PHPUnit_Framework_TestCase;
 
 final class EventSourcingTest extends PHPUnit_Framework_TestCase

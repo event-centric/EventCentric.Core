@@ -2,12 +2,12 @@
 
 namespace EventCentric\Aggregates\Tests\AggregateRoot;
 
-use EventCentric\Aggregates\Tests\Sample\Order;
-use EventCentric\Aggregates\Tests\Sample\OrderId;
-use EventCentric\Aggregates\Tests\Sample\OrderWasPaidInFull;
-use EventCentric\Aggregates\Tests\Sample\PaymentWasMade;
-use EventCentric\Aggregates\Tests\Sample\ProductId;
-use EventCentric\Aggregates\Tests\Sample\ProductWasOrdered;
+use EventCentric\Fixtures\Order;
+use EventCentric\Fixtures\OrderId;
+use EventCentric\Fixtures\OrderWasPaidInFull;
+use EventCentric\Fixtures\PaymentWasMade;
+use EventCentric\Fixtures\ProductId;
+use EventCentric\Fixtures\ProductWasOrdered;
 use PHPUnit_Framework_TestCase;
 
 final class DomainTest extends PHPUnit_Framework_TestCase
