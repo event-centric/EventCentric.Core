@@ -10,10 +10,10 @@ use EventCentric\EventEnvelope;
 use EventCentric\EventId;
 use EventCentric\EventStore;
 use EventCentric\Serializer\DomainEventSerializer;
+use EventCentric\UnitOfWork\AggregateRootReconstituter;
 
 final class OrderRepository
 {
-
     /**
      * @var EventStore
      */
@@ -29,11 +29,21 @@ final class OrderRepository
      */
     private $contract;
 
-    public function __construct(EventStore $eventStore, DomainEventSerializer $domainEventSerializer)
+    /**
+     * @var AggregateRootReconstituter
+     */
+    private $aggregateRootReconstituter;
+
+    public function __construct(
+        EventStore $eventStore,
+        DomainEventSerializer $domainEventSerializer,
+        AggregateRootReconstituter $aggregateRootReconstituter
+    )
     {
         $this->eventStore = $eventStore;
         $this->serializer = $domainEventSerializer;
         $this->contract = Contract::canonicalFrom(Order::class);
+        $this->aggregateRootReconstituter = $aggregateRootReconstituter;
     }
 
     public function add(Order $order)
@@ -57,7 +67,10 @@ final class OrderRepository
         $stream->commit(CommitId::generate());
     }
 
-
+    /**
+     * @param OrderId $orderId
+     * @return Order
+     */
     public function get(OrderId $orderId)
     {
         $streamId = $orderId;
@@ -74,7 +87,7 @@ final class OrderRepository
             array_map($unwrapFromEnvelope, $eventEnvelopes)
         );
 
-        return Order::reconstituteFrom($domainEvents);
+        return $this->aggregateRootReconstituter->reconstitute($this->contract, $domainEvents);
     }
 
 

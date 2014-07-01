@@ -9,9 +9,9 @@ use EventCentric\Fixtures\OrderRepository;
 use EventCentric\Fixtures\OrderWasPaidInFull;
 use EventCentric\Fixtures\PaymentWasMade;
 use EventCentric\Fixtures\ProductId;
-use EventCentric\Fixtures\ProductWasOrdered;
 use EventCentric\InMemoryPersistence;
 use EventCentric\Serializer\PhpDomainEventSerializer;
+use EventCentric\UnitOfWork\ClassNameBasedAggregateRootReconstituter;
 use PHPUnit_Framework_TestCase;
 
 final class RepositoryTest extends PHPUnit_Framework_TestCase
@@ -21,19 +21,17 @@ final class RepositoryTest extends PHPUnit_Framework_TestCase
      */
     private $repository;
 
-    /**
-     * @var EventStore
-     */
-    private $eventStore;
-
-    private $eventSerializer;
-
     protected function setUp()
     {
         parent::setUp();
-        $this->eventStore = new EventStore(new InMemoryPersistence());
-        $this->eventSerializer = new PhpDomainEventSerializer();
-        $this->repository = new OrderRepository($this->eventStore, $this->eventSerializer);
+
+        $eventStore = new EventStore(new InMemoryPersistence());
+        $eventSerializer = new PhpDomainEventSerializer();
+        $aggregateRootReconstituter = new ClassNameBasedAggregateRootReconstituter();
+
+        $this->repository = new OrderRepository(
+            $eventStore, $eventSerializer, $aggregateRootReconstituter
+        );
     }
 
 
