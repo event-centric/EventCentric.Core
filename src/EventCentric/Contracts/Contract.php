@@ -3,18 +3,17 @@
 namespace EventCentric\Contracts;
 
 use Assert;
-use Verraes\ClassFunctions\ClassFunctions;
 
 final class Contract
 {
     /**
      * @var string
      */
-    private $contract;
+    private $contractName;
 
     private function __construct($contract)
     {
-        $this->contract = $contract;
+        $this->contractName = $contract;
     }
 
     /**
@@ -28,23 +27,30 @@ final class Contract
     }
 
     /**
-     * Make a contract from an object's namespace using dots instead of backslashes
-     * @param $object
+     * Make a contract from an fully qualified class name, of the form My.Namespace.Class
+     * @param $className
      * @return Contract
      */
-    public static function canonicalFrom($object)
+    public static function canonicalFrom($className)
     {
-        return new Contract(ClassFunctions::canonical($object));
+        return new Contract(
+            str_replace('\\', '.', $className)
+        );
+    }
+
+    public function toClassName()
+    {
+        return str_replace('.', '\\', $this->contractName);
     }
 
     public function __toString()
     {
-        return $this->contract;
+        return $this->contractName;
     }
 
     public function equals(Contract $other)
     {
-        return $this->contract == $other->contract;
+        return $this->contractName == $other->contractName;
     }
 
 } 
