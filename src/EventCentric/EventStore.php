@@ -1,11 +1,9 @@
 <?php
 
-
 namespace EventCentric;
 
 use EventCentric\Contracts\Contract;
 use EventCentric\Identity\Identity;
-use Exception;
 
 final class EventStore
 {
