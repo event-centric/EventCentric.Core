@@ -1,6 +1,6 @@
 <?php
 
-namespace EventCentric\Aggregates\Tests\AggregateRoot;
+namespace EventCentric\Tests\Aggregates\AggregateRoot;
 
 use EventCentric\DomainEvents\Implementations\DomainEventsArray;
 use EventCentric\Fixtures\Order;

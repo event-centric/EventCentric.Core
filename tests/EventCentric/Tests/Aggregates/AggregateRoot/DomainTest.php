@@ -1,6 +1,6 @@
 <?php
 
-namespace EventCentric\Aggregates\Tests\AggregateRoot;
+namespace EventCentric\Tests\Aggregates\AggregateRoot;
 
 use EventCentric\Fixtures\Order;
 use EventCentric\Fixtures\OrderId;
