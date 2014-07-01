@@ -2,6 +2,7 @@
 
 namespace EventCentric\Fixtures;
 
+use EventCentric\CommitId;
 use EventCentric\Contracts\Contract;
 use EventCentric\DomainEvents\DomainEvent;
 use EventCentric\DomainEvents\Implementations\DomainEventsArray;
@@ -53,6 +54,7 @@ final class OrderRepository
         $envelopes = $domainEvents->map($wrapInEnvelope);
 
         $stream->appendAll($envelopes);
+        $stream->commit(CommitId::generate());
     }
 
 

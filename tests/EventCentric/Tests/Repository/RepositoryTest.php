@@ -10,6 +10,7 @@ use EventCentric\Fixtures\OrderWasPaidInFull;
 use EventCentric\Fixtures\PaymentWasMade;
 use EventCentric\Fixtures\ProductId;
 use EventCentric\Fixtures\ProductWasOrdered;
+use EventCentric\InMemoryPersistence;
 use EventCentric\Serializer\PhpDomainEventSerializer;
 use PHPUnit_Framework_TestCase;
 
@@ -30,7 +31,7 @@ final class RepositoryTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->eventStore = new EventStore;
+        $this->eventStore = new EventStore(new InMemoryPersistence());
         $this->eventSerializer = new PhpDomainEventSerializer();
         $this->repository = new OrderRepository($this->eventStore, $this->eventSerializer);
     }
@@ -50,13 +51,12 @@ final class RepositoryTest extends PHPUnit_Framework_TestCase
         /** @var $retrievedOrder Order */
         $retrievedOrder->pay(50);
         $retrievedOrder->pay(50);
-        $changes = $order->getChanges();
+        $changes = $retrievedOrder->getChanges();
 
-        $this->assertCount(4, $changes);
-        $this->assertInstanceOf(ProductWasOrdered::class, $changes[0]);
+        $this->assertCount(3, $changes);
+        $this->assertInstanceOf(PaymentWasMade::class, $changes[0]);
         $this->assertInstanceOf(PaymentWasMade::class, $changes[1]);
-        $this->assertInstanceOf(PaymentWasMade::class, $changes[2]);
-        $this->assertInstanceOf(OrderWasPaidInFull::class, $changes[3]);
+        $this->assertInstanceOf(OrderWasPaidInFull::class, $changes[2]);
 
     }
 } 
