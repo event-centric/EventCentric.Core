@@ -18,7 +18,7 @@
         "event-centric/domain-events": "~0.0@dev",
         "event-centric/when": "~0.0@dev",
         "doctrine/dbal": "@stable",
-        "beberlei/assert": "master"
+        "beberlei/assert": "dev-master"
     },
 
     "require-dev": {
@@ -27,13 +27,13 @@
 
     "autoload": {
         "psr-4": {
-            "EventCentric\\Aggregates\\": ["src/EventCentric/Aggregates"]
+            "EventCentric\\": ["src/EventCentric"]
         }
     },
 
     "autoload-dev": {
         "psr-4": {
-            "EventCentric\\Aggregates\\": ["tests/EventCentric/Aggregates"]
+            "EventCentric\\": ["tests/EventCentric"]
         }
     },
 
