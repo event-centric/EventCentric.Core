@@ -33,7 +33,7 @@ final class OrderRepository
     {
         $this->eventStore = $eventStore;
         $this->serializer = $domainEventSerializer;
-        $this->contract = Contract::with(Order::class);
+        $this->contract = Contract::canonicalFrom(Order::class);
     }
 
     public function add(Order $order)
@@ -45,7 +45,7 @@ final class OrderRepository
 
 
         $wrapInEnvelope = function (DomainEvent $domainEvent) {
-            $eventContract = Contract::with(get_class($domainEvent));
+            $eventContract = Contract::canonicalFrom(get_class($domainEvent));
             $payload = $this->serializer->serialize($eventContract, $domainEvent);
             return EventEnvelope::wrap(EventId::generate(), $eventContract, $payload);
         };
