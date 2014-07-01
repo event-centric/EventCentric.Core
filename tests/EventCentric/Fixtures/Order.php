@@ -2,7 +2,7 @@
 
 namespace EventCentric\Fixtures;
 
-use EventCentric\Aggregates\AggregateRoot\AggregateRootEntity;
+use EventCentric\AggregateRoot\AggregateRootEntity;
 
 final class Order extends AggregateRootEntity
 {

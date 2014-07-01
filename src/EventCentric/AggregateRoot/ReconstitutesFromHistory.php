@@ -1,9 +1,9 @@
 <?php
 
-namespace EventCentric\Aggregates\AggregateRoot;
+namespace EventCentric\AggregateRoot;
 
 use EventCentric\DomainEvents\DomainEvents;
-use EventCentric\Aggregates\AggregateRoot\AggregateRoot;
+use EventCentric\AggregateRoot\AggregateRoot;
 
 interface ReconstitutesFromHistory
 {

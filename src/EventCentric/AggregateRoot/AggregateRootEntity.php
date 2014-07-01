@@ -1,6 +1,6 @@
 <?php
 
-namespace EventCentric\Aggregates\AggregateRoot;
+namespace EventCentric\AggregateRoot;
 
 use EventCentric\When\ConventionBased\ConventionBasedWhen;
 
