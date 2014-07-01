@@ -5,7 +5,7 @@ namespace EventCentric\Fixtures;
 use EventCentric\CommitId;
 use EventCentric\Contracts\Contract;
 use EventCentric\DomainEvents\DomainEvent;
-use EventCentric\DomainEvents\Implementations\DomainEventsArray;
+use EventCentric\DomainEvents\DomainEventsArray;
 use EventCentric\EventEnvelope;
 use EventCentric\EventId;
 use EventCentric\EventStore;
