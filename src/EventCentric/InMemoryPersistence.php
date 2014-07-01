@@ -9,14 +9,27 @@ final class InMemoryPersistence implements Persistence
 {
     private $eventEnvelopes = [];
 
+    /**
+     * @param Contract $streamContract
+     * @param Identity $streamId
+     * @return EventEnvelope[]
+     */
     public function fetch(Contract $streamContract, Identity $streamId)
     {
         $key = $this->key($streamContract, $streamId);
         return $this->eventEnvelopes[$key];
     }
 
-    public function commit(Contract $streamContract, Identity $streamId, array $eventEnvelopes)
+    /**
+     * @param CommitId $commitId
+     * @param Contract $streamContract
+     * @param Identity $streamId
+     * @param EventEnvelope[] $eventEnvelopes
+     */
+    public function commit(CommitId $commitId, Contract $streamContract, Identity $streamId, array $eventEnvelopes)
     {
+        //ignoring $commitId for now
+
         $key = $this->key($streamContract, $streamId);
 
         if(!array_key_exists($key, $this->eventEnvelopes)) {
@@ -25,9 +38,7 @@ final class InMemoryPersistence implements Persistence
 
         foreach($eventEnvelopes as $eventEnvelope) {
             $this->eventEnvelopes[$key][] = $eventEnvelope;
-
         }
-
     }
 
     /**
