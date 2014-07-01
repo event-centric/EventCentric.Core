@@ -7,7 +7,7 @@ use EventCentric\DomainEvents\DomainEvent;
 
 final class PhpSerializer implements Serializer
 {
-    public function serialize(DomainEvent $domainEvent)
+    public function serialize(Contract $contract, DomainEvent $domainEvent)
     {
         return serialize($domainEvent);
     }

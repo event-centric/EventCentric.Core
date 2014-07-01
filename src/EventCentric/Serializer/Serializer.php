@@ -7,7 +7,7 @@ use EventCentric\DomainEvents\DomainEvent;
 
 interface Serializer
 {
-    public function serialize(DomainEvent $domainEvent);
+    public function serialize(Contract $contract, DomainEvent $domainEvent);
 
     /**
      * @param \EventCentric\Contracts\Contract $contract
