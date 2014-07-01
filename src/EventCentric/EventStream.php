@@ -54,7 +54,7 @@ final class EventStream
     public static function open(Persistence $persistence, Contract $streamContract, Identity $streamId)
     {
         $eventStream = new EventStream($persistence, $streamContract, $streamId);
-        $persistence->fetch($streamContract, $streamId);
+        $eventStream->eventEnvelopes = $persistence->fetch($streamContract, $streamId);
         return $eventStream;
     }
 
@@ -85,5 +85,11 @@ final class EventStream
     public function all()
     {
         return $this->eventEnvelopes;
+    }
+
+    public function commit(CommitId $commitId)
+    {
+        $this->persistence->commit($commitId, $this->streamContract, $this->streamId, $this->newEventEnvelopes);
+        $this->newEventEnvelopes = [];
     }
 } 

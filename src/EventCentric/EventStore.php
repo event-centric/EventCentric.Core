@@ -28,7 +28,7 @@ final class EventStore
      */
     public function createStream(Contract $streamContract, Identity $streamId)
     {
-        return EventStream::create($persistence, $streamContract, $streamId);
+        return EventStream::create($this->persistence, $streamContract, $streamId);
 
     }
 
@@ -39,6 +39,6 @@ final class EventStore
      */
     public function openStream(Contract $streamContract, Identity $streamId)
     {
-        return EventStream::open($streamContract, $streamId);
+        return EventStream::open($this->persistence, $streamContract, $streamId);
     }
 }
