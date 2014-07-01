@@ -16,6 +16,10 @@ final class Contract
         $this->contract = $contract;
     }
 
+    /**
+     * @param $name
+     * @return Contract
+     */
     public static function with($name)
     {
         Assert\that($name)->string()->betweenLength(1, 255);
