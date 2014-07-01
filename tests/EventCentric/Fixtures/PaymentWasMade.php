@@ -11,7 +11,7 @@ final class PaymentWasMade implements DomainEvent
     /** @var int */
     private $amount;
 
-    function __construct($orderId, $amount)
+    public function __construct(OrderId $orderId, $amount)
     {
         $this->orderId = $orderId;
         $this->amount = $amount;
