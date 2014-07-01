@@ -4,7 +4,7 @@ namespace EventCentric\AggregateRoot;
 
 use EventCentric\DomainEvents\DomainEvent;
 use EventCentric\DomainEvents\DomainEvents;
-use EventCentric\DomainEvents\DomainEventsArray;
+use EventCentric\DomainEvents\Implementations\DomainEventsArray;
 
 /**
  * Implements TracksChanges

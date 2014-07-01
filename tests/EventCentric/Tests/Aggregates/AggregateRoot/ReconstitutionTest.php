@@ -2,7 +2,7 @@
 
 namespace EventCentric\Tests\Aggregates\AggregateRoot;
 
-use EventCentric\DomainEvents\DomainEventsArray;
+use EventCentric\DomainEvents\Implementations\DomainEventsArray;
 use EventCentric\Fixtures\Order;
 use EventCentric\Fixtures\OrderId;
 use EventCentric\Fixtures\OrderWasPaidInFull;
