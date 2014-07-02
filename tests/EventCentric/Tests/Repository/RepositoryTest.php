@@ -9,6 +9,7 @@ use EventCentric\Fixtures\OrderRepository;
 use EventCentric\Fixtures\OrderWasPaidInFull;
 use EventCentric\Fixtures\PaymentWasMade;
 use EventCentric\Fixtures\ProductId;
+use EventCentric\MySQLPersistence\MySQLPersistence;
 use EventCentric\Persistence\InMemoryPersistence;
 use EventCentric\Serializer\PhpDomainEventSerializer;
 use EventCentric\UnitOfWork\ClassNameBasedAggregateRootReconstituter;
@@ -27,12 +28,43 @@ final class RepositoryTest extends PHPUnit_Framework_TestCase
         parent::setUp();
 
         $eventStore = new EventStore(new InMemoryPersistence());
+
+//-----
+        $persistence = new MySQLPersistence($this->connect());
+        $persistence->dropSchema();
+        $persistence->createSchema();
+        $eventStore = new EventStore($persistence);
+//-----
         $eventSerializer = new PhpDomainEventSerializer();
         $aggregateRootReconstituter = new ClassNameBasedAggregateRootReconstituter();
         $unitOfWork = new UnitOfWork($eventStore, $eventSerializer, $aggregateRootReconstituter);
 
         $this->repository = new OrderRepository($unitOfWork);
     }
+
+
+    /**
+     * @return \Doctrine\DBAL\Connection
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    private function connect()
+    {
+        $configuration = new \Doctrine\DBAL\Configuration();
+        $parameters = [
+            'dbname' => 'eventcentric',
+            'user' => 'root',
+            'password' => 'root',
+            'host' => 'localhost',
+            'driver' => 'pdo_mysql',
+        ];
+        $connection = \Doctrine\DBAL\DriverManager::getConnection(
+            $parameters,
+            $configuration
+        );
+
+        return $connection;
+    }
+
 
 
     /**
@@ -55,6 +87,6 @@ final class RepositoryTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(PaymentWasMade::class, $changes[0]);
         $this->assertInstanceOf(PaymentWasMade::class, $changes[1]);
         $this->assertInstanceOf(OrderWasPaidInFull::class, $changes[2]);
-
+        $this->repository->add($retrievedOrder);
     }
 } 
