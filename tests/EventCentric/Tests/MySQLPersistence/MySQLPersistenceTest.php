@@ -13,11 +13,6 @@ use PHPUnit_Framework_TestCase;
 final class MySQLPersistenceTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    private $connection;
-
-    /**
      * @var MySQLPersistence
      */
     private $mysqlPersistence;
@@ -25,9 +20,7 @@ final class MySQLPersistenceTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->connection = $this->connect();
-
-        $this->mysqlPersistence = new MySQLPersistence($this->connection, $this->connection);
+        $this->mysqlPersistence = new MySQLPersistence(MySQLTestConnector::connect());
         $this->mysqlPersistence->dropSchema();
         $this->mysqlPersistence->createSchema();
     }
@@ -53,30 +46,6 @@ final class MySQLPersistenceTest extends PHPUnit_Framework_TestCase
         $this->assertCount(2, $persistedEventEnvelopes);
         $this->assertTrue($persistedEventEnvelopes[0]->equals($eventEnvelope1));
         $this->assertTrue($persistedEventEnvelopes[1]->equals($eventEnvelope2));
-
     }
-
-    /**
-     * @return \Doctrine\DBAL\Connection
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    private function connect()
-    {
-        $configuration = new \Doctrine\DBAL\Configuration();
-        $parameters = [
-            'dbname' => 'eventcentric',
-            'user' => 'root',
-            'password' => 'root',
-            'host' => 'localhost',
-            'driver' => 'pdo_mysql',
-        ];
-        $connection = \Doctrine\DBAL\DriverManager::getConnection(
-            $parameters,
-            $configuration
-        );
-
-        return $connection;
-    }
-
 }
  
