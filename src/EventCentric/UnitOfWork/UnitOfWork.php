@@ -4,20 +4,20 @@ namespace EventCentric\UnitOfWork;
 
 use EventCentric\AggregateRoot\ReconstitutesFromHistory;
 use EventCentric\AggregateRoot\TracksChanges;
-use EventCentric\CommitId;
+use EventCentric\EventStore\CommitId;
 use EventCentric\Contracts\Contract;
 use EventCentric\DomainEvents\DomainEvent;
 use EventCentric\DomainEvents\DomainEventsArray;
-use EventCentric\EventEnvelope;
-use EventCentric\EventId;
-use EventCentric\EventStore;
+use EventCentric\EventStore\EventEnvelope;
+use EventCentric\EventStore\EventId;
+use EventCentric\EventStore\EventStore;
 use EventCentric\Identity\Identity;
 use EventCentric\Serializer\DomainEventSerializer;
 
 final class UnitOfWork
 {
     /**
-     * @var EventStore
+     * @var \EventCentric\EventStore\EventStore
      */
     private $eventStore;
 

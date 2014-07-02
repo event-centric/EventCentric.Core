@@ -1,6 +1,6 @@
 <?php
 
-namespace EventCentric;
+namespace EventCentric\EventStore;
 
 use EventCentric\Identity\UuidIdentity;
 

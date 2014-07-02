@@ -1,9 +1,12 @@
 <?php
 
-namespace EventCentric;
+namespace EventCentric\EventStore;
 
 use EventCentric\Contracts\Contract;
+use EventCentric\EventStore\CommitId;
+use EventCentric\EventStore\EventEnvelope;
 use EventCentric\Identity\Identity;
+use EventCentric\Persistence\Persistence;
 
 final class EventStream
 {
@@ -22,7 +25,7 @@ final class EventStream
     private $newEventEnvelopes = [];
 
     /**
-     * @var Persistence
+     * @var \EventCentric\Persistence\Persistence
      */
     private $persistence;
 
@@ -34,7 +37,7 @@ final class EventStream
     }
 
     /**
-     * @param Persistence $persistence
+     * @param \EventCentric\Persistence\Persistence $persistence
      * @param Contract $streamContract
      * @param Identity $streamId
      * @return EventStream
@@ -46,7 +49,7 @@ final class EventStream
     }
 
     /**
-     * @param Persistence $persistence
+     * @param \EventCentric\Persistence\Persistence $persistence
      * @param Contract $streamContract
      * @param Identity $streamId
      * @return EventStream

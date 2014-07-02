@@ -1,9 +1,12 @@
 <?php
 
-namespace EventCentric;
+namespace EventCentric\Persistence;
 
 use EventCentric\Contracts\Contract;
+use EventCentric\EventStore\CommitId;
+use EventCentric\EventStore\EventEnvelope;
 use EventCentric\Identity\Identity;
+use EventCentric\Persistence\Persistence;
 
 final class InMemoryPersistence implements Persistence
 {

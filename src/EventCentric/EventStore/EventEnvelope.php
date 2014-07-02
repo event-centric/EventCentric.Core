@@ -1,9 +1,10 @@
 <?php
 
-namespace EventCentric;
+namespace EventCentric\EventStore;
 
 use EventCentric\Contracts\Contract;
 use Assert;
+use EventCentric\EventStore\EventId;
 
 /**
  * An EventEnvelope wraps a payload with a bunch of relevant information, so we can send it around.

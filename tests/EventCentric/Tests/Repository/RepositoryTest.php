@@ -2,14 +2,14 @@
 
 namespace EventCentric\Tests\Repository;
 
-use EventCentric\EventStore;
+use EventCentric\EventStore\EventStore;
 use EventCentric\Fixtures\Order;
 use EventCentric\Fixtures\OrderId;
 use EventCentric\Fixtures\OrderRepository;
 use EventCentric\Fixtures\OrderWasPaidInFull;
 use EventCentric\Fixtures\PaymentWasMade;
 use EventCentric\Fixtures\ProductId;
-use EventCentric\InMemoryPersistence;
+use EventCentric\Persistence\InMemoryPersistence;
 use EventCentric\Serializer\PhpDomainEventSerializer;
 use EventCentric\UnitOfWork\ClassNameBasedAggregateRootReconstituter;
 use EventCentric\UnitOfWork\UnitOfWork;

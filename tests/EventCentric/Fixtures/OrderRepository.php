@@ -4,7 +4,7 @@ namespace EventCentric\Fixtures;
 
 use EventCentric\AggregateRoot\AggregateRoot;
 use EventCentric\Contracts\Contract;
-use EventCentric\EventStore;
+use EventCentric\EventStore\EventStore;
 use EventCentric\Identity\Identity;
 use EventCentric\UnitOfWork\UnitOfWork;
 
