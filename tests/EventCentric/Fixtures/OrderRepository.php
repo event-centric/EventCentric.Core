@@ -2,6 +2,7 @@
 
 namespace EventCentric\Fixtures;
 
+use EventCentric\AggregateRoot\AggregateRoot;
 use EventCentric\CommitId;
 use EventCentric\Contracts\Contract;
 use EventCentric\DomainEvents\DomainEvent;
@@ -25,10 +26,6 @@ final class OrderRepository
      */
     private $serializer;
 
-    /**
-     * @var Contract
-     */
-    private $contract;
 
     /**
      * @var AggregateRootReconstituter
@@ -43,14 +40,13 @@ final class OrderRepository
     {
         $this->eventStore = $eventStore;
         $this->serializer = $domainEventSerializer;
-        $this->contract = Contract::canonicalFrom(Order::class);
         $this->aggregateRootReconstituter = $aggregateRootReconstituter;
     }
 
     public function add(Order $order)
     {
         $streamId = $this->extractAggregateId($order);
-        $stream = $this->eventStore->createStream($this->contract, $streamId);
+        $stream = $this->eventStore->createStream($this->getContract(), $streamId);
 
         $domainEvents = $order->getChanges();
 
@@ -75,7 +71,7 @@ final class OrderRepository
     public function get(OrderId $orderId)
     {
         $streamId = $orderId;
-        $stream = $this->eventStore->openStream($this->contract, $streamId);
+        $stream = $this->eventStore->openStream($this->getContract(), $streamId);
 
         $eventEnvelopes = $stream->all();
 
@@ -88,16 +84,24 @@ final class OrderRepository
             array_map($unwrapFromEnvelope, $eventEnvelopes)
         );
 
-        return $this->aggregateRootReconstituter->reconstitute($this->contract, $domainEvents);
+        return $this->aggregateRootReconstituter->reconstitute($this->getContract(), $domainEvents);
     }
 
     /**
-     * @param object $order
+     * @param AggregateRoot $aggregateRoot
      * @return Identity
      */
-    protected function extractAggregateId($order)
+    private function extractAggregateId(AggregateRoot $aggregateRoot)
     {
-        return $order->getOrderId();
+        return $aggregateRoot->getOrderId();
+    }
+
+    /**
+     * @return Contract
+     */
+    private function getContract()
+    {
+        return Contract::canonicalFrom(Order::class);
     }
 
 
