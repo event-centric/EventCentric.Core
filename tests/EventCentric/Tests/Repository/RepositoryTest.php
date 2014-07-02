@@ -28,44 +28,12 @@ final class RepositoryTest extends PHPUnit_Framework_TestCase
         parent::setUp();
 
         $eventStore = new EventStore(new InMemoryPersistence());
-
-//-----
-        $persistence = new MySQLPersistence($this->connect());
-        $persistence->dropSchema();
-        $persistence->createSchema();
-        $eventStore = new EventStore($persistence);
-//-----
         $eventSerializer = new PhpDomainEventSerializer();
         $aggregateRootReconstituter = new ClassNameBasedAggregateRootReconstituter();
         $unitOfWork = new UnitOfWork($eventStore, $eventSerializer, $aggregateRootReconstituter);
 
         $this->repository = new OrderRepository($unitOfWork);
     }
-
-
-    /**
-     * @return \Doctrine\DBAL\Connection
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    private function connect()
-    {
-        $configuration = new \Doctrine\DBAL\Configuration();
-        $parameters = [
-            'dbname' => 'eventcentric',
-            'user' => 'root',
-            'password' => 'root',
-            'host' => 'localhost',
-            'driver' => 'pdo_mysql',
-        ];
-        $connection = \Doctrine\DBAL\DriverManager::getConnection(
-            $parameters,
-            $configuration
-        );
-
-        return $connection;
-    }
-
-
 
     /**
      * @test
