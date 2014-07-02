@@ -28,6 +28,8 @@ final class MySQLPersistenceTest extends PHPUnit_Framework_TestCase
         $this->connection = $this->connect();
 
         $this->mysqlPersistence = new MySQLPersistence($this->connection, $this->connection);
+        $this->mysqlPersistence->dropSchema();
+        $this->mysqlPersistence->createSchema();
     }
 
     /**

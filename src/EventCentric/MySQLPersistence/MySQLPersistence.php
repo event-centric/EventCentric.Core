@@ -23,15 +23,9 @@ final class MySQLPersistence implements Persistence
      */
     private $connection;
 
-    /**
-     * @var string
-     */
-    private $query;
-
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
-        $this->query = sprintf("SELECT * FROM %s WHERE streamContract = :streamContract AND streamId = :streamId ORDER BY utcCommittedTime ASC", self::TABLE_NAME);
     }
 
     /**
@@ -41,7 +35,10 @@ final class MySQLPersistence implements Persistence
      */
     public function fetch(Contract $streamContract, Identity $streamId)
     {
-        $records = $this->connection->fetchAll($this->query, ['streamContract' => $streamContract, 'streamId' => $streamId]);
+        $records = $this->connection->fetchAll(
+            Query\Select::from(self::TABLE_NAME),
+            ['streamContract' => $streamContract, 'streamId' => $streamId]
+        );
 
         $eventEnvelopes = array_map(
             function(array $record){
@@ -96,4 +93,20 @@ final class MySQLPersistence implements Persistence
             throw $exception;
         }
     }
+
+    public function createSchema()
+    {
+        $this->connection->executeQuery(
+            Query\Create::table(self::TABLE_NAME)
+        );
+    }
+
+
+    public function dropSchema()
+    {
+        $this->connection->executeQuery(
+            Query\Drop::drop(self::TABLE_NAME)
+        );
+    }
 }
+
