@@ -44,6 +44,19 @@ final class EventEnvelope
         return $eventEnvelope;
     }
 
+    public static function reconstitute(
+        EventId $eventId,
+        Contract $eventContract,
+        $eventPayload
+    )
+    {
+        $eventEnvelope = new EventEnvelope();
+        $eventEnvelope->eventId = $eventId;
+        $eventEnvelope->eventContract = $eventContract;
+        $eventEnvelope->eventPayload = $eventPayload;
+        return $eventEnvelope;
+    }
+
     /**
      * @return Contract
      */
@@ -60,5 +73,19 @@ final class EventEnvelope
         return $this->eventPayload;
     }
 
+    /**
+     * @return EventId
+     */
+    public function getEventId()
+    {
+        return $this->eventId;
+    }
 
+    public function equals(EventEnvelope $other)
+    {
+        return
+            $this->eventId->equals($other->eventId)
+            && $this->eventContract->equals($other->eventContract)
+            && $this->eventPayload == $other->eventPayload;
+    }
 } 
