@@ -2,7 +2,6 @@
 
 namespace EventCentric\Tests\MySQLPersistence;
 
-use Doctrine\DBAL\Logging\EchoSQLLogger;
 use EventCentric\Contracts\Contract;
 use EventCentric\EventStore\CommitId;
 use EventCentric\EventStore\EventEnvelope;
