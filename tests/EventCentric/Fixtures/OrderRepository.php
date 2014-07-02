@@ -9,6 +9,7 @@ use EventCentric\DomainEvents\DomainEventsArray;
 use EventCentric\EventEnvelope;
 use EventCentric\EventId;
 use EventCentric\EventStore;
+use EventCentric\Identity\Identity;
 use EventCentric\Serializer\DomainEventSerializer;
 use EventCentric\UnitOfWork\AggregateRootReconstituter;
 
@@ -48,7 +49,7 @@ final class OrderRepository
 
     public function add(Order $order)
     {
-        $streamId = $order->getOrderId();
+        $streamId = $this->extractAggregateId($order);
         $stream = $this->eventStore->createStream($this->contract, $streamId);
 
         $domainEvents = $order->getChanges();
@@ -90,6 +91,14 @@ final class OrderRepository
         return $this->aggregateRootReconstituter->reconstitute($this->contract, $domainEvents);
     }
 
+    /**
+     * @param object $order
+     * @return Identity
+     */
+    protected function extractAggregateId($order)
+    {
+        return $order->getOrderId();
+    }
 
 
 }
