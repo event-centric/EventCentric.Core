@@ -2,6 +2,7 @@
 
 namespace EventCentric\Tests\MySQLPersistence;
 
+use Doctrine\DBAL\Logging\EchoSQLLogger;
 use EventCentric\Contracts\Contract;
 use EventCentric\EventStore\CommitId;
 use EventCentric\EventStore\EventEnvelope;
@@ -66,7 +67,7 @@ final class MySQLPersistenceTest extends PHPUnit_Framework_TestCase
         $parameters = [
             'dbname' => 'eventcentric',
             'user' => 'root',
-            'password' => '',
+            'password' => 'root',
             'host' => 'localhost',
             'driver' => 'pdo_mysql',
         ];

@@ -11,6 +11,7 @@ use EventCentric\EventStore\CommitId;
 use EventCentric\EventStore\EventEnvelope;
 use EventCentric\EventStore\EventId;
 use EventCentric\Identity\Identity;
+use EventCentric\MySQLPersistence\Query\Insert;
 use EventCentric\Persistence\Persistence;
 use Exception;
 
@@ -71,8 +72,8 @@ final class MySQLPersistence implements Persistence
             $now = (new DateTimeImmutable('now', new DateTimeZone('UTC')))->format("Y-m-d H:i:s");
 
             foreach ($eventEnvelopes as $eventEnvelope) {
-                $this->connection->insert(
-                    self::TABLE_NAME,
+                $this->connection->executeQuery(
+                    Insert::into(self::TABLE_NAME),
                     [
                         'streamContract' => (string)$streamContract,
                         'streamId' => (string)$streamId,
