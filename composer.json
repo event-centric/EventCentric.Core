@@ -17,7 +17,7 @@
         "event-centric/identity": "~0.0@dev",
         "event-centric/domain-events": "~0.0@dev",
         "event-centric/when": "~0.0@dev",
-        "doctrine/dbal": "@stable",
+        "doctrine/dbal": "2.5.*",
         "beberlei/assert": "dev-master"
     },
 
