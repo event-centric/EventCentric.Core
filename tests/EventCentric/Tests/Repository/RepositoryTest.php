@@ -12,6 +12,7 @@ use EventCentric\Fixtures\ProductId;
 use EventCentric\InMemoryPersistence;
 use EventCentric\Serializer\PhpDomainEventSerializer;
 use EventCentric\UnitOfWork\ClassNameBasedAggregateRootReconstituter;
+use EventCentric\UnitOfWork\UnitOfWork;
 use PHPUnit_Framework_TestCase;
 
 final class RepositoryTest extends PHPUnit_Framework_TestCase
@@ -28,10 +29,9 @@ final class RepositoryTest extends PHPUnit_Framework_TestCase
         $eventStore = new EventStore(new InMemoryPersistence());
         $eventSerializer = new PhpDomainEventSerializer();
         $aggregateRootReconstituter = new ClassNameBasedAggregateRootReconstituter();
+        $unitOfWork = new UnitOfWork($eventStore, $eventSerializer, $aggregateRootReconstituter);
 
-        $this->repository = new OrderRepository(
-            $eventStore, $eventSerializer, $aggregateRootReconstituter
-        );
+        $this->repository = new OrderRepository($unitOfWork);
     }
 
 
