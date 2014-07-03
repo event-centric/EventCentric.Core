@@ -12,12 +12,14 @@ use EventCentric\EventStore\EventEnvelope;
 use EventCentric\EventStore\EventId;
 use EventCentric\Identity\Identity;
 use EventCentric\MySQLPersistence\Query\Insert;
+use EventCentric\MySQLPersistence\Query\MaxStreamRevision;
+use EventCentric\Persistence\OptimisticConcurrencyFailed;
 use EventCentric\Persistence\Persistence;
 use Exception;
 
 final class MySQLPersistence implements Persistence
 {
-    const TABLE_NAME = 'events';
+    const TABLE_NAME = 'events'; // @todo make configurable
 
     /**
      * @var Connection
@@ -59,25 +61,35 @@ final class MySQLPersistence implements Persistence
      * @param CommitId $commitId
      * @param Contract $streamContract
      * @param Identity $streamId
+     * @param $expectedStreamRevision
      * @param EventEnvelope[] $eventEnvelopes
-     * @throws ConnectionException
-     * @throws Exception
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Exception
      * @return void
      */
-    public function commit(CommitId $commitId, Contract $streamContract, Identity $streamId, array $eventEnvelopes)
+    public function commit(
+        CommitId $commitId,
+        Contract $streamContract,
+        Identity $streamId,
+        $expectedStreamRevision,
+        array $eventEnvelopes
+    )
     {
         $this->connection->beginTransaction();
+        $now = (new DateTimeImmutable('now', new DateTimeZone('UTC')))->format("Y-m-d H:i:s");
+
+
         try {
+            $this->controlOptimisticConcurrency($streamContract, $streamId, $expectedStreamRevision);
 
-            $now = (new DateTimeImmutable('now', new DateTimeZone('UTC')))->format("Y-m-d H:i:s");
-
+            $nextStreamRevision = $expectedStreamRevision;
             foreach ($eventEnvelopes as $eventEnvelope) {
                 $this->connection->executeQuery(
                     Insert::into(self::TABLE_NAME),
                     [
                         'streamContract' => (string)$streamContract,
                         'streamId' => (string)$streamId,
-                        'streamRevision' => 0,
+                        'streamRevision' => ++$nextStreamRevision,
                         'eventContract' => (string)$eventEnvelope->getEventContract(),
                         'eventPayload' => (string)$eventEnvelope->getEventPayload(),
                         'eventId' => (string)$eventEnvelope->getEventId(),
@@ -106,8 +118,34 @@ final class MySQLPersistence implements Persistence
     public function dropSchema()
     {
         $this->connection->executeQuery(
-            Query\Drop::drop(self::TABLE_NAME)
+            Query\Drop::table(self::TABLE_NAME)
         );
+    }
+
+    /**
+     * @param Contract $streamContract
+     * @param Identity $streamId
+     * @param $expectedStreamRevision
+     * @throws \EventCentric\Persistence\OptimisticConcurrencyFailed
+     */
+    protected function controlOptimisticConcurrency(
+        Contract $streamContract,
+        Identity $streamId,
+        $expectedStreamRevision
+    ) {
+
+
+        $result = $this->connection->fetchArray(
+            MaxStreamRevision::from(self::TABLE_NAME),
+            ['streamContract' => $streamContract, 'streamId' => $streamId]
+        );
+        $actualStreamVersion = (int) $result[0];
+
+        if ($actualStreamVersion != $expectedStreamRevision) {
+            throw new OptimisticConcurrencyFailed(
+                sprintf("Expected streamVersion = %d, got %d", $expectedStreamRevision, $actualStreamVersion)
+            );
+        }
     }
 }
 

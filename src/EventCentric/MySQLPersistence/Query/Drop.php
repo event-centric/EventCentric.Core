@@ -7,7 +7,7 @@ final class Drop
 DROP TABLE IF EXISTS `%s`;';
 MYSQL;
 
-    public static function drop($tableName)
+    public static function table($tableName)
     {
         return sprintf(self::QUERY, $tableName);
     }

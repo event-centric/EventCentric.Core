@@ -27,9 +27,16 @@ final class InMemoryPersistence implements Persistence
      * @param CommitId $commitId
      * @param Contract $streamContract
      * @param Identity $streamId
+     * @param int $expectedStreamRevision
      * @param EventEnvelope[] $eventEnvelopes
      */
-    public function commit(CommitId $commitId, Contract $streamContract, Identity $streamId, array $eventEnvelopes)
+    public function commit(
+        CommitId $commitId,
+        Contract $streamContract,
+        Identity $streamId,
+        $expectedStreamRevision,
+        array $eventEnvelopes
+    )
     {
         //ignoring $commitId for now
 

@@ -20,9 +20,9 @@ final class EventStream
      */
     private $streamId;
 
-    private $eventEnvelopes = [];
+    private $committedEventEnvelopes = [];
 
-    private $newEventEnvelopes = [];
+    private $pendingEventEnvelopes = [];
 
     /**
      * @var Persistence
@@ -57,7 +57,7 @@ final class EventStream
     public static function open(Persistence $persistence, Contract $streamContract, Identity $streamId)
     {
         $eventStream = new EventStream($persistence, $streamContract, $streamId);
-        $eventStream->eventEnvelopes = $persistence->fetch($streamContract, $streamId);
+        $eventStream->committedEventEnvelopes = $persistence->fetch($streamContract, $streamId);
         return $eventStream;
     }
 
@@ -67,8 +67,7 @@ final class EventStream
      */
     public function append(EventEnvelope $eventEnvelope)
     {
-        $this->newEventEnvelopes[] = $eventEnvelope;
-        $this->eventEnvelopes[] = $eventEnvelope;
+        $this->pendingEventEnvelopes[] = $eventEnvelope;
     }
 
     /**
@@ -87,12 +86,22 @@ final class EventStream
      */
     public function all()
     {
-        return $this->eventEnvelopes;
+        return array_merge($this->committedEventEnvelopes, $this->pendingEventEnvelopes);
     }
 
     public function commit(CommitId $commitId)
     {
-        $this->persistence->commit($commitId, $this->streamContract, $this->streamId, $this->newEventEnvelopes);
-        $this->newEventEnvelopes = [];
+        $this->persistence->commit(
+            $commitId,
+            $this->streamContract,
+            $this->streamId,
+            count($this->committedEventEnvelopes),
+            $this->pendingEventEnvelopes
+        );
+
+        $this->committedEventEnvelopes = array_merge($this->committedEventEnvelopes, $this->pendingEventEnvelopes);
+        $this->pendingEventEnvelopes = [];
     }
+
+
 } 

@@ -20,8 +20,15 @@ interface Persistence
      * @param CommitId $commitId
      * @param Contract $streamContract
      * @param Identity $streamId
+     * @param $expectedStreamRevision
      * @param EventEnvelope[] $eventEnvelopes
      * @return void
      */
-    public function commit(CommitId $commitId, Contract $streamContract, Identity $streamId, array $eventEnvelopes);
+    public function commit(
+        CommitId $commitId,
+        Contract $streamContract,
+        Identity $streamId,
+        $expectedStreamRevision,
+        array $eventEnvelopes
+    );
 }
