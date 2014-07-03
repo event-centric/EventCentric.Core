@@ -22,11 +22,17 @@ final class EventEnvelope
     private $eventContract;
 
     /**
-     * @var $eventPayload
+     * @var string
      */
     private $eventPayload;
 
-    private function __construct(){}
+    private function __construct(EventId $eventId, Contract $eventContract, $eventPayload)
+    {
+        Assert\that($eventPayload)->string();
+        $this->eventId = $eventId;
+        $this->eventContract = $eventContract;
+        $this->eventPayload = $eventPayload;
+    }
 
     /**
      * @param EventId $eventId
@@ -36,25 +42,12 @@ final class EventEnvelope
      */
     public static function wrap(EventId $eventId, Contract $eventContract, $eventPayload)
     {
-        Assert\that($eventPayload)->string();
-        $eventEnvelope = new EventEnvelope;
-        $eventEnvelope->eventId = $eventId;
-        $eventEnvelope->eventContract = $eventContract;
-        $eventEnvelope->eventPayload = $eventPayload;
-        return $eventEnvelope;
+        return new EventEnvelope($eventId, $eventContract, $eventPayload);
     }
 
-    public static function reconstitute(
-        EventId $eventId,
-        Contract $eventContract,
-        $eventPayload
-    )
+    public static function reconstitute(EventId $eventId, Contract $eventContract, $eventPayload)
     {
-        $eventEnvelope = new EventEnvelope();
-        $eventEnvelope->eventId = $eventId;
-        $eventEnvelope->eventContract = $eventContract;
-        $eventEnvelope->eventPayload = $eventPayload;
-        return $eventEnvelope;
+        return new EventEnvelope($eventId, $eventContract, $eventPayload);
     }
 
     /**
