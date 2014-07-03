@@ -31,8 +31,8 @@
 
     <php>
         <env name="testsuite_db_name" value="eventcentric"/>
-        <env name="testsuite_db_user" value="YOUR_USERNAME"/>
-        <env name="testsuite_db_password" value="YOUR_PASSWORD"/>
+        <env name="testsuite_db_user" value="root"/>
+        <env name="testsuite_db_password" value=""/>
         <env name="testsuite_db_host" value="localhost"/>
     </php>
 </phpunit>
