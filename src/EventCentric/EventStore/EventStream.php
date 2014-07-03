@@ -25,7 +25,7 @@ final class EventStream
     private $newEventEnvelopes = [];
 
     /**
-     * @var \EventCentric\Persistence\Persistence
+     * @var Persistence
      */
     private $persistence;
 
@@ -37,7 +37,7 @@ final class EventStream
     }
 
     /**
-     * @param \EventCentric\Persistence\Persistence $persistence
+     * @param Persistence $persistence
      * @param Contract $streamContract
      * @param Identity $streamId
      * @return EventStream
@@ -49,7 +49,7 @@ final class EventStream
     }
 
     /**
-     * @param \EventCentric\Persistence\Persistence $persistence
+     * @param Persistence $persistence
      * @param Contract $streamContract
      * @param Identity $streamId
      * @return EventStream
