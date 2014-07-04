@@ -28,7 +28,7 @@ final class InMemoryPersistence implements Persistence
         return
             _\toArray(
                 _\map(
-                    $this->recordToEvent(),
+                    $this->toEventEnvelope(),
                     _\filter(
                         $this->belongsToStream($streamContract, $streamId),
                         $this->records
@@ -99,7 +99,7 @@ final class InMemoryPersistence implements Persistence
     }
 
 
-    private function recordToEvent()
+    private function toEventEnvelope()
     {
         return function(InMemoryRecord $record) {
             return EventEnvelope::reconstitute($record->eventId, $record->eventContract, $record->eventPayload);
