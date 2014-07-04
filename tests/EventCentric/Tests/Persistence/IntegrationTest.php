@@ -2,11 +2,11 @@
 
 namespace EventCentric\Tests\Persistence;
 
-use EventCentric\Fixtures\Order;
-use EventCentric\Fixtures\OrderId;
-use EventCentric\Fixtures\OrderRepository;
-use EventCentric\Fixtures\OrderWasPaidInFull;
-use EventCentric\Fixtures\ProductId;
+use EventCentric\Tests\Fixtures\Order;
+use EventCentric\Tests\Fixtures\OrderId;
+use EventCentric\Tests\Fixtures\OrderRepository;
+use EventCentric\Tests\Fixtures\OrderWasPaidInFull;
+use EventCentric\Tests\Fixtures\ProductId;
 use EventCentric\Persistence\Persistence;
 
 final class IntegrationTest extends \PHPUnit_Framework_TestCase

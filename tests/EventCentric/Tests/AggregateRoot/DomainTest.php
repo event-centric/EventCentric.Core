@@ -1,13 +1,13 @@
 <?php
 
-namespace EventCentric\Tests\Aggregates\AggregateRoot;
+namespace EventCentric\Tests\AggregateRoot;
 
-use EventCentric\Fixtures\Order;
-use EventCentric\Fixtures\OrderId;
-use EventCentric\Fixtures\OrderWasPaidInFull;
-use EventCentric\Fixtures\PaymentWasMade;
-use EventCentric\Fixtures\ProductId;
-use EventCentric\Fixtures\ProductWasOrdered;
+use EventCentric\Tests\Fixtures\Order;
+use EventCentric\Tests\Fixtures\OrderId;
+use EventCentric\Tests\Fixtures\OrderWasPaidInFull;
+use EventCentric\Tests\Fixtures\PaymentWasMade;
+use EventCentric\Tests\Fixtures\ProductId;
+use EventCentric\Tests\Fixtures\ProductWasOrdered;
 use PHPUnit_Framework_TestCase;
 
 final class DomainTest extends PHPUnit_Framework_TestCase

@@ -2,12 +2,12 @@
 
 namespace EventCentric\Tests\Repository;
 
-use EventCentric\Fixtures\Order;
-use EventCentric\Fixtures\OrderId;
-use EventCentric\Fixtures\OrderRepository;
-use EventCentric\Fixtures\OrderWasPaidInFull;
-use EventCentric\Fixtures\PaymentWasMade;
-use EventCentric\Fixtures\ProductId;
+use EventCentric\Tests\Fixtures\Order;
+use EventCentric\Tests\Fixtures\OrderId;
+use EventCentric\Tests\Fixtures\OrderRepository;
+use EventCentric\Tests\Fixtures\OrderWasPaidInFull;
+use EventCentric\Tests\Fixtures\PaymentWasMade;
+use EventCentric\Tests\Fixtures\ProductId;
 use EventCentric\Persistence\Persistence;
 use EventCentric\Tests\Persistence\PersistenceProvider;
 use PHPUnit_Framework_TestCase;

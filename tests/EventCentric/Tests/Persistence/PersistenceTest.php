@@ -6,7 +6,7 @@ use EventCentric\Contracts\Contract;
 use EventCentric\EventStore\CommitId;
 use EventCentric\EventStore\EventEnvelope;
 use EventCentric\EventStore\EventId;
-use EventCentric\Fixtures\OrderId;
+use EventCentric\Tests\Fixtures\OrderId;
 use EventCentric\Persistence\OptimisticConcurrencyFailed;
 use EventCentric\Persistence\Persistence;
 use PHPUnit_Framework_TestCase;

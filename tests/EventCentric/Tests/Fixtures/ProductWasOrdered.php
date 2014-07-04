@@ -1,6 +1,6 @@
 <?php
 
-namespace EventCentric\Fixtures;
+namespace EventCentric\Tests\Fixtures;
 
 use EventCentric\DomainEvents\DomainEvent;
 
