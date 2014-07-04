@@ -139,12 +139,10 @@ final class MySQLPersistence implements Persistence
             MaxStreamRevision::from(self::TABLE_NAME),
             ['streamContract' => $streamContract, 'streamId' => $streamId]
         );
-        $actualStreamVersion = (int) $result[0];
+        $actualStreamRevision = (int) $result[0];
 
-        if ($actualStreamVersion != $expectedStreamRevision) {
-            throw new OptimisticConcurrencyFailed(
-                sprintf("Expected streamVersion = %d, got %d", $expectedStreamRevision, $actualStreamVersion)
-            );
+        if ($actualStreamRevision != $expectedStreamRevision) {
+            throw OptimisticConcurrencyFailed::revisionDoNotMatch($expectedStreamRevision, $actualStreamRevision);
         }
     }
 }
