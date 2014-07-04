@@ -28,6 +28,7 @@ final class RepositoryTest extends PHPUnit_Framework_TestCase
         $orderId = OrderId::generate();
         $order = Order::orderProduct($orderId, ProductId::generate(), 100);
         $repository->add($order);
+        $unitOfWork->commit();
 
         $retrievedOrder = $repository->get($orderId);
 

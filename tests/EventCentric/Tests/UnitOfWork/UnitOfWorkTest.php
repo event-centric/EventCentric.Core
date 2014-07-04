@@ -30,6 +30,7 @@ final class UnitOfWorkTest extends \PHPUnit_Framework_TestCase
         $order = Order::orderProduct($orderId, ProductId::generate(), 100);
         $order->pay(50);
         $repository->add($order);
+        $unitOfWork->commit();
 
         $retrievedOrder = $repository->get($orderId);
         $retrievedOrder->pay(50);
@@ -51,6 +52,23 @@ final class UnitOfWorkTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException(AggregateRootIsAlreadyBeingTracked::class);
         $unitOfWork->track(Contract::with(Order::class), $orderId, $order);
+    }
+
+    /**
+     * @test
+     * @dataProvider providePersistence
+     * @param Persistence $persistence
+     */
+    public function it_should_not_persist_events_until_commit_is_called(Persistence $persistence)
+    {
+        $unitOfWork = $this->buildUnitOfWork($persistence);
+        $orderId = OrderId::generate();
+        $order = Order::orderProduct($orderId, ProductId::generate(), 100);
+        $contract = Contract::with(Order::class);
+        $unitOfWork->track($contract, $orderId, $order);
+
+        $results = $persistence->fetch($contract, $orderId);
+        $this->assertEmpty($results);
     }
 }
  

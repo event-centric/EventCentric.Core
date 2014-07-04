@@ -13,6 +13,7 @@ use EventCentric\EventStore\EventId;
 use EventCentric\EventStore\EventStore;
 use EventCentric\Identity\Identity;
 use EventCentric\Serializer\DomainEventSerializer;
+use iter as _;
 
 final class UnitOfWork
 {
@@ -31,7 +32,7 @@ final class UnitOfWork
      */
     private $aggregateRootReconstituter;
 
-    private $trackedAggregateRoots  = [];
+    private $trackedAggregates  = [];
 
     public function __construct(
         EventStore $eventStore,
@@ -54,32 +55,19 @@ final class UnitOfWork
      */
     public function track(Contract $aggregateContract, Identity $aggregateId, TracksChanges $aggregateRoot)
     {
-        $trackingKey = "$aggregateContract::$aggregateId";
-        if(array_key_exists($trackingKey, $this->trackedAggregateRoots)) {
+        $aggregate = new Aggregate($aggregateContract, $aggregateId, $aggregateRoot);
+
+        $alreadyTracked =
+            _\any(
+                function(Aggregate $foundAggregate) use($aggregate){ return $aggregate->equals($foundAggregate); },
+                $this->trackedAggregates
+            );
+
+        if($alreadyTracked) {
             throw AggregateRootIsAlreadyBeingTracked::identifiedBy($aggregateContract, $aggregateId);
         }
-        $this->trackedAggregateRoots[$trackingKey] = $aggregateRoot;
 
-
-        $streamId = $aggregateId;
-        $streamContract = $aggregateContract;
-        $stream = $this->eventStore->createStream($streamContract, $streamId);
-
-        $domainEvents = $aggregateRoot->getChanges();
-
-
-        $wrapInEnvelope = function (DomainEvent $domainEvent) {
-            $eventContract = Contract::canonicalFrom(get_class($domainEvent));
-            $payload = $this->serializer->serialize($eventContract, $domainEvent);
-            return EventEnvelope::wrap(EventId::generate(), $eventContract, $payload);
-        };
-
-
-        $envelopes = $domainEvents->map($wrapInEnvelope);
-
-        $stream->appendAll($envelopes);
-        $stream->commit(CommitId::generate());
-
+        $this->trackedAggregates[] = $aggregate;
     }
 
     /**
@@ -108,5 +96,33 @@ final class UnitOfWork
 
         $aggregateRoot = $this->aggregateRootReconstituter->reconstitute($aggregateContract, $domainEvents);
         return $aggregateRoot;
+    }
+
+    public function commit()
+    {
+        foreach($this->trackedAggregates as $aggregate) {
+            $this->persistAggregate($aggregate);
+        }
+    }
+
+    /**
+     * @param Aggregate $aggregate
+     */
+    private function persistAggregate(Aggregate $aggregate)
+    {
+        $stream = $this->eventStore->createStream($aggregate->getAggregateContract(), $aggregate->getAggregateId());
+
+        $domainEvents = $aggregate->getChanges();
+
+        $wrapInEnvelope = function (DomainEvent $domainEvent) {
+            $eventContract = Contract::canonicalFrom(get_class($domainEvent));
+            $payload = $this->serializer->serialize($eventContract, $domainEvent);
+            return EventEnvelope::wrap(EventId::generate(), $eventContract, $payload);
+        };
+
+        $envelopes = $domainEvents->map($wrapInEnvelope);
+
+        $stream->appendAll($envelopes);
+        $stream->commit(CommitId::generate());
     }
 } 
