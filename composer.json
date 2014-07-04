@@ -18,7 +18,8 @@
         "event-centric/domain-events": "~0.0@dev",
         "event-centric/when": "~0.0@dev",
         "doctrine/dbal": ">=2.5.0-BETA3",
-        "beberlei/assert": "dev-master"
+        "beberlei/assert": "dev-master",
+        "nikic/iter": "v1.1.0"
     },
 
     "require-dev": {

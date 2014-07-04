@@ -25,7 +25,6 @@ final class RepositoryTest extends PHPUnit_Framework_TestCase
     {
         $unitOfWork = $this->buildUnitOfWork($persistence);
         $repository = new OrderRepository($unitOfWork);
-        $repository = new OrderRepository($unitOfWork);
         $orderId = OrderId::generate();
         $order = Order::orderProduct($orderId, ProductId::generate(), 100);
         $repository->add($order);
