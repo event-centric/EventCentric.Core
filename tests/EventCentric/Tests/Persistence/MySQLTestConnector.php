@@ -1,6 +1,6 @@
 <?php
 
-namespace EventCentric\Tests\MySQLPersistence;
+namespace EventCentric\Tests\Persistence;
 
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\DriverManager;

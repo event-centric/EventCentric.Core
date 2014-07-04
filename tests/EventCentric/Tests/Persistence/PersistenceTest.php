@@ -1,35 +1,26 @@
 <?php
 
-namespace EventCentric\Tests\MySQLPersistence;
+namespace EventCentric\Tests\Persistence;
 
 use EventCentric\Contracts\Contract;
 use EventCentric\EventStore\CommitId;
 use EventCentric\EventStore\EventEnvelope;
 use EventCentric\EventStore\EventId;
 use EventCentric\Fixtures\OrderId;
-use EventCentric\MySQLPersistence\MySQLPersistence;
 use EventCentric\Persistence\OptimisticConcurrencyFailed;
+use EventCentric\Persistence\Persistence;
 use PHPUnit_Framework_TestCase;
 
-final class MySQLPersistenceTest extends PHPUnit_Framework_TestCase
+final class PersistenceTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @var MySQLPersistence
-     */
-    private $mysqlPersistence;
-
-    protected function setUp()
-    {
-        parent::setUp();
-        $this->mysqlPersistence = new MySQLPersistence(MySQLTestConnector::connect());
-        $this->mysqlPersistence->dropSchema();
-        $this->mysqlPersistence->createSchema();
-    }
+    use PersistenceProvider;
 
     /**
      * @test
+     * @dataProvider providePersistence
+     * @param Persistence $persistence
      */
-    public function it_should_commit_and_fetch_events()
+    public function it_should_commit_and_fetch_events(Persistence $persistence)
     {
         $commitId = CommitId::generate();
         $streamContract = Contract::with('My.Contract');
@@ -38,7 +29,7 @@ final class MySQLPersistenceTest extends PHPUnit_Framework_TestCase
         $eventContract = Contract::with("My.SomethingHasHappened");
         $eventEnvelope1 = EventEnvelope::wrap(EventId::generate(), $eventContract, "My payload1");
         $eventEnvelope2 = EventEnvelope::wrap(EventId::generate(), $eventContract, "My payload2");
-        $this->mysqlPersistence->commit(
+        $persistence->commit(
             $commitId,
             $streamContract,
             $streamId,
@@ -46,7 +37,7 @@ final class MySQLPersistenceTest extends PHPUnit_Framework_TestCase
             [$eventEnvelope1, $eventEnvelope2]
         );
 
-        $persistedEventEnvelopes = $this->mysqlPersistence->fetch($streamContract, $streamId);
+        $persistedEventEnvelopes = $persistence->fetch($streamContract, $streamId);
 
         $this->assertCount(2, $persistedEventEnvelopes);
         $this->assertTrue($persistedEventEnvelopes[0]->equals($eventEnvelope1));
@@ -56,8 +47,9 @@ final class MySQLPersistenceTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      * @depends it_should_commit_and_fetch_events
+     * @param Persistence $persistence
      */
-    public function it_should_throw_when_events_have_been_committed_elsewhere()
+    public function it_should_throw_when_events_have_been_committed_elsewhere(Persistence $persistence)
     {
         $commitId = CommitId::generate();
         $streamContract = Contract::with('My.Contract');
@@ -66,7 +58,7 @@ final class MySQLPersistenceTest extends PHPUnit_Framework_TestCase
 
         $this->setExpectedException(OptimisticConcurrencyFailed::class);
 
-        $this->mysqlPersistence->commit(
+        $persistence->commit(
             $commitId,
             $streamContract,
             $streamId,
