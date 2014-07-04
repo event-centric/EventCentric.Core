@@ -1,6 +1,6 @@
 <?php
 
-namespace EventCentric\Tests\Persistence;
+namespace EventCentric\Tests\UnitOfWork;
 
 use EventCentric\Tests\Fixtures\Order;
 use EventCentric\Tests\Fixtures\OrderId;
@@ -8,8 +8,9 @@ use EventCentric\Tests\Fixtures\OrderRepository;
 use EventCentric\Tests\Fixtures\OrderWasPaidInFull;
 use EventCentric\Tests\Fixtures\ProductId;
 use EventCentric\Persistence\Persistence;
+use EventCentric\Tests\Persistence\PersistenceProvider;
 
-final class IntegrationTest extends \PHPUnit_Framework_TestCase
+final class UnitOfWorkTest extends \PHPUnit_Framework_TestCase
 {
     use PersistenceProvider;
 
