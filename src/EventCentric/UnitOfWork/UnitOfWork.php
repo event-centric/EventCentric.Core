@@ -31,6 +31,8 @@ final class UnitOfWork
      */
     private $aggregateRootReconstituter;
 
+    private $trackedAggregateRoots  = [];
+
     public function __construct(
         EventStore $eventStore,
         DomainEventSerializer $serializer,
@@ -42,8 +44,22 @@ final class UnitOfWork
         $this->aggregateRootReconstituter = $aggregateRootReconstituter;
     }
 
+    /**
+     * Track a newly created AggregateRoot
+     *
+     * @param Contract $aggregateContract
+     * @param Identity $aggregateId
+     * @param TracksChanges $aggregateRoot
+     * @throws AggregateRootIsAlreadyBeingTracked
+     */
     public function track(Contract $aggregateContract, Identity $aggregateId, TracksChanges $aggregateRoot)
     {
+        $trackingKey = "$aggregateContract::$aggregateId";
+        if(array_key_exists($trackingKey, $this->trackedAggregateRoots)) {
+            throw AggregateRootIsAlreadyBeingTracked::identifiedBy($aggregateContract, $aggregateId);
+        }
+        $this->trackedAggregateRoots[$trackingKey] = $aggregateRoot;
+
 
         $streamId = $aggregateId;
         $streamContract = $aggregateContract;
