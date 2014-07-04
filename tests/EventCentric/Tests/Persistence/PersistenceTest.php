@@ -47,6 +47,7 @@ final class PersistenceTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      * @depends it_should_commit_and_fetch_events
+     * @dataProvider providePersistence
      * @param Persistence $persistence
      */
     public function it_should_throw_when_events_have_been_committed_elsewhere(Persistence $persistence)
