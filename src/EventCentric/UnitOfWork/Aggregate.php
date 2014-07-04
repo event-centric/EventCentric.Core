@@ -4,6 +4,7 @@ namespace EventCentric\UnitOfWork;
 
 use EventCentric\AggregateRoot\TracksChanges;
 use EventCentric\Contracts\Contract;
+use EventCentric\DomainEvents\DomainEvents;
 use EventCentric\Identity\Identity;
 
 /**
@@ -64,14 +65,27 @@ final class Aggregate
      */
     public function equals(Aggregate $other)
     {
-        return
-            $this->aggregateContract->equals($other->aggregateContract)
-            && $this->aggregateId->equals($other->aggregateId);
+        return $this->isIdentifiedBy($other->aggregateContract, $other->aggregateId);
     }
 
+    /**
+     * @return DomainEvents
+     */
     public function getChanges()
     {
         return $this->aggregateRoot->getChanges();
+    }
+
+    /**
+     * @param Contract $aggregateContract
+     * @param Identity $aggregateId
+     * @return bool
+     */
+    public function isIdentifiedBy(Contract $aggregateContract, Identity $aggregateId)
+    {
+        return
+            $this->aggregateContract->equals($aggregateContract)
+            && $this->aggregateId->equals($aggregateId);
     }
 
 
