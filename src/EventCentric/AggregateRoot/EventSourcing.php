@@ -8,9 +8,14 @@ use EventCentric\DomainEvents\DomainEventsArray;
 
 /**
  * Implements TracksChanges
+ * @package EventCentric\AggregateRoot
+ * @uses \EventCentric\When\When as a contract for applying new Domain Events to the Aggregate
  */
 trait EventSourcing
 {
+    /**
+     * @var DomainEvent[]
+     */
     private $recordedEvents = [];
 
     /**

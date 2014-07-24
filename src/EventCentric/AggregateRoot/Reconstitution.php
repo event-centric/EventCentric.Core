@@ -4,6 +4,10 @@ namespace EventCentric\AggregateRoot;
 
 use EventCentric\DomainEvents\DomainEvents;
 
+/**
+ * Implements ReconstitutesFromHistory
+ * @package EventCentric\AggregateRoot
+ */
 trait Reconstitution
 {
     /**
@@ -18,6 +22,11 @@ trait Reconstitution
         return $instance;
     }
 
+    /**
+     * React to a series of Domain Events.
+     * @param DomainEvents $events
+     * @return void
+     */
     abstract protected function whenAll(DomainEvents $events);
 
 } 
