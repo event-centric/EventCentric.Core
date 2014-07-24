@@ -14,6 +14,7 @@ use EventCentric\EventStore\EventStore;
 use EventCentric\Identity\Identity;
 use EventCentric\Serializer\DomainEventSerializer;
 use iter as _;
+use iter\fn as __;
 
 final class UnitOfWork
 {
@@ -77,24 +78,15 @@ final class UnitOfWork
      */
     public function get(Contract $aggregateContract, Identity $aggregateId)
     {
-        $streamId = $aggregateId;
-        $stream = $this->eventStore->openStream($aggregateContract, $streamId);
+        $aggregate = $this->findTrackedAggregate($aggregateContract, $aggregateId);
 
-        $eventEnvelopes = $stream->all();
+        if(!is_null($aggregate)) {
+            return $aggregate->getAggregateRoot();
+        }
 
-        $unwrapFromEnvelope = function (EventEnvelope $eventEnvelope) {
-            $domainEvent = $this->serializer->unserialize(
-                $eventEnvelope->getEventContract(),
-                $eventEnvelope->getEventPayload()
-            );
-            return $domainEvent;
-        };
+        $aggregateRoot = $this->findPersistedAggregateRoot($aggregateContract, $aggregateId);
+        $this->track($aggregateContract, $aggregateId, $aggregateRoot);
 
-        $domainEvents = new DomainEventsArray(
-            array_map($unwrapFromEnvelope, $eventEnvelopes)
-        );
-
-        $aggregateRoot = $this->aggregateRootReconstituter->reconstitute($aggregateContract, $domainEvents);
         return $aggregateRoot;
     }
 
@@ -124,5 +116,58 @@ final class UnitOfWork
 
         $stream->appendAll($envelopes);
         $stream->commit(CommitId::generate());
+        $aggregate->clearChanges();
+    }
+
+    /**
+     * @param Contract $aggregateContract
+     * @param Identity $aggregateId
+     * @return Aggregate
+     */
+    private function findTrackedAggregate(Contract $aggregateContract, Identity $aggregateId)
+    {
+        $aggregates = _\toArray(
+            _\filter(
+                function (Aggregate $aggregate) use ($aggregateContract, $aggregateId) {
+                    return $aggregate->isIdentifiedBy($aggregateContract, $aggregateId);
+                },
+                $this->trackedAggregates
+            )
+        );
+
+        // ugh I'm missing all kinds of FP shizzle to make this pretty. Maybe later.
+        /** @var Aggregate $aggregate */
+        $aggregate = count($aggregates)
+            ? $aggregates[0]
+            : null;
+        return $aggregate;
+    }
+
+    /**
+     * @param Contract $aggregateContract
+     * @param Identity $aggregateId
+     * @return mixed
+     */
+    private function findPersistedAggregateRoot(Contract $aggregateContract, Identity $aggregateId)
+    {
+        $streamId = $aggregateId;
+        $stream = $this->eventStore->openStream($aggregateContract, $streamId);
+
+        $eventEnvelopes = $stream->all();
+
+        $unwrapFromEnvelope = function (EventEnvelope $eventEnvelope) {
+            $domainEvent = $this->serializer->unserialize(
+                $eventEnvelope->getEventContract(),
+                $eventEnvelope->getEventPayload()
+            );
+            return $domainEvent;
+        };
+
+        $domainEvents = new DomainEventsArray(
+            array_map($unwrapFromEnvelope, $eventEnvelopes)
+        );
+
+        $aggregateRoot = $this->aggregateRootReconstituter->reconstitute($aggregateContract, $domainEvents);
+        return $aggregateRoot;
     }
 } 

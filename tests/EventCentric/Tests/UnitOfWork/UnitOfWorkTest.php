@@ -63,12 +63,36 @@ final class UnitOfWorkTest extends \PHPUnit_Framework_TestCase
     {
         $unitOfWork = $this->buildUnitOfWork($persistence);
         $orderId = OrderId::generate();
-        $order = Order::orderProduct($orderId, ProductId::generate(), 100);
         $contract = Contract::with(Order::class);
+        $order = Order::orderProduct($orderId, ProductId::generate(), 100);
         $unitOfWork->track($contract, $orderId, $order);
 
         $results = $persistence->fetch($contract, $orderId);
         $this->assertEmpty($results);
+    }
+
+    /**
+     * @test
+     * @dataProvider providePersistence
+     * @param Persistence $persistence
+     */
+    public function it_should_return_tracked_AggregateRoots_when_available(Persistence $persistence)
+    {
+        $unitOfWork = $this->buildUnitOfWork($persistence);
+        $orderId = OrderId::generate();
+        $contract = Contract::with(Order::class);
+        $order = Order::orderProduct($orderId, ProductId::generate(), 100);
+        $unitOfWork->track($contract, $orderId, $order);
+        $unitOfWork->commit();
+
+        // get a new UoW
+        $unitOfWork = $this->buildUnitOfWork($persistence);
+        $retrievedOrder1 = $unitOfWork->get($contract, $orderId);
+        $retrievedOrder2 = $unitOfWork->get($contract, $orderId);
+        $this->assertSame($retrievedOrder1, $retrievedOrder2);
+
+
+
     }
 }
  

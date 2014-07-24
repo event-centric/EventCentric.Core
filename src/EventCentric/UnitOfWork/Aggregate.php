@@ -76,6 +76,11 @@ final class Aggregate
         return $this->aggregateRoot->getChanges();
     }
 
+    public function clearChanges()
+    {
+        $this->aggregateRoot->clearChanges();
+    }
+
     /**
      * @param Contract $aggregateContract
      * @param Identity $aggregateId
