@@ -6,7 +6,6 @@ use EventCentric\DomainEvents\DomainEvents;
 
 /**
  * Implements ReconstitutesFromHistory
- * @package EventCentric\AggregateRoot
  */
 trait Reconstitution
 {

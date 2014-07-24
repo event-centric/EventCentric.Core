@@ -7,7 +7,6 @@ use EventCentric\DomainEvents\DomainEvents;
 
 /**
  * Reconstitute an AggregateRoot using its history of DomainEvents
- * @package EventCentric\UnitOfWork
  */
 interface AggregateRootReconstituter
 {

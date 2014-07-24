@@ -19,7 +19,6 @@ use Exception;
 
 /**
  * An implementation of Persistence that stores Events in MySQL.
- * @package EventCentric\MySQLPersistence
  */
 final class MySQLPersistence implements Persistence
 {

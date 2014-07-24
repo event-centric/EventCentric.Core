@@ -9,7 +9,6 @@ use EventCentric\Persistence\Persistence;
 
 /**
  * A history of all DomainEvents that have happened in the system.
- * @package EventCentric\EventStore
  */
 final class EventStore
 {

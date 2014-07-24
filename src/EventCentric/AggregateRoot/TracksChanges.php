@@ -5,8 +5,7 @@ namespace EventCentric\AggregateRoot;
 use EventCentric\DomainEvents\DomainEvents;
 
 /**
- * Interface to provide the ability to track changes to the state of an Aggregate using Domain Events.
- * @package EventCentric\AggregateRoot
+ * Track the history of an Aggregate instance using Domain Events.
  */
 interface TracksChanges
 {

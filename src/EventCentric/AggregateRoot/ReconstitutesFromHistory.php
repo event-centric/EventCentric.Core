@@ -6,8 +6,7 @@ use EventCentric\DomainEvents\DomainEvents;
 use EventCentric\AggregateRoot\AggregateRoot;
 
 /**
- * Interface to provide the ability to reconstitute the state of an Aggregate from a history of Domain Events.
- * @package EventCentric\AggregateRoot
+ * Reconstitutes an Aggregate instance from its history of Domain Events
  */
 interface ReconstitutesFromHistory
 {

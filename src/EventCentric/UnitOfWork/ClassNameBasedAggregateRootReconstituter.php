@@ -7,7 +7,6 @@ use EventCentric\DomainEvents\DomainEvents;
 
 /**
  * Reconstitute an AggregateRoot using the class name as implemented by the Contract.
- * @package EventCentric\UnitOfWork
  */
 final class ClassNameBasedAggregateRootReconstituter implements AggregateRootReconstituter
 {
