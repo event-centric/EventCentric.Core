@@ -1,6 +1,6 @@
 {
     "name": "event-centric/aggregates",
-    "description": "Event sourced Aggregates",
+    "description": "Event Sourcing and CQRS",
     "license": "MIT",
     "homepage": "https://github.com/event-centric/aggregates",
     "authors": [
@@ -14,9 +14,6 @@
 
     "require": {
         "php": ">=5.5",
-        "event-centric/identity": "~0.0@dev",
-        "event-centric/domain-events": "~0.0@dev",
-        "event-centric/when": "~0.0@dev",
         "doctrine/dbal": ">=2.5.0-BETA3",
         "beberlei/assert": "~2.0@dev",
         "nikic/iter": "v1.1.0"
