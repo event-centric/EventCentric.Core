@@ -21,7 +21,7 @@ final class UnitOfWorkTest extends \PHPUnit_Framework_TestCase
      * @dataProvider providePersistence
      * @param Persistence $persistence
      */
-    public function retrieved_order_should_behave_the_same_as_the_original_order(Persistence $persistence)
+    public function retrieved_AggregateRoot_should_behave_the_same_as_the_original_AggregateRoot(Persistence $persistence)
     {
         $unitOfWork = $this->buildUnitOfWork($persistence);
         $repository = new OrderRepository($unitOfWork);
