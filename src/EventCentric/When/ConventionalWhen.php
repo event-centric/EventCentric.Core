@@ -1,12 +1,11 @@
 <?php
 
-namespace EventCentric\When\ConventionBased;
+namespace EventCentric\When;
 
 use EventCentric\DomainEvents\DomainEvent;
 use EventCentric\DomainEvents\DomainEvents;
-use EventCentric\When\When;
 
-trait ConventionBasedWhen
+trait ConventionalWhen
 {
     use When;
 

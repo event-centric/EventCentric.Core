@@ -1,14 +1,14 @@
 <?php
 
-namespace EventCentric\Tests\When\Tests\ConventionBased;
+namespace EventCentric\Tests\When;
 
 use EventCentric\DomainEvents\DomainEvent;
 use EventCentric\DomainEvents\DomainEventsArray;
-use EventCentric\When\ConventionBased\ConventionBasedWhen;
+use EventCentric\When\ConventionalWhen;
 
 final class MyReactor
 {
-    use ConventionBasedWhen;
+    use ConventionalWhen;
 
     private $reacted = false;
 

@@ -2,7 +2,7 @@
 
 namespace EventCentric\AggregateRoot;
 
-use EventCentric\When\ConventionBased\ConventionBasedWhen;
+use EventCentric\When\ConventionalWhen;
 
 /**
  * Extending this abstract class from your Aggregate Root provides implementations to:
@@ -11,6 +11,6 @@ use EventCentric\When\ConventionBased\ConventionBasedWhen;
  */
 abstract class AggregateRootEntity implements AggregateRoot
 {
-    use EventSourcing, Reconstitution, ConventionBasedWhen;
+    use EventSourcing, Reconstitution, \EventCentric\When\ConventionalWhen;
     protected function __construct() {}
 } 
