@@ -11,7 +11,7 @@ use EventCentric\DomainEvents\DomainEventsArray;
 use EventCentric\EventStore\EventEnvelope;
 use EventCentric\EventStore\EventId;
 use EventCentric\EventStore\EventStore;
-use EventCentric\Identity\Identity;
+use EventCentric\Identifiers\Identifier;
 use EventCentric\Serializer\DomainEventSerializer;
 use iter as _;
 use iter\fn as __;
@@ -56,11 +56,11 @@ final class UnitOfWork
      * Track a newly created AggregateRoot
      *
      * @param Contract $aggregateContract
-     * @param Identity $aggregateId
+     * @param Identifier $aggregateId
      * @param TracksChanges $aggregateRoot
      * @throws AggregateRootIsAlreadyBeingTracked
      */
-    public function track(Contract $aggregateContract, Identity $aggregateId, TracksChanges $aggregateRoot)
+    public function track(Contract $aggregateContract, Identifier $aggregateId, TracksChanges $aggregateRoot)
     {
         $aggregate = new Aggregate($aggregateContract, $aggregateId, $aggregateRoot);
 
@@ -79,10 +79,10 @@ final class UnitOfWork
 
     /**
      * @param Contract $aggregateContract
-     * @param Identity $aggregateId
+     * @param Identifier $aggregateId
      * @return ReconstitutesFromHistory
      */
-    public function get(Contract $aggregateContract, Identity $aggregateId)
+    public function get(Contract $aggregateContract, Identifier $aggregateId)
     {
         $aggregate = $this->findTrackedAggregate($aggregateContract, $aggregateId);
 
@@ -131,10 +131,10 @@ final class UnitOfWork
 
     /**
      * @param Contract $aggregateContract
-     * @param Identity $aggregateId
+     * @param Identifier $aggregateId
      * @return Aggregate
      */
-    private function findTrackedAggregate(Contract $aggregateContract, Identity $aggregateId)
+    private function findTrackedAggregate(Contract $aggregateContract, Identifier $aggregateId)
     {
         $aggregates = _\toArray(
             _\filter(
@@ -155,10 +155,10 @@ final class UnitOfWork
 
     /**
      * @param Contract $aggregateContract
-     * @param Identity $aggregateId
+     * @param Identifier $aggregateId
      * @return mixed
      */
-    private function findPersistedAggregateRoot(Contract $aggregateContract, Identity $aggregateId)
+    private function findPersistedAggregateRoot(Contract $aggregateContract, Identifier $aggregateId)
     {
         $streamId = $aggregateId;
         $stream = $this->eventStore->openStream($aggregateContract, $streamId);

@@ -2,7 +2,7 @@
 
 namespace EventCentric\Tests\Identity;
 
-use EventCentric\Identity\UuidIdentity;
+use EventCentric\Identifiers\UuidIdentifier;
 use PHPUnit_Framework_TestCase;
 
 final class UuidIdentityTest extends PHPUnit_Framework_TestCase
@@ -18,9 +18,9 @@ final class UuidIdentityTest extends PHPUnit_Framework_TestCase
         $id4 = OrderId::fromString('c3bc7f4c-804a-4a7c-8313-51fd1b7baf52');
         $id5 = OrderId::fromString('c3bc7f4c-804a-4a7c-8313-51fd1b7baf52');
 
-        $this->assertTrue($id1->equals($id2), "Two generated UuidIdentity objects with the same value should be equal.");
-        $this->assertTrue(!$id1->equals($id3), "Two random UuidIdentity objects should not be equal.");
-        $this->assertTrue($id4->equals($id5), "Two instantiated UuidIdentity objects with the same value should be equal.");
+        $this->assertTrue($id1->equals($id2), "Two generated UuidIdentifier objects with the same value should be equal.");
+        $this->assertTrue(!$id1->equals($id3), "Two random UuidIdentifier objects should not be equal.");
+        $this->assertTrue($id4->equals($id5), "Two instantiated UuidIdentifier objects with the same value should be equal.");
     }
 
     /**
@@ -43,7 +43,7 @@ final class UuidIdentityTest extends PHPUnit_Framework_TestCase
     }
 
 }
-final class OrderId extends UuidIdentity
+final class OrderId extends UuidIdentifier
 {
 }
 

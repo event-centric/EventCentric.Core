@@ -10,7 +10,7 @@ use EventCentric\Contracts\Contract;
 use EventCentric\EventStore\CommitId;
 use EventCentric\EventStore\EventEnvelope;
 use EventCentric\EventStore\EventId;
-use EventCentric\Identity\Identity;
+use EventCentric\Identifiers\Identifier;
 use EventCentric\MySQLPersistence\Query\Insert;
 use EventCentric\MySQLPersistence\Query\MaxStreamRevision;
 use EventCentric\Persistence\OptimisticConcurrencyFailed;
@@ -37,10 +37,10 @@ final class MySQLPersistence implements Persistence
 
     /**
      * @param Contract $streamContract
-     * @param Identity $streamId
+     * @param Identifier $streamId
      * @return EventEnvelope[]
      */
-    public function fetch(Contract $streamContract, Identity $streamId)
+    public function fetch(Contract $streamContract, Identifier $streamId)
     {
         $records = $this->connection->fetchAll(
             Query\Select::from(self::TABLE_NAME),
@@ -64,7 +64,7 @@ final class MySQLPersistence implements Persistence
     /**
      * @param CommitId $commitId
      * @param Contract $streamContract
-     * @param Identity $streamId
+     * @param Identifier $streamId
      * @param $expectedStreamRevision
      * @param EventEnvelope[] $eventEnvelopes
      * @throws \Doctrine\DBAL\ConnectionException
@@ -74,7 +74,7 @@ final class MySQLPersistence implements Persistence
     public function commit(
         CommitId $commitId,
         Contract $streamContract,
-        Identity $streamId,
+        Identifier $streamId,
         $expectedStreamRevision,
         array $eventEnvelopes
     )
@@ -127,13 +127,13 @@ final class MySQLPersistence implements Persistence
 
     /**
      * @param Contract $streamContract
-     * @param Identity $streamId
+     * @param Identifier $streamId
      * @param $expectedStreamRevision
      * @throws \EventCentric\Persistence\OptimisticConcurrencyFailed
      */
     protected function controlOptimisticConcurrency(
         Contract $streamContract,
-        Identity $streamId,
+        Identifier $streamId,
         $expectedStreamRevision
     ) {
 

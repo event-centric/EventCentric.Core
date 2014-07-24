@@ -1,10 +1,10 @@
 <?php
 
-namespace EventCentric\Identity;
+namespace EventCentric\Identifiers;
 
 use InvalidArgumentException;
 
-abstract class StringIdentity implements Identity
+abstract class StringIdentifier implements Identifier
 {
     /**
      * @var string
@@ -38,10 +38,10 @@ abstract class StringIdentity implements Identity
 
     /**
      * Compares the object to another IdentifiesAggregate object. Returns true if both have the same type and value.
-     * @param Identity $other
+     * @param Identifier $other
      * @return boolean
      */
-    public function equals(Identity $other)
+    public function equals(Identifier $other)
     {
         return (string) $this->string == (string) $other;
     }

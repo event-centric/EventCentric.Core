@@ -5,7 +5,7 @@ namespace EventCentric\Persistence;
 use EventCentric\Contracts\Contract;
 use EventCentric\EventStore\CommitId;
 use EventCentric\EventStore\EventEnvelope;
-use EventCentric\Identity\Identity;
+use EventCentric\Identifiers\Identifier;
 
 /**
  * A concrete instance of Persistence is required by EventStore; each EventStream will
@@ -16,15 +16,15 @@ interface Persistence
 {
     /**
      * @param Contract $streamContract
-     * @param Identity $streamId
+     * @param Identifier $streamId
      * @return EventEnvelope[]
      */
-    public function fetch(Contract $streamContract, Identity $streamId);
+    public function fetch(Contract $streamContract, Identifier $streamId);
 
     /**
      * @param CommitId $commitId
      * @param Contract $streamContract
-     * @param Identity $streamId
+     * @param Identifier $streamId
      * @param $expectedStreamRevision
      * @param EventEnvelope[] $eventEnvelopes
      * @return void
@@ -32,7 +32,7 @@ interface Persistence
     public function commit(
         CommitId $commitId,
         Contract $streamContract,
-        Identity $streamId,
+        Identifier $streamId,
         $expectedStreamRevision,
         array $eventEnvelopes
     );

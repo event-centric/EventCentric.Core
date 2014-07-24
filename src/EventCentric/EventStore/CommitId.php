@@ -2,13 +2,13 @@
 
 namespace EventCentric\EventStore;
 
-use EventCentric\Identity\UuidIdentity;
+use EventCentric\Identifiers\UuidIdentifier;
 
 /**
  * CommitId identifies the domain events that were persisted as part of the same transaction.
  * @package EventCentric\EventStore
  */
-final class CommitId extends UuidIdentity
+final class CommitId extends UuidIdentifier
 {
 
 } 

@@ -2,8 +2,8 @@
 
 namespace EventCentric\Tests\Fixtures;
 
-use EventCentric\Identity\UuidIdentity;
+use EventCentric\Identifiers\UuidIdentifier;
 
-final class OrderId extends UuidIdentity
+final class OrderId extends UuidIdentifier
 {
 }

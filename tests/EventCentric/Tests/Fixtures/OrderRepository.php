@@ -5,7 +5,7 @@ namespace EventCentric\Tests\Fixtures;
 use EventCentric\AggregateRoot\AggregateRoot;
 use EventCentric\Contracts\Contract;
 use EventCentric\EventStore\EventStore;
-use EventCentric\Identity\Identity;
+use EventCentric\Identifiers\Identifier;
 use EventCentric\UnitOfWork\UnitOfWork;
 
 final class OrderRepository
@@ -40,7 +40,7 @@ final class OrderRepository
 
     /**
      * @param AggregateRoot $aggregateRoot
-     * @return Identity
+     * @return Identifier
      */
     private function extractAggregateId(AggregateRoot $aggregateRoot)
     {

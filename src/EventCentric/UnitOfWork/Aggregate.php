@@ -5,7 +5,7 @@ namespace EventCentric\UnitOfWork;
 use EventCentric\AggregateRoot\TracksChanges;
 use EventCentric\Contracts\Contract;
 use EventCentric\DomainEvents\DomainEvents;
-use EventCentric\Identity\Identity;
+use EventCentric\Identifiers\Identifier;
 
 /**
  * A shell around an AggregateRoot that stores all infrastructural information such as aggregateId and aggregateContract
@@ -19,7 +19,7 @@ final class Aggregate
     private $aggregateContract;
 
     /**
-     * @var Identity
+     * @var Identifier
      */
     private $aggregateId;
 
@@ -28,7 +28,7 @@ final class Aggregate
      */
     private $aggregateRoot;
 
-    public function __construct(Contract $aggregateContract, Identity $aggregateId, TracksChanges $aggregateRoot)
+    public function __construct(Contract $aggregateContract, Identifier $aggregateId, TracksChanges $aggregateRoot)
     {
 
         $this->aggregateContract = $aggregateContract;
@@ -45,7 +45,7 @@ final class Aggregate
     }
 
     /**
-     * @return Identity
+     * @return Identifier
      */
     public function getAggregateId()
     {
@@ -84,10 +84,10 @@ final class Aggregate
 
     /**
      * @param Contract $aggregateContract
-     * @param Identity $aggregateId
+     * @param Identifier $aggregateId
      * @return bool
      */
-    public function isIdentifiedBy(Contract $aggregateContract, Identity $aggregateId)
+    public function isIdentifiedBy(Contract $aggregateContract, Identifier $aggregateId)
     {
         return
             $this->aggregateContract->equals($aggregateContract)

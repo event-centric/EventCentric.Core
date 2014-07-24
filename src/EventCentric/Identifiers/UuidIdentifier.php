@@ -1,8 +1,8 @@
 <?php
 
-namespace EventCentric\Identity;
+namespace EventCentric\Identifiers;
 
-abstract class UuidIdentity implements Identity, GeneratesIdentity
+abstract class UuidIdentifier implements Identifier, GeneratesIdentifier
 {
     /**
      * @var string
@@ -15,7 +15,7 @@ abstract class UuidIdentity implements Identity, GeneratesIdentity
     }
 
     /**
-     * Generates a UUID v4 Identity
+     * Generates a UUID v4 Identifier
      * @return static
      */
     public static function generate()
@@ -46,10 +46,10 @@ abstract class UuidIdentity implements Identity, GeneratesIdentity
 
     /**
      * Compares the object to another IdentifiesAggregate object. Returns true if both have the same type and value.
-     * @param Identity $other
+     * @param Identifier $other
      * @return boolean
      */
-    public function equals(Identity $other)
+    public function equals(Identifier $other)
     {
         return (string) $this->uuid == (string) $other->uuid;
     }

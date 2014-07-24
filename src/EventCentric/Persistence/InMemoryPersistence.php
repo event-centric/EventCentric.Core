@@ -6,7 +6,7 @@ use DateTimeImmutable;
 use EventCentric\Contracts\Contract;
 use EventCentric\EventStore\CommitId;
 use EventCentric\EventStore\EventEnvelope;
-use EventCentric\Identity\Identity;
+use EventCentric\Identifiers\Identifier;
 use EventCentric\Persistence\Persistence;
 use iter as _;
 use iter\fn as __;
@@ -25,10 +25,10 @@ final class InMemoryPersistence implements Persistence
 
     /**
      * @param Contract $streamContract
-     * @param Identity $streamId
+     * @param Identifier $streamId
      * @return EventEnvelope[]
      */
-    public function fetch(Contract $streamContract, Identity $streamId)
+    public function fetch(Contract $streamContract, Identifier $streamId)
     {
         return
             _\toArray(
@@ -46,7 +46,7 @@ final class InMemoryPersistence implements Persistence
     /**
      * @param CommitId $commitId
      * @param Contract $streamContract
-     * @param Identity $streamId
+     * @param Identifier $streamId
      * @param int $expectedStreamRevision
      * @param EventEnvelope[] $eventEnvelopes
      * @throws OptimisticConcurrencyFailed
@@ -54,7 +54,7 @@ final class InMemoryPersistence implements Persistence
     public function commit(
         CommitId $commitId,
         Contract $streamContract,
-        Identity $streamId,
+        Identifier $streamId,
         $expectedStreamRevision,
         array $eventEnvelopes
     )
@@ -88,7 +88,7 @@ final class InMemoryPersistence implements Persistence
         );
     }
 
-    private function revisionFor(Contract $streamContract, Identity $streamId)
+    private function revisionFor(Contract $streamContract, Identifier $streamId)
     {
         $pluckStreamRevision = __\property('streamRevision');
 
@@ -112,7 +112,7 @@ final class InMemoryPersistence implements Persistence
     }
 
 
-    private function belongsToStream(Contract $streamContract, Identity $streamId)
+    private function belongsToStream(Contract $streamContract, Identifier $streamId)
     {
         return function (InMemoryRecord $record) use ($streamContract, $streamId) {
             return $record->streamContract->equals($streamContract) && $record->streamId->equals($streamId);
@@ -128,7 +128,7 @@ final class InMemoryRecord
     public $streamContract;
     public $eventContract;
     public $eventPayload;
-    /** @var Identity */
+    /** @var Identifier */
     public $streamId;
     public $streamRevision;
     public $utcCommittedTime;

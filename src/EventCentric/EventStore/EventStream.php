@@ -5,7 +5,7 @@ namespace EventCentric\EventStore;
 use EventCentric\Contracts\Contract;
 use EventCentric\EventStore\CommitId;
 use EventCentric\EventStore\EventEnvelope;
-use EventCentric\Identity\Identity;
+use EventCentric\Identifiers\Identifier;
 use EventCentric\Persistence\Persistence;
 
 /**
@@ -22,7 +22,7 @@ final class EventStream
     private $streamContract;
 
     /**
-     * @var Identity
+     * @var Identifier
      */
     private $streamId;
 
@@ -35,7 +35,7 @@ final class EventStream
      */
     private $persistence;
 
-    private function __construct(Persistence $persistence, Contract $streamContract, Identity $streamId)
+    private function __construct(Persistence $persistence, Contract $streamContract, Identifier $streamId)
     {
         $this->streamContract = $streamContract;
         $this->streamId = $streamId;
@@ -45,10 +45,10 @@ final class EventStream
     /**
      * @param Persistence $persistence
      * @param Contract $streamContract
-     * @param Identity $streamId
+     * @param Identifier $streamId
      * @return EventStream
      */
-    public static function create(Persistence $persistence, Contract $streamContract, Identity $streamId)
+    public static function create(Persistence $persistence, Contract $streamContract, Identifier $streamId)
     {
         $eventStream = new EventStream($persistence, $streamContract, $streamId);
         return $eventStream;
@@ -57,10 +57,10 @@ final class EventStream
     /**
      * @param Persistence $persistence
      * @param Contract $streamContract
-     * @param Identity $streamId
+     * @param Identifier $streamId
      * @return EventStream
      */
-    public static function open(Persistence $persistence, Contract $streamContract, Identity $streamId)
+    public static function open(Persistence $persistence, Contract $streamContract, Identifier $streamId)
     {
         $eventStream = new EventStream($persistence, $streamContract, $streamId);
         $eventStream->committedEventEnvelopes = $persistence->fetch($streamContract, $streamId);

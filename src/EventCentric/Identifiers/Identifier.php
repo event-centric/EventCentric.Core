@@ -1,13 +1,13 @@
 <?php
 
-namespace EventCentric\Identity;
+namespace EventCentric\Identifiers;
 
-interface Identity 
+interface Identifier
 {
     /**
      * Creates an identifier object from a string representation
      * @param $string
-     * @return Identity
+     * @return Identifier
      */
     public static function fromString($string);
 
@@ -18,9 +18,9 @@ interface Identity
     public function __toString();
 
     /**
-     * Compares the object to another IdentifiesAggregate object. Returns true if both have the same type and value.
+     * Compares the object to another Identifier object. Returns true if both have the same type and value.
      * @param $other
      * @return boolean
      */
-    public function equals(Identity $other);
+    public function equals(Identifier $other);
 }

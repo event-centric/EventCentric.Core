@@ -2,13 +2,13 @@
 
 namespace EventCentric\EventStore;
 
-use EventCentric\Identity\UuidIdentity;
+use EventCentric\Identifiers\UuidIdentifier;
 
 /**
  * EventId identifies a domain event inside an event envelope.
  * @package EventCentric\EventStore
  */
-final class EventId extends UuidIdentity
+final class EventId extends UuidIdentifier
 {
 
 } 

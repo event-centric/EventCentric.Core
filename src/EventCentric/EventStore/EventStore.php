@@ -4,7 +4,7 @@ namespace EventCentric\EventStore;
 
 use EventCentric\Contracts\Contract;
 use EventCentric\EventStore\EventStream;
-use EventCentric\Identity\Identity;
+use EventCentric\Identifiers\Identifier;
 use EventCentric\Persistence\Persistence;
 
 /**
@@ -29,17 +29,17 @@ final class EventStore
      * @param $streamId
      * @return EventStream
      */
-    public function createStream(Contract $streamContract, Identity $streamId)
+    public function createStream(Contract $streamContract, Identifier $streamId)
     {
         return EventStream::create($this->persistence, $streamContract, $streamId);
     }
 
     /**
      * @param Contract $streamContract
-     * @param Identity $streamId
+     * @param Identifier $streamId
      * @return EventStream
      */
-    public function openStream(Contract $streamContract, Identity $streamId)
+    public function openStream(Contract $streamContract, Identifier $streamId)
     {
         return EventStream::open($this->persistence, $streamContract, $streamId);
     }

@@ -2,11 +2,11 @@
 
 namespace EventCentric\Tests\Identity;
 
-use EventCentric\Identity\StringIdentity;
+use EventCentric\Identifiers\StringIdentifier;
 use InvalidArgumentException;
 use PHPUnit_Framework_TestCase;
 
-final class StringIdentityTest extends PHPUnit_Framework_TestCase
+final class StringIdentifierTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @test
@@ -34,6 +34,6 @@ final class StringIdentityTest extends PHPUnit_Framework_TestCase
 
 
 
-final class ProductId extends StringIdentity
+final class ProductId extends StringIdentifier
 {
 }
