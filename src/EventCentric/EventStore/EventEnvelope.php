@@ -7,7 +7,9 @@ use Assert;
 use EventCentric\EventStore\EventId;
 
 /**
- * An EventEnvelope wraps a payload with a bunch of relevant information, so we can send it around.
+ * A wrapper around a DomainEvent, containing metadata about that Event.
+ * Comparable to a physical envelope, with an address on the outside, containing a message on the inside.
+ * @package EventCentric\EventStore
  */
 final class EventEnvelope
 {
@@ -22,7 +24,7 @@ final class EventEnvelope
     private $eventContract;
 
     /**
-     * @var string
+     * @var string as Serialized by a DomainEventSerializer
      */
     private $eventPayload;
 
@@ -45,6 +47,9 @@ final class EventEnvelope
         return new EventEnvelope($eventId, $eventContract, $eventPayload);
     }
 
+    /**
+     * @todo check whether this method serves the same purpose as self::wrap().
+     */
     public static function reconstitute(EventId $eventId, Contract $eventContract, $eventPayload)
     {
         return new EventEnvelope($eventId, $eventContract, $eventPayload);
@@ -74,6 +79,11 @@ final class EventEnvelope
         return $this->eventId;
     }
 
+    /**
+     * Check if two event envelopes are the same, i.e. the same id, contract & payload.
+     * @param EventEnvelope $other
+     * @return bool
+     */
     public function equals(EventEnvelope $other)
     {
         return

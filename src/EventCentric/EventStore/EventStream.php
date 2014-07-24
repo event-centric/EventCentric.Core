@@ -8,6 +8,12 @@ use EventCentric\EventStore\EventEnvelope;
 use EventCentric\Identity\Identity;
 use EventCentric\Persistence\Persistence;
 
+/**
+ * A logical, cohesive sequence of DomainEvents, ordered chronologically by their
+ * recorded date, identified by a StreamId.
+ * Typically, an EventStream represents the history for a single Aggregate instance.
+ * @package EventCentric\EventStore
+ */
 final class EventStream
 {
     /**

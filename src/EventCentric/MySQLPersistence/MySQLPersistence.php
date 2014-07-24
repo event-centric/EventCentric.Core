@@ -17,6 +17,10 @@ use EventCentric\Persistence\OptimisticConcurrencyFailed;
 use EventCentric\Persistence\Persistence;
 use Exception;
 
+/**
+ * An implementation of Persistence that stores Events in MySQL.
+ * @package EventCentric\MySQLPersistence
+ */
 final class MySQLPersistence implements Persistence
 {
     const TABLE_NAME = 'events'; // @todo make configurable
@@ -113,7 +117,6 @@ final class MySQLPersistence implements Persistence
             Query\Create::table(self::TABLE_NAME)
         );
     }
-
 
     public function dropSchema()
     {

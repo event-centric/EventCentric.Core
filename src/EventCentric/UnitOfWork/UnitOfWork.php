@@ -15,6 +15,12 @@ use EventCentric\Identity\Identity;
 use EventCentric\Serializer\DomainEventSerializer;
 use iter as _;
 
+/**
+ * A Unit of Work will keep track of one or more Aggregates.
+ * When the Unit of Work is committed, the changes will be persisted using a single commit for each Aggregate.
+ * A UnitOfWork can also reconstitute an Aggregate from the Event Store.
+ * @package EventCentric\UnitOfWork
+ */
 final class UnitOfWork
 {
     /**
@@ -98,6 +104,9 @@ final class UnitOfWork
         return $aggregateRoot;
     }
 
+    /**
+     * Persist each tracked Aggregate.
+     */
     public function commit()
     {
         foreach($this->trackedAggregates as $aggregate) {
@@ -107,6 +116,7 @@ final class UnitOfWork
 
     /**
      * @param Aggregate $aggregate
+     * @todo happens if there are no changes to an Aggregate?
      */
     private function persistAggregate(Aggregate $aggregate)
     {
