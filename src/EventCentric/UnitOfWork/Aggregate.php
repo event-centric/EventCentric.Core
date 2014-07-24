@@ -9,7 +9,6 @@ use EventCentric\Identity\Identity;
 
 /**
  * A shell around an AggregateRoot that stores all infrastructural information such as aggregateId and aggregateContract
- * @package EventCentric\UnitOfWork
  */
 final class Aggregate
 {
@@ -60,10 +59,6 @@ final class Aggregate
         return $this->aggregateRoot;
     }
 
-    /**
-     * @param Aggregate $other
-     * @return bool
-     */
     public function equals(Aggregate $other)
     {
         return $this->isIdentifiedBy($other->aggregateContract, $other->aggregateId);

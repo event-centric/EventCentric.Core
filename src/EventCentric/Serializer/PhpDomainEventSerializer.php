@@ -5,6 +5,9 @@ namespace EventCentric\Serializer;
 use EventCentric\Contracts\Contract;
 use EventCentric\DomainEvents\DomainEvent;
 
+/**
+ * Serialize Domain Events using PHP's serialize()/unserialize() functions.
+ */
 final class PhpDomainEventSerializer implements DomainEventSerializer
 {
     public function serialize(Contract $contract, DomainEvent $domainEvent)

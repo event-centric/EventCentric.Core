@@ -9,7 +9,6 @@ use EventCentric\DomainEvents\DomainEvent;
  * Transforms a DomainEvent into a string, and vice versa using a Contract to decide
  * how the string should be interpreted.
  * Domain Events are serialized & wrapped in an EventEnvelope ready for persisting.
- * @package EventCentric\Serializer
  */
 interface DomainEventSerializer
 {
