@@ -5,8 +5,8 @@ namespace EventCentric\Commands;
 
 /**
  * Executes a Command
+ * @method handle(Command $command)
  */
 interface CommandHandler 
 {
-    public function handle(Command $command);
-} 
+}
