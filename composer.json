@@ -1,8 +1,8 @@
 {
-    "name": "event-centric/aggregates",
+    "name": "event-centric/EventCentric.Core",
     "description": "Event Sourcing and CQRS",
     "license": "MIT",
-    "homepage": "https://github.com/event-centric/aggregates",
+    "homepage": "https://github.com/event-centric/EventCentric.Core",
     "authors": [
         {
             "name": "Mathias Verraes",
