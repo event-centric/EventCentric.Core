@@ -20,7 +20,6 @@ use iter\fn as __;
  * A Unit of Work will keep track of one or more Aggregates.
  * When the Unit of Work is committed, the changes will be persisted using a single commit for each Aggregate.
  * A UnitOfWork can also reconstitute an Aggregate from the Event Store.
- * @package EventCentric\UnitOfWork
  */
 final class UnitOfWork
 {

@@ -10,7 +10,6 @@ use EventCentric\Identity\Identity;
 /**
  * A concrete instance of Persistence is required by EventStore; each EventStream will
  * then use this instance to persist new events & to fetch a history of events.
- * @package EventCentric\Persistence
  */
 interface Persistence
 {

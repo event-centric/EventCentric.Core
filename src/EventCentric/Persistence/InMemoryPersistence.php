@@ -14,7 +14,6 @@ use iter\fn as __;
 /**
  * An implementation of Persistence that stores Events in-memory & only at runtime.
  * This is useful to use during testing.
- * @package EventCentric\Persistence
  */
 final class InMemoryPersistence implements Persistence
 {
