@@ -2,8 +2,6 @@
 
 namespace EventCentric\Identity;
 
-use EventCentric\Identity\Identity;
-
 abstract class UuidIdentity implements Identity, GeneratesIdentity
 {
     /**
