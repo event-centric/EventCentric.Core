@@ -116,7 +116,8 @@ final class UnitOfWork
         $domainEvents = $aggregate->getChanges();
 
         $wrapInEnvelope = function (DomainEvent $domainEvent) {
-            $eventContract = Contract::canonicalFrom(get_class($domainEvent));
+            // @todo The unit of work shouldn't know how to get contracts. Move to Serializer
+            $eventContract = Contract::canonicalFrom($domainEvent);
             $payload = $this->serializer->serialize($eventContract, $domainEvent);
             return EventEnvelope::wrap(EventId::generate(), $eventContract, $payload);
         };
