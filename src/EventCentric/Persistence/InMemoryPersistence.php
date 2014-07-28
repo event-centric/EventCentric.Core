@@ -60,7 +60,7 @@ final class InMemoryPersistence implements Persistence
     {
         $actualStreamRevision = $this->revisionFor($streamContract, $streamId);
         if($actualStreamRevision != $expectedStreamRevision) {
-            throw OptimisticConcurrencyFailed::revisionDoNotMatch($expectedStreamRevision, $actualStreamRevision);
+            throw OptimisticConcurrencyFailed::revisionDoesNotMatch($expectedStreamRevision, $actualStreamRevision);
         }
 
         foreach ($eventEnvelopes as $eventEnvelope) {

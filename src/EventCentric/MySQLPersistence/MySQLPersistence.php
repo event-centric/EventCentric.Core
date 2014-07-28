@@ -144,7 +144,7 @@ final class MySQLPersistence implements Persistence
         $actualStreamRevision = (int) $result[0];
 
         if ($actualStreamRevision != $expectedStreamRevision) {
-            throw OptimisticConcurrencyFailed::revisionDoNotMatch($expectedStreamRevision, $actualStreamRevision);
+            throw OptimisticConcurrencyFailed::revisionDoesNotMatch($expectedStreamRevision, $actualStreamRevision);
         }
     }
 }
