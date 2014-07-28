@@ -2,7 +2,7 @@
 
 namespace EventCentric\Tests\Identity;
 
-use EventCentric\Identifiers\UuidIdentifier;
+use EventCentric\Tests\Fixtures\OrderId;
 use PHPUnit_Framework_TestCase;
 
 final class UuidIdentityTest extends PHPUnit_Framework_TestCase
@@ -42,8 +42,5 @@ final class UuidIdentityTest extends PHPUnit_Framework_TestCase
         OrderId::fromString('bad-uuid');
     }
 
-}
-final class OrderId extends UuidIdentifier
-{
 }
 
