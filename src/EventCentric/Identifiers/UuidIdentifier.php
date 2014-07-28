@@ -56,6 +56,7 @@ abstract class UuidIdentifier implements Identifier, GeneratesIdentifier
 
     /**
      * Returns a version 4 UUID
+     * Borrowed from https://github.com/ramsey/uuid
      * @return string
      */
     private static function uuid4()
