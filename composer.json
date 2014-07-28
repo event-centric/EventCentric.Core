@@ -16,7 +16,8 @@
         "php": ">=5.5",
         "doctrine/dbal": ">=2.5.0-BETA3",
         "beberlei/assert": "~2.0@dev",
-        "nikic/iter": "v1.1.0"
+        "nikic/iter": "v1.1.0",
+        "mathiasverraes/classfunctions": "1.*"
     },
 
     "require-dev": {

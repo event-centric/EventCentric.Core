@@ -3,6 +3,7 @@
 namespace EventCentric\Contracts;
 
 use Assert;
+use Verraes\ClassFunctions\ClassFunctions;
 
 /**
  * The label for a contract describing the shape of a message or domain object.
@@ -34,13 +35,13 @@ final class Contract
 
     /**
      * Make a contract from an fully qualified class name, of the form My.Namespace.Class
-     * @param string $className
+     * @param object|string $object
      * @return Contract
      */
-    public static function canonicalFrom($className)
+    public static function canonicalFrom($object)
     {
         return new Contract(
-            str_replace('\\', '.', $className)
+            ClassFunctions::canonical($object)
         );
     }
 
