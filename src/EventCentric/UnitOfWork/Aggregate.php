@@ -72,6 +72,17 @@ final class Aggregate
         return $this->aggregateRoot->getChanges();
     }
 
+    /**
+     * @return bool
+     */
+    public function hasChanges()
+    {
+        return $this->aggregateRoot->hasChanges();
+    }
+
+    /**
+     * @return void
+     */
     public function clearChanges()
     {
         $this->aggregateRoot->clearChanges();

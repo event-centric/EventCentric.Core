@@ -42,4 +42,5 @@ final class RepositoryTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(PaymentWasMade::class, $changes[1]);
         $this->assertInstanceOf(OrderWasPaidInFull::class, $changes[2]);
     }
+
 } 

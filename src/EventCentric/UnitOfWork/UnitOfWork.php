@@ -100,8 +100,11 @@ final class UnitOfWork
      */
     public function commit()
     {
+        /** @var Aggregate $aggregate */
         foreach($this->trackedAggregates as $aggregate) {
-            $this->persistAggregate($aggregate);
+            if($aggregate->hasChanges()) {
+                $this->persistAggregate($aggregate);
+            }
         }
     }
 

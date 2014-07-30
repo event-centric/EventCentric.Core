@@ -108,5 +108,20 @@ final class UnitOfWorkTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($retrievedOrder1, $retrievedOrder2);
     }
 
+
+    /**
+     * @test
+     * @dataProvider providePersistence
+     * @param Persistence $persistence
+     */
+    public function committing_twice_should_be_idempotent(Persistence $persistence)
+    {
+        $unitOfWork = $this->buildUnitOfWork($persistence);
+        $unitOfWork->track($this->contract, $this->orderId, $this->order);
+        $unitOfWork->commit();
+        $unitOfWork->commit();
+        $this->assertTrue(true, "Testing for idempotency means there's no observable behaviour, so no assertions. This line is here to satisfy PHPUnit strict mode.");
+    }
+
 }
  
