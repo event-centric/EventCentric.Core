@@ -17,6 +17,9 @@ final class Contract
      */
     private $contractName;
 
+    /**
+     * @param string $contract
+     */
     private function __construct($contract)
     {
         $this->contractName = $contract;
@@ -30,7 +33,7 @@ final class Contract
     public static function with($name)
     {
         Assert\that($name)->string()->betweenLength(1, 255);
-        return new static($name);
+        return new Contract($name);
     }
 
     /**
@@ -40,7 +43,7 @@ final class Contract
      */
     public static function canonicalFrom($object)
     {
-        return new Contract(
+        return Contract::with(
             ClassFunctions::canonical($object)
         );
     }
