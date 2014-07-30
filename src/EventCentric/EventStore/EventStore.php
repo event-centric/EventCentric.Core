@@ -34,11 +34,13 @@ final class EventStore
     }
 
     /**
+     * Queries the persistence to open a stream. If there was no stream, a new stream is created. Prefer using
+     * createStream when you know there is no stream yet.
      * @param Contract $streamContract
      * @param Identifier $streamId
      * @return EventStream
      */
-    public function openStream(Contract $streamContract, Identifier $streamId)
+    public function openOrCreateStream(Contract $streamContract, Identifier $streamId)
     {
         return EventStream::open($this->persistence, $streamContract, $streamId);
     }

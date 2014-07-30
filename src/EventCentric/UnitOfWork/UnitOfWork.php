@@ -165,7 +165,7 @@ final class UnitOfWork
     private function findPersistedAggregateRoot(Contract $aggregateContract, Identifier $aggregateId)
     {
         $streamId = $aggregateId;
-        $stream = $this->eventStore->openStream($aggregateContract, $streamId);
+        $stream = $this->eventStore->openOrCreateStream($aggregateContract, $streamId);
 
         $eventEnvelopes = $stream->all();
 
