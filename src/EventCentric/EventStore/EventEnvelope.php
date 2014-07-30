@@ -36,6 +36,7 @@ final class EventEnvelope
     }
 
     /**
+     * Wrap a payload in an EventEnvelope
      * @param EventId $eventId
      * @param Contract $eventContract
      * @param string $eventPayload
@@ -46,8 +47,13 @@ final class EventEnvelope
         return new EventEnvelope($eventId, $eventContract, $eventPayload);
     }
 
+
     /**
-     * @todo check whether this method serves the same purpose as self::wrap().
+     * Reconstitute a persisted EventEnvelope
+     * @param EventId $eventId
+     * @param Contract $eventContract
+     * @param string $eventPayload
+     * @return EventEnvelope
      */
     public static function reconstitute(EventId $eventId, Contract $eventContract, $eventPayload)
     {
