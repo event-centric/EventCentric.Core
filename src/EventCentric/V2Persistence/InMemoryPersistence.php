@@ -53,8 +53,9 @@ final class InMemoryPersistence implements V2Persistence
             array_values(
                 array_filter(
                     $this->storage,
-                    function(CommittedEvent $event) use($bucket) { return
-                        $bucket->equals($event->getBucket());
+                    function(CommittedEvent $event) use($bucket, $streamContract) { return
+                        $bucket->equals($event->getBucket())
+                        && $streamContract->equals($event->getStreamContract());
                     }
                 )
             );
