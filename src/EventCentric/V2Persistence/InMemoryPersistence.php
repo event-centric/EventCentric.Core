@@ -13,7 +13,7 @@ final class InMemoryPersistence implements V2Persistence
 {
     private $storage = [];
 
-    public function persist(PendingEvent $pendingEvent)
+    public function commit(PendingEvent $pendingEvent)
     {
         $streamRevision = 0;
         $checkpointNumber = 1;

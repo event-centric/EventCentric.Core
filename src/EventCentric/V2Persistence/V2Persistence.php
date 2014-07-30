@@ -12,7 +12,7 @@ interface V2Persistence
      * @param PendingEvent $pendingEvent
      * @return void
      */
-    public function persist(PendingEvent $pendingEvent);
+    public function commit(PendingEvent $pendingEvent);
 
     public function fetchFromStream(Bucket $bucket, Contract $streamContract, Identifier $streamId);
 }

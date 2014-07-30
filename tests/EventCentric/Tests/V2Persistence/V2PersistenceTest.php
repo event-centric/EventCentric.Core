@@ -90,9 +90,9 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function it_should_persist_and_fetch_event_an_event()
+    public function it_should_commit_and_fetch_event_an_event()
     {
-        $this->given_events_are_persisted_individually();
+        $this->given_events_are_committed_individually();
 
         $committedEvents = $this->persistence->fetchFromStream($this->amazonBucket, $this->orderContract, $this->aStreamId);
 
@@ -105,7 +105,7 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
      */
     public function it_should_fetch_by_bucket()
     {
-        $this->given_events_are_persisted_individually();
+        $this->given_events_are_committed_individually();
 
         $committedEvents = $this->persistence->fetchFromStream($this->ebayBucket, $this->orderContract, $this->aStreamId);
 
@@ -118,7 +118,7 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
      */
     public function it_should_fetch_by_stream_contract()
     {
-        $this->given_events_are_persisted_individually();
+        $this->given_events_are_committed_individually();
 
         $committedEvents = $this->persistence->fetchFromStream($this->amazonBucket, $this->invoiceContract, $this->aStreamId);
 
@@ -131,7 +131,7 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
      */
     public function it_should_fetch_by_stream_id()
     {
-        $this->given_events_are_persisted_individually();
+        $this->given_events_are_committed_individually();
 
         $committedEvents = $this->persistence->fetchFromStream($this->amazonBucket, $this->orderContract, $this->otherStreamId);
 
@@ -161,12 +161,12 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    private function given_events_are_persisted_individually()
+    private function given_events_are_committed_individually()
     {
-        $this->persistence->persist($this->pendingEvent1);
-        $this->persistence->persist($this->pendingEvent2);
-        $this->persistence->persist($this->pendingEvent3);
-        $this->persistence->persist($this->pendingEvent4);
+        $this->persistence->commit($this->pendingEvent1);
+        $this->persistence->commit($this->pendingEvent2);
+        $this->persistence->commit($this->pendingEvent3);
+        $this->persistence->commit($this->pendingEvent4);
     }
 }
  
