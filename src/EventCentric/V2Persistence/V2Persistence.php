@@ -3,7 +3,6 @@
 namespace EventCentric\V2Persistence;
 
 use EventCentric\Contracts\Contract;
-use EventCentric\EventStore\CommitId;
 use EventCentric\Identifiers\Identifier;
 use EventCentric\V2EventStore\PendingEvent;
 
