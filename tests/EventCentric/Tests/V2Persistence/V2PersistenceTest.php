@@ -85,10 +85,6 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->persistence = $this->getPersistence();
-        $this->persistence->persist($this->pendingEvent1);
-        $this->persistence->persist($this->pendingEvent2);
-        $this->persistence->persist($this->pendingEvent3);
-        $this->persistence->persist($this->pendingEvent4);
     }
 
     /**
@@ -96,6 +92,8 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
      */
     public function it_should_persist_and_fetch_event_an_event()
     {
+        $this->given_events_are_persisted_individually();
+
         $committedEvents = $this->persistence->fetchFromStream($this->amazonBucket, $this->orderContract, $this->aStreamId);
 
         $this->assertCount(1, $committedEvents);
@@ -107,6 +105,8 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
      */
     public function it_should_fetch_by_bucket()
     {
+        $this->given_events_are_persisted_individually();
+
         $committedEvents = $this->persistence->fetchFromStream($this->ebayBucket, $this->orderContract, $this->aStreamId);
 
         $this->assertCount(1, $committedEvents);
@@ -118,6 +118,8 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
      */
     public function it_should_fetch_by_stream_contract()
     {
+        $this->given_events_are_persisted_individually();
+
         $committedEvents = $this->persistence->fetchFromStream($this->amazonBucket, $this->invoiceContract, $this->aStreamId);
 
         $this->assertCount(1, $committedEvents);
@@ -129,6 +131,8 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
      */
     public function it_should_fetch_by_stream_id()
     {
+        $this->given_events_are_persisted_individually();
+
         $committedEvents = $this->persistence->fetchFromStream($this->amazonBucket, $this->orderContract, $this->otherStreamId);
 
         $this->assertCount(1, $committedEvents);
@@ -155,6 +159,14 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
         if ($pendingEvent->hasCorrelationId() && $committedEvent->hasCorrelationId()) {
             $this->assertEquals($pendingEvent->getCorrelationId(), $committedEvent->getCorrelationId());
         }
+    }
+
+    private function given_events_are_persisted_individually()
+    {
+        $this->persistence->persist($this->pendingEvent1);
+        $this->persistence->persist($this->pendingEvent2);
+        $this->persistence->persist($this->pendingEvent3);
+        $this->persistence->persist($this->pendingEvent4);
     }
 }
  
