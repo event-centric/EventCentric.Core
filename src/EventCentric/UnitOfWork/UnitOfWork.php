@@ -128,6 +128,7 @@ final class UnitOfWork
         $envelopes = $domainEvents->map($wrapInEnvelope);
 
         $stream->appendAll($envelopes);
+        // @todo share commitId across aggregates
         $stream->commit(CommitId::generate());
         $aggregate->clearChanges();
     }
