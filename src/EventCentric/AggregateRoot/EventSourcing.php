@@ -54,5 +54,9 @@ trait EventSourcing
         return $this;
     }
 
+    /**
+     * @param DomainEvent $event
+     * @return void
+     */
     abstract protected function when(DomainEvent $event);
 } 
