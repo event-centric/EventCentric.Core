@@ -28,4 +28,13 @@ final class Bucket
     {
         return $this->name;
     }
+
+    /**
+     * @param Bucket $other
+     * @return bool
+     */
+    public function equals(Bucket $other)
+    {
+        return $this->name === $other->name;
+    }
 } 

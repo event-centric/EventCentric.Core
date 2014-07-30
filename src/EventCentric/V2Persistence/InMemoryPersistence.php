@@ -49,6 +49,15 @@ final class InMemoryPersistence implements V2Persistence
      */
     public function fetchFromStream(Bucket $bucket, Contract $streamContract, Identifier $streamId)
     {
-        return $this->storage;
+        return
+            array_values(
+                array_filter(
+                    $this->storage,
+                    function(CommittedEvent $event) use($bucket) { return
+                        $bucket->equals($event->getBucket());
+                    }
+                )
+            );
     }
+
 }
