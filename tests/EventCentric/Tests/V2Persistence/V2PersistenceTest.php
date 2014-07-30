@@ -17,45 +17,24 @@ use EventCentric\V2Persistence\V2Persistence;
 abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @var Contract
+     */
+    private $orderContract;
+
+    /**
+     * @var OrderId
+     */
+    private $anOrderId;
+
+    /**
      * @var  PendingEvent
      */
     private $pendingEvent;
 
     /**
-     * @var EventId
-     */
-    private $eventId;
-
-    /**
-     * @var Contract
-     */
-    private $streamContract;
-
-    /**
-     * @var Identifier
-     */
-    private $streamId;
-
-    /**
-     * @var Contract
-     */
-    private $eventContract;
-
-    /**
-     * @var string
-     */
-    private $eventPayload;
-
-    /**
-     * @var Bucket
-     */
-    private $bucket;
-
-    /**
      * @var V2Persistence
      */
     private $persistence;
-
 
     /**
      * @return V2Persistence
@@ -66,19 +45,15 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->eventId = EventId::generate();
-        $this->streamContract = Contract::canonicalFrom(Order::class);
-        $this->streamId = OrderId::generate();
-        $this->eventContract = Contract::canonicalFrom(PaymentWasMade::class);
-        $this->eventPayload = '{"my":"payload"}';
-        $this->bucket = Bucket::defaultx();
+        $this->orderContract = Contract::canonicalFrom(Order::class);
+        $this->anOrderId = OrderId::generate();
         $this->pendingEvent = new PendingEvent(
-            $this->eventId,
-            $this->bucket,
-            $this->streamContract,
-            $this->streamId,
-            $this->eventContract,
-            $this->eventPayload
+            EventId::generate(),
+            Bucket::defaultx(),
+            $this->orderContract,
+            $this->anOrderId,
+            Contract::canonicalFrom(PaymentWasMade::class),
+            '{"my":"payload"}'
         );
         $this->persistence = $this->getPersistence();
     }
@@ -91,7 +66,7 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
         $commitId = CommitId::generate();
         $this->persistence->persist($commitId, $this->pendingEvent);
 
-        $committedEvents = $this->persistence->fetchFromStream($this->bucket, $this->streamContract, $this->streamId);
+        $committedEvents = $this->persistence->fetchFromStream(Bucket::defaultx(), Contract::canonicalFrom(Order::class), $this->anOrderId);
 
         $this->assertCount(1, $committedEvents);
         $this->assertCommittedEventMatchesPendingEvent($this->pendingEvent, $committedEvents[0]);
