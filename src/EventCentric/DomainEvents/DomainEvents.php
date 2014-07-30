@@ -8,7 +8,11 @@ use Iterator;
 
 interface DomainEvents extends Countable, Iterator, ArrayAccess
 {
-    public function map(Callable $callback);
+    /**
+     * @param callable $callback
+     * @return array
+     */
+    public function map(callable $callback);
 
     /**
      * @param DomainEvents $other
