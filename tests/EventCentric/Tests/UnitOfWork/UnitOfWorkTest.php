@@ -17,6 +17,30 @@ final class UnitOfWorkTest extends \PHPUnit_Framework_TestCase
     use PersistenceProvider;
 
     /**
+     * @var OrderId
+     */
+    private $orderId;
+
+    /**
+     * @var Order
+     */
+    private $order;
+
+    /**
+     * @var Contract
+     */
+    private $contract;
+
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->orderId = OrderId::generate();
+        $this->order = Order::orderProduct($this->orderId, ProductId::generate(), 100);
+        $this->contract = Contract::with(Order::class);
+    }
+
+
+    /**
      * @test
      * @dataProvider providePersistence
      * @param Persistence $persistence
@@ -26,13 +50,12 @@ final class UnitOfWorkTest extends \PHPUnit_Framework_TestCase
         $unitOfWork = $this->buildUnitOfWork($persistence);
         $repository = new OrderRepository($unitOfWork);
 
-        $orderId = OrderId::generate();
-        $order = Order::orderProduct($orderId, ProductId::generate(), 100);
-        $order->pay(50);
-        $repository->add($order);
+
+        $this->order->pay(50);
+        $repository->add($this->order);
         $unitOfWork->commit();
 
-        $retrievedOrder = $repository->get($orderId);
+        $retrievedOrder = $repository->get($this->orderId);
         $retrievedOrder->pay(50);
         $changes = $retrievedOrder->getChanges();
         $this->assertInstanceOf(OrderWasPaidInFull::class, $changes[1]);
@@ -46,12 +69,10 @@ final class UnitOfWorkTest extends \PHPUnit_Framework_TestCase
     public function it_should_disallow_tracking_AggregateRoots_twice(Persistence $persistence)
     {
         $unitOfWork = $this->buildUnitOfWork($persistence);
-        $orderId = OrderId::generate();
-        $order = Order::orderProduct($orderId, ProductId::generate(), 100);
-        $unitOfWork->track(Contract::with(Order::class), $orderId, $order);
+        $unitOfWork->track(Contract::with(Order::class), $this->orderId, $this->order);
 
         $this->setExpectedException(AggregateRootIsAlreadyBeingTracked::class);
-        $unitOfWork->track(Contract::with(Order::class), $orderId, $order);
+        $unitOfWork->track(Contract::with(Order::class), $this->orderId, $this->order);
     }
 
     /**
@@ -62,12 +83,10 @@ final class UnitOfWorkTest extends \PHPUnit_Framework_TestCase
     public function it_should_not_persist_events_until_commit_is_called(Persistence $persistence)
     {
         $unitOfWork = $this->buildUnitOfWork($persistence);
-        $orderId = OrderId::generate();
-        $contract = Contract::with(Order::class);
-        $order = Order::orderProduct($orderId, ProductId::generate(), 100);
-        $unitOfWork->track($contract, $orderId, $order);
 
-        $results = $persistence->fetch($contract, $orderId);
+        $unitOfWork->track($this->contract, $this->orderId, $this->order);
+
+        $results = $persistence->fetch($this->contract, $this->orderId);
         $this->assertEmpty($results);
     }
 
@@ -79,20 +98,15 @@ final class UnitOfWorkTest extends \PHPUnit_Framework_TestCase
     public function it_should_return_tracked_AggregateRoots_when_available(Persistence $persistence)
     {
         $unitOfWork = $this->buildUnitOfWork($persistence);
-        $orderId = OrderId::generate();
-        $contract = Contract::with(Order::class);
-        $order = Order::orderProduct($orderId, ProductId::generate(), 100);
-        $unitOfWork->track($contract, $orderId, $order);
+        $unitOfWork->track($this->contract, $this->orderId, $this->order);
         $unitOfWork->commit();
 
         // get a new UoW
         $unitOfWork = $this->buildUnitOfWork($persistence);
-        $retrievedOrder1 = $unitOfWork->get($contract, $orderId);
-        $retrievedOrder2 = $unitOfWork->get($contract, $orderId);
+        $retrievedOrder1 = $unitOfWork->get($this->contract, $this->orderId);
+        $retrievedOrder2 = $unitOfWork->get($this->contract, $this->orderId);
         $this->assertSame($retrievedOrder1, $retrievedOrder2);
-
-
-
     }
+
 }
  
