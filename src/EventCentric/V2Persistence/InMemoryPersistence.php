@@ -8,6 +8,7 @@ use EventCentric\EventStore\CommitId;
 use EventCentric\Identifiers\Identifier;
 use EventCentric\V2EventStore\CommittedEvent;
 use EventCentric\V2EventStore\PendingEvent;
+use Assert;
 
 final class InMemoryPersistence implements V2Persistence
 {
@@ -19,26 +20,27 @@ final class InMemoryPersistence implements V2Persistence
         $checkpointNumber = 1;
         $commitSequence = 0;
         $dispatched = false;
-        $committedEvent = new CommittedEvent(
-            $pendingEvent->getEventId(),
-            $pendingEvent->getBucket(),
-            $pendingEvent->getStreamContract(),
-            $pendingEvent->getStreamId(),
-            $pendingEvent->getEventContract(),
-            $pendingEvent->getEventPayload(),
-            $pendingEvent->getEventMetadata(),
-            $pendingEvent->getEventMetadataContract(),
-            $pendingEvent->getCausationId(),
-            $pendingEvent->getCorrelationId(),
-            $streamRevision,
-            $checkpointNumber,
-            CommitId::generate(),
-            $commitSequence,
-            new DateTimeImmutable(),
-            $dispatched
-        );
+        $commitId = CommitId::generate();
+        $this->commitAs($commitId, $pendingEvent, $streamRevision, $checkpointNumber, $commitSequence, $dispatched);
+    }
 
-        $this->storage[] = $committedEvent;
+    /**
+     * @param PendingEvent[] $pendingEvents
+     * @return CommittedEvent[]
+     */
+    public function commitAll($pendingEvents)
+    {
+        Assert\that($pendingEvents)->all()->isInstanceOf(PendingEvent::class);
+
+        $streamRevision = 0;
+        $checkpointNumber = 1;
+        $commitSequence = 0;
+        $dispatched = false;
+        $commitId = CommitId::generate();
+
+        foreach($pendingEvents as $pendingEvent) {
+            $this->commitAs($commitId, $pendingEvent, $streamRevision, $checkpointNumber, $commitSequence, $dispatched);
+        }
     }
 
     /**
@@ -64,4 +66,49 @@ final class InMemoryPersistence implements V2Persistence
         );
     }
 
+    /**
+     * @return CommittedEvent[]
+     */
+    public function fetchAll()
+    {
+        return array_values($this->storage);
+    }
+
+    /**
+     * @param CommitId $commitId
+     * @param PendingEvent $pendingEvent
+     * @param $streamRevision
+     * @param $checkpointNumber
+     * @param $commitSequence
+     * @param $dispatched
+     */
+    private function commitAs(
+        CommitId $commitId,
+        PendingEvent $pendingEvent,
+        $streamRevision,
+        $checkpointNumber,
+        $commitSequence,
+        $dispatched
+    ) {
+        $committedEvent = new CommittedEvent(
+            $pendingEvent->getEventId(),
+            $pendingEvent->getBucket(),
+            $pendingEvent->getStreamContract(),
+            $pendingEvent->getStreamId(),
+            $pendingEvent->getEventContract(),
+            $pendingEvent->getEventPayload(),
+            $pendingEvent->getEventMetadata(),
+            $pendingEvent->getEventMetadataContract(),
+            $pendingEvent->getCausationId(),
+            $pendingEvent->getCorrelationId(),
+            $streamRevision,
+            $checkpointNumber,
+            $commitId,
+            $commitSequence,
+            new DateTimeImmutable(),
+            $dispatched
+        );
+
+        $this->storage[] = $committedEvent;
+    }
 }

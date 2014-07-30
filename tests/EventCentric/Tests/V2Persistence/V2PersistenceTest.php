@@ -139,6 +139,27 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
         $this->assertCommittedEventMatchesPendingEvent($this->pendingEvent4, $committedEvents[0]);
     }
 
+    /**
+     * @test
+     */
+    public function it_should_give_the_same_commitId_to_events_committed_together()
+    {
+        $this->persistence->commitAll([
+            $this->pendingEvent1,
+            $this->pendingEvent2,
+            $this->pendingEvent3,
+            $this->pendingEvent4,
+        ]);
+
+        $committedEvents = $this->persistence->fetchAll();
+        $this->assertCount(4, $committedEvents);
+        $this->assertCommittedEventMatchesPendingEvent($this->pendingEvent1, $committedEvents[0]);
+        $this->assertCommittedEventMatchesPendingEvent($this->pendingEvent2, $committedEvents[1]);
+        $this->assertCommittedEventMatchesPendingEvent($this->pendingEvent3, $committedEvents[2]);
+        $this->assertCommittedEventMatchesPendingEvent($this->pendingEvent4, $committedEvents[3]);
+
+    }
+
     private function assertCommittedEventMatchesPendingEvent(PendingEvent $pendingEvent, CommittedEvent $committedEvent)
     {
         $this->assertTrue($pendingEvent->getEventId()->equals($committedEvent->getEventId()));
