@@ -12,11 +12,21 @@ final class RegisteringCommandDispatcher implements CommandDispatcher
      */
     private $commandHandlers = [];
 
+    /**
+     * @param $commandFqcn
+     * @param CommandHandler $commandHandler
+     * @return void
+     */
     public function register($commandFqcn, CommandHandler $commandHandler)
     {
         $this->commandHandlers[$commandFqcn] = $commandHandler;
     }
 
+    /**
+     * @param Command $command
+     * @throws NoSuitableCommandHandlerWasFound
+     * @return void
+     */
     public function dispatch(Command $command)
     {
         $commandFqcn = get_class($command);

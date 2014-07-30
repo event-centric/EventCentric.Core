@@ -7,5 +7,9 @@ namespace EventCentric\Commands;
  */
 interface CommandDispatcher 
 {
+    /**
+     * @param Command $command
+     * @return void
+     */
     public function dispatch(Command $command);
 }
