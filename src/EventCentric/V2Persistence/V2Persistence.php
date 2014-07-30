@@ -10,11 +10,10 @@ use EventCentric\V2EventStore\PendingEvent;
 interface V2Persistence
 {
     /**
-     * @param CommitId $commitId
      * @param PendingEvent $pendingEvent
      * @return void
      */
-    public function persist(CommitId $commitId, PendingEvent $pendingEvent);
+    public function persist(PendingEvent $pendingEvent);
 
     public function fetchFromStream(Bucket $bucket, Contract $streamContract, Identifier $streamId);
 }

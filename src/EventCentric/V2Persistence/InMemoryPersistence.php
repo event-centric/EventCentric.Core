@@ -13,7 +13,7 @@ final class InMemoryPersistence implements V2Persistence
 {
     private $storage = [];
 
-    public function persist(CommitId $commitId, PendingEvent $pendingEvent)
+    public function persist(PendingEvent $pendingEvent)
     {
         $streamRevision = 0;
         $checkpointNumber = 1;
@@ -32,7 +32,7 @@ final class InMemoryPersistence implements V2Persistence
             $pendingEvent->getCorrelationId(),
             $streamRevision,
             $checkpointNumber,
-            $commitId,
+            CommitId::generate(),
             $commitSequence,
             new DateTimeImmutable(),
             $dispatched
