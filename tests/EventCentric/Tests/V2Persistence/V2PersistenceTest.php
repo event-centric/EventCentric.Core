@@ -74,7 +74,7 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
         $this->bucket = Bucket::defaultx();
         $this->pendingEvent = new PendingEvent(
             $this->eventId,
-            Bucket::defaultx(),
+            $this->bucket,
             $this->streamContract,
             $this->streamId,
             $this->eventContract,
@@ -86,12 +86,12 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function it_should_persist_and_fetch_events()
+    public function it_should_persist_and_fetch_event_an_event()
     {
         $commitId = CommitId::generate();
         $this->persistence->persist($commitId, $this->pendingEvent);
 
-        $committedEvents = $this->persistence->fetchFromStream($this->streamContract, $this->streamId);
+        $committedEvents = $this->persistence->fetchFromStream($this->bucket, $this->streamContract, $this->streamId);
 
         $this->assertCount(1, $committedEvents);
         $this->assertCommittedEventMatchesPendingEvent($this->pendingEvent, $committedEvents[0]);

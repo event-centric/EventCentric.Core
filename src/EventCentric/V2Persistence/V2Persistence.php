@@ -16,5 +16,5 @@ interface V2Persistence
      */
     public function persist(CommitId $commitId, PendingEvent $pendingEvent);
 
-    public function fetchFromStream(Contract $streamContract, Identifier $streamId);
+    public function fetchFromStream(Bucket $bucket, Contract $streamContract, Identifier $streamId);
 }
