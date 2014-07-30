@@ -86,6 +86,7 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $committedEvents);
         $this->assertCommittedEventMatchesPendingEvent($eventInOtherBucket, $committedEvents[0]);
     }
+
     /**
      * @test
      */
@@ -100,6 +101,22 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
         $committedEvents = $this->persistence->fetchFromStream(Bucket::defaultx(), $otherStreamContract, $this->anOrderId);
         $this->assertCount(1, $committedEvents);
         $this->assertCommittedEventMatchesPendingEvent($eventWithOtherContract, $committedEvents[0]);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_fetch_by_stream_id()
+    {
+        $otherStreamId = OrderId::generate();
+        $eventWithOtherStream = new PendingEvent(EventId::generate(), Bucket::defaultx(),$this->orderContract,$otherStreamId, Contract::canonicalFrom(PaymentWasMade::class), '{"my":"payload"}' );
+
+        $this->persistence->persist($this->pendingEvent);
+        $this->persistence->persist($eventWithOtherStream);
+
+        $committedEvents = $this->persistence->fetchFromStream(Bucket::defaultx(),  Contract::canonicalFrom(Order::class), $otherStreamId);
+        $this->assertCount(1, $committedEvents);
+        $this->assertCommittedEventMatchesPendingEvent($eventWithOtherStream, $committedEvents[0]);
     }
 
     private function assertCommittedEventMatchesPendingEvent(PendingEvent $pendingEvent, CommittedEvent $committedEvent)
