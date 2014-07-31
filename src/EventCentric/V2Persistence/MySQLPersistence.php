@@ -4,6 +4,7 @@ namespace EventCentric\V2Persistence;
 
 use Doctrine\DBAL\Connection;
 use EventCentric\Contracts\Contract;
+use EventCentric\EventStore\EventId;
 use EventCentric\Identifiers\Identifier;
 use EventCentric\Persistence\OptimisticConcurrencyFailed;
 use EventCentric\V2EventStore\CommittedEvent;
@@ -89,13 +90,23 @@ MYSQL;
         throw new \Exception("Not implemented: ".__METHOD__);
     }
 
+
+    public function delete(EventId $eventId)
+    {
+        throw new \Exception("Not implemented: ".__METHOD__);
+    }
+
+    public function deleteStream(Bucket $bucket, Contract $streamContract, Identifier $streamId)
+    {
+        throw new \Exception("Not implemented: ".__METHOD__);
+    }
+
     public function createSchema()
     {
         $this->connection->executeQuery(
             sprintf(self::CREATE, self::TABLE_NAME)
         );
     }
-
     public function dropSchema()
     {
         $this->connection->executeQuery(

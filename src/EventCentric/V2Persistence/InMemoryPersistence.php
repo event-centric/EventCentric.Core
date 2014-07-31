@@ -5,6 +5,7 @@ namespace EventCentric\V2Persistence;
 use DateTimeImmutable;
 use EventCentric\Contracts\Contract;
 use EventCentric\EventStore\CommitId;
+use EventCentric\EventStore\EventId;
 use EventCentric\Identifiers\Identifier;
 use EventCentric\Persistence\OptimisticConcurrencyFailed;
 use EventCentric\V2EventStore\CommittedEvent;
@@ -127,5 +128,29 @@ final class InMemoryPersistence implements V2Persistence
     {
         $committedEvents = $this->fetchFromStream($bucket, $streamContract, $streamId);
         return count($committedEvents);
+    }
+
+    public function delete(EventId $eventId)
+    {
+        $this->storage = array_filter(
+            $this->storage,
+            function(CommittedEvent $committedEvent) use($eventId) { return !$committedEvent->getEventId()->equals($eventId);}
+        );
+    }
+
+    public function deleteStream(Bucket $bucket, Contract $streamContract, Identifier $streamId)
+    {
+        $callback = function (CommittedEvent $event) use ($bucket, $streamContract, $streamId) {
+            return
+                !($bucket->equals($event->getBucket())
+                    && $streamContract->equals($event->getStreamContract())
+                    && $streamId->equals($event->getStreamId())
+                );
+        };
+
+        $this->storage = array_filter(
+            $this->storage,
+            $callback
+        );
     }
 }

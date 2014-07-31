@@ -26,10 +26,30 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
     private $ebayBucket;
     private $invoiceContract;
     private $otherStreamId;
+
+    /**
+     * @var PendingEvent
+     */
     private $pendingEvent1;
+
+    /**
+     * @var PendingEvent
+     */
     private $pendingEvent2;
+
+    /**
+     * @var PendingEvent
+     */
     private $pendingEvent3;
+
+    /**
+     * @var PendingEvent
+     */
     private $pendingEvent4;
+
+    /**
+     * @var PendingEvent
+     */
     private $pendingEvent5;
 
     /**
@@ -231,6 +251,32 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException(OptimisticConcurrencyFailed::class);
         $this->persistence->commit($pendingEvent);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_delete_events_by_id()
+    {
+        $this->given_events_are_committed_together();
+        $eventId = $this->pendingEvent1->getEventId();
+
+        $this->assertCount(4, $this->persistence->fetchAll());
+        $this->persistence->delete($eventId);
+        $this->assertCount(3, $this->persistence->fetchAll());
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_delete_a_stream()
+    {
+        $this->given_events_are_committed_together();
+        $eventId = $this->pendingEvent1->getEventId();
+
+        $this->assertCount(4, $this->persistence->fetchAll());
+        $this->persistence->deleteStream($this->amazonBucket, $this->orderContract, $this->otherStreamId);
+        $this->assertCount(3, $this->persistence->fetchAll());
     }
 
     private function assertCommittedEventMatchesPendingEvent(PendingEvent $pendingEvent, CommittedEvent $committedEvent)

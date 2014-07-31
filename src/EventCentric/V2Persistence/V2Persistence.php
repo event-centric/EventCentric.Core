@@ -3,6 +3,7 @@
 namespace EventCentric\V2Persistence;
 
 use EventCentric\Contracts\Contract;
+use EventCentric\EventStore\EventId;
 use EventCentric\Identifiers\Identifier;
 use EventCentric\Persistence\OptimisticConcurrencyFailed;
 use EventCentric\V2EventStore\CommittedEvent;
@@ -37,4 +38,8 @@ interface V2Persistence
      * @return CommittedEvent[]
      */
     public function fetchAll();
+
+    public function delete(EventId $eventId);
+
+    public function deleteStream(Bucket $bucket, Contract $streamContract, Identifier $streamId);
 }
