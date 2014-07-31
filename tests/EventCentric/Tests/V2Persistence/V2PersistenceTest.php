@@ -4,6 +4,7 @@ namespace EventCentric\Tests\V2Persistence;
 
 use EventCentric\Contracts\Contract;
 use EventCentric\EventStore\EventId;
+use EventCentric\Persistence\OptimisticConcurrencyFailed;
 use EventCentric\Tests\Fixtures\OrderId;
 use EventCentric\Tests\Fixtures\PaymentWasMade;
 use EventCentric\V2EventStore\CommittedEvent;
@@ -50,6 +51,7 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
 
         $this->pendingEvent1 = new PendingEvent(
             EventId::generate(),
+            0,
             $this->amazonBucket,
             $this->orderContract,
             $this->aStreamId,
@@ -59,6 +61,7 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
 
         $this->pendingEvent2 = new PendingEvent(
             EventId::generate(),
+            0,
             $this->ebayBucket,
             $this->orderContract,
             $this->aStreamId,
@@ -69,6 +72,7 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
 
         $this->pendingEvent3 = new PendingEvent(
             EventId::generate(),
+            0,
             $this->amazonBucket,
             $this->invoiceContract,
             $this->aStreamId,
@@ -78,6 +82,7 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
 
         $this->pendingEvent4 = new PendingEvent(
             EventId::generate(),
+            0,
             $this->amazonBucket,
             $this->orderContract,
             $this->otherStreamId,
@@ -87,6 +92,7 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
 
         $this->pendingEvent5 = new PendingEvent(
             EventId::generate(),
+            1,
             $this->amazonBucket,
             $this->orderContract,
             $this->aStreamId,
@@ -211,6 +217,20 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
         $committedEvents = $this->persistence->fetchFromStream($this->ebayBucket, $this->orderContract, $this->aStreamId);
         $this->assertCount(1, $committedEvents);
         $this->assertEquals(1, $committedEvents[0]->getStreamRevision());
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_throw_when_expected_stream_revision_does_not_match()
+    {
+        $this->given_events_are_committed_together();
+
+        $incorrectExpectedStreamRevision = 0;
+        $pendingEvent = new PendingEvent(EventId::generate(), $incorrectExpectedStreamRevision, $this->amazonBucket, $this->orderContract, $this->aStreamId, $this->eventContract, '{"my":"payload"}');
+
+        $this->setExpectedException(OptimisticConcurrencyFailed::class);
+        $this->persistence->commit($pendingEvent);
     }
 
     private function assertCommittedEventMatchesPendingEvent(PendingEvent $pendingEvent, CommittedEvent $committedEvent)

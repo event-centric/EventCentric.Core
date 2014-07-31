@@ -11,6 +11,16 @@ use EventCentric\V2Persistence\Bucket;
 final class PendingEvent
 {
     /**
+     * @var Identifier
+     */
+    private $eventId;
+
+    /**
+     * @var int
+     */
+    private $expectedStreamRevision;
+
+    /**
      * @var Bucket
      */
     private $bucket;
@@ -55,13 +65,9 @@ final class PendingEvent
      */
     private $correlationId;
 
-    /**
-     * @var Identifier
-     */
-    private $eventId;
-
     public function __construct(
         EventId $eventId,
+        $expectedStreamRevision,
         Bucket $bucket,
         Contract $streamContract,
         Identifier $streamId,
@@ -69,12 +75,22 @@ final class PendingEvent
         $eventPayload
     ) {
         Assert\that($eventPayload)->string();
+        Assert\that($expectedStreamRevision)->integer()->min(0);
         $this->eventId = $eventId;
         $this->streamContract = $streamContract;
         $this->streamId = $streamId;
         $this->eventContract = $eventContract;
         $this->eventPayload = $eventPayload;
         $this->bucket = $bucket;
+        $this->expectedStreamRevision = $expectedStreamRevision;
+    }
+
+    /**
+     * @return int
+     */
+    public function getExpectedStreamRevision()
+    {
+        return $this->expectedStreamRevision;
     }
 
     /**

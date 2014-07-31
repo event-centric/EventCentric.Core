@@ -5,6 +5,7 @@ namespace EventCentric\V2Persistence;
 use Doctrine\DBAL\Connection;
 use EventCentric\Contracts\Contract;
 use EventCentric\Identifiers\Identifier;
+use EventCentric\Persistence\OptimisticConcurrencyFailed;
 use EventCentric\V2EventStore\CommittedEvent;
 use EventCentric\V2EventStore\PendingEvent;
 
@@ -60,6 +61,7 @@ MYSQL;
     /**
      * Commit a set of events in a transaction.
      * @param PendingEvent[] $pendingEvents
+     * @throws OptimisticConcurrencyFailed
      * @return void
      */
     public function commitAll($pendingEvents)

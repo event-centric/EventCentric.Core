@@ -6,6 +6,7 @@ use DateTimeImmutable;
 use EventCentric\Contracts\Contract;
 use EventCentric\EventStore\CommitId;
 use EventCentric\Identifiers\Identifier;
+use EventCentric\Persistence\OptimisticConcurrencyFailed;
 use EventCentric\V2EventStore\CommittedEvent;
 use EventCentric\V2EventStore\PendingEvent;
 use Assert;
@@ -16,6 +17,10 @@ final class InMemoryPersistence implements V2Persistence
 
     private $lastCheckPointNumber = 0;
 
+    /**
+     * @param PendingEvent $pendingEvent
+     * @return void
+     */
     public function commit(PendingEvent $pendingEvent)
     {
         $this->commitAll([$pendingEvent]);
@@ -23,6 +28,7 @@ final class InMemoryPersistence implements V2Persistence
 
     /**
      * @param PendingEvent[] $pendingEvents
+     * @throws OptimisticConcurrencyFailed
      * @return void
      */
     public function commitAll($pendingEvents)
@@ -34,7 +40,10 @@ final class InMemoryPersistence implements V2Persistence
         $commitId = CommitId::generate();
 
         foreach($pendingEvents as $pendingEvent) {
-            $streamRevision = $this->getNextStreamRevisionFor($pendingEvent->getBucket(), $pendingEvent->getStreamContract(), $pendingEvent->getStreamId());
+            $streamRevision = $this->getStreamRevisionFor($pendingEvent->getBucket(), $pendingEvent->getStreamContract(), $pendingEvent->getStreamId());
+            if($streamRevision !== $pendingEvent->getExpectedStreamRevision()) {
+                throw OptimisticConcurrencyFailed::revisionDoesNotMatch($pendingEvent->getExpectedStreamRevision(), $streamRevision);
+            }
             $this->commitAs($commitId, $pendingEvent, ++$streamRevision, ++$this->lastCheckPointNumber, $commitSequence++, $dispatched);
         }
     }
@@ -114,7 +123,7 @@ final class InMemoryPersistence implements V2Persistence
      * @param Identifier $streamId
      * @return int
      */
-    private function getNextStreamRevisionFor(Bucket $bucket, Contract $streamContract, Identifier $streamId)
+    private function getStreamRevisionFor(Bucket $bucket, Contract $streamContract, Identifier $streamId)
     {
         $committedEvents = $this->fetchFromStream($bucket, $streamContract, $streamId);
         return count($committedEvents);
