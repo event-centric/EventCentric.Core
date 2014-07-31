@@ -3,6 +3,7 @@
 namespace EventCentric\Tests\Identity;
 
 use EventCentric\Tests\Fixtures\OrderId;
+use InvalidArgumentException;
 use PHPUnit_Framework_TestCase;
 
 final class UuidIdentityTest extends PHPUnit_Framework_TestCase
@@ -38,9 +39,7 @@ final class UuidIdentityTest extends PHPUnit_Framework_TestCase
      */
     public function it_should_throw_on_malformed_uuid()
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->setExpectedException(InvalidArgumentException::class);
         OrderId::fromString('bad-uuid');
     }
-
 }
-

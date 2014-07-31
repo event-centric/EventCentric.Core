@@ -38,12 +38,12 @@ final class OrderRepository
     }
 
     /**
-     * @param AggregateRoot $aggregateRoot
+     * @param Order $order
      * @return Identifier
      */
-    private function extractAggregateId(AggregateRoot $aggregateRoot)
+    private function extractAggregateId(Order $order)
     {
-        return $aggregateRoot->getOrderId();
+        return $order->getOrderId();
     }
 
     /**

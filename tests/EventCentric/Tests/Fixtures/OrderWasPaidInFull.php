@@ -23,5 +23,4 @@ final class OrderWasPaidInFull implements DomainEvent
     {
         return $this->orderId;
     }
-
-} 
+}

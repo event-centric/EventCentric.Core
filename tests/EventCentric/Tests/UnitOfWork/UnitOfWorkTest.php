@@ -108,7 +108,6 @@ final class UnitOfWorkTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($retrievedOrder1, $retrievedOrder2);
     }
 
-
     /**
      * @test
      * @dataProvider providePersistence
@@ -122,6 +121,5 @@ final class UnitOfWorkTest extends \PHPUnit_Framework_TestCase
         $unitOfWork->commit();
         $this->assertTrue(true, "Testing for idempotency means there's no observable behaviour, so no assertions. This line is here to satisfy PHPUnit strict mode.");
     }
-
 }
  

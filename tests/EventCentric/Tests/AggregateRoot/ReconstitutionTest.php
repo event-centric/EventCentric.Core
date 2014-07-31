@@ -31,6 +31,5 @@ final class ReconstitutionTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(PaymentWasMade::class, $changes[0]);
         $this->assertInstanceOf(OrderWasPaidInFull::class, $changes[1]);
     }
-
 }
  
