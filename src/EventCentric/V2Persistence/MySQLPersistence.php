@@ -56,6 +56,7 @@ MYSQL;
      */
     public function commit(PendingEvent $pendingEvent)
     {
+        throw new \Exception("Not implemented: ".__METHOD__);
     }
 
     /**
@@ -66,6 +67,7 @@ MYSQL;
      */
     public function commitAll($pendingEvents)
     {
+        throw new \Exception("Not implemented: ".__METHOD__);
     }
 
     /**
@@ -76,7 +78,7 @@ MYSQL;
      */
     public function fetchFromStream(Bucket $bucket, Contract $streamContract, Identifier $streamId)
     {
-        return [];
+        throw new \Exception("Not implemented: ".__METHOD__);
     }
 
     /**
@@ -84,7 +86,7 @@ MYSQL;
      */
     public function fetchAll()
     {
-        return [];
+        throw new \Exception("Not implemented: ".__METHOD__);
     }
 
     public function createSchema()
