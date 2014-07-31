@@ -6,8 +6,9 @@ use EventCentric\Commands\Command;
 use EventCentric\Commands\CommandHandler;
 use EventCentric\Commands\RegisteringCommandDispatcher;
 use EventCentric\Commands\NoSuitableCommandHandlerWasFound;
+use PHPUnit_Framework_TestCase;
 
-final class RegisteringCommandDispatcherTest extends \PHPUnit_Framework_TestCase
+final class RegisteringCommandDispatcherTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var RegisteringCommandDispatcher
