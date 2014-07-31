@@ -63,5 +63,4 @@ final class InMemoryPersistence implements V2Persistence
             )
         );
     }
-
 }

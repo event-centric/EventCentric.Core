@@ -65,5 +65,4 @@ final class Contract
     {
         return $this->contractName == $other->contractName;
     }
-
-} 
+}

@@ -99,6 +99,4 @@ final class Aggregate
             $this->aggregateContract->equals($aggregateContract)
             && $this->aggregateId->equals($aggregateId);
     }
-
-
-} 
+}

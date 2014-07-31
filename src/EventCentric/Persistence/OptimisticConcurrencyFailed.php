@@ -11,4 +11,4 @@ final class OptimisticConcurrencyFailed extends Exception
         $message = sprintf("Expected streamVersion = %d, got %d", $expectedStreamRevision, $actualStreamRevision);
         return new OptimisticConcurrencyFailed($message);
     }
-} 
+}

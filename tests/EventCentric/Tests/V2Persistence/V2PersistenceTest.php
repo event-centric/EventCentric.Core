@@ -3,9 +3,7 @@
 namespace EventCentric\Tests\V2Persistence;
 
 use EventCentric\Contracts\Contract;
-use EventCentric\EventStore\CommitId;
 use EventCentric\EventStore\EventId;
-use EventCentric\Identifiers\Identifier;
 use EventCentric\Tests\Fixtures\Order;
 use EventCentric\Tests\Fixtures\OrderId;
 use EventCentric\Tests\Fixtures\PaymentWasMade;
@@ -13,8 +11,9 @@ use EventCentric\V2EventStore\CommittedEvent;
 use EventCentric\V2EventStore\PendingEvent;
 use EventCentric\V2Persistence\Bucket;
 use EventCentric\V2Persistence\V2Persistence;
+use PHPUnit_Framework_TestCase;
 
-abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
+abstract class V2PersistenceTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var Contract

@@ -1,4 +1,5 @@
 <?php
+
 namespace EventCentric\MySQLPersistence\Query;
 
 final class Select

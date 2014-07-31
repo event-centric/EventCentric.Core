@@ -19,5 +19,4 @@ final class V2EventStore
     {
 
     }
-
-} 
+}

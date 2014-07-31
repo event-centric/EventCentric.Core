@@ -8,4 +8,4 @@ namespace EventCentric\Commands;
 interface Command 
 {
 
-} 
+}

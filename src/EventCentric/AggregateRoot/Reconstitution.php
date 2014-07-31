@@ -27,5 +27,4 @@ trait Reconstitution
      * @return void
      */
     abstract protected function whenAll(DomainEvents $events);
-
-} 
+}

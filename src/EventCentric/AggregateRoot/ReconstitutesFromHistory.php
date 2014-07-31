@@ -3,7 +3,6 @@
 namespace EventCentric\AggregateRoot;
 
 use EventCentric\DomainEvents\DomainEvents;
-use EventCentric\AggregateRoot\AggregateRoot;
 
 /**
  * Reconstitutes an Aggregate instance from its history of Domain Events

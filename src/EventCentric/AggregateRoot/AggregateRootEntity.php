@@ -14,4 +14,4 @@ abstract class AggregateRootEntity implements AggregateRoot
     use EventSourcing, Reconstitution, ConventionalWhen;
 
     protected function __construct() {}
-} 
+}
