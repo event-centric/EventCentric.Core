@@ -25,7 +25,7 @@ interface V2Persistence
      * @param Bucket $bucket
      * @param Contract $streamContract
      * @param Identifier $streamId
-     * @return CommittedEvent
+     * @return CommittedEvent[]
      */
     public function fetchFromStream(Bucket $bucket, Contract $streamContract, Identifier $streamId);
 

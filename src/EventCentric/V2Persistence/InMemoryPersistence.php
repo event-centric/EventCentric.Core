@@ -29,13 +29,13 @@ final class InMemoryPersistence implements V2Persistence
     {
         Assert\that($pendingEvents)->all()->isInstanceOf(PendingEvent::class);
 
-        $streamRevision = 0;
         $commitSequence = 1;
         $dispatched = false;
         $commitId = CommitId::generate();
 
         foreach($pendingEvents as $pendingEvent) {
-            $this->commitAs($commitId, $pendingEvent, $streamRevision, ++$this->lastCheckPointNumber, $commitSequence++, $dispatched);
+            $streamRevision = $this->getNextStreamRevisionFor($pendingEvent->getBucket(), $pendingEvent->getStreamContract(), $pendingEvent->getStreamId());
+            $this->commitAs($commitId, $pendingEvent, ++$streamRevision, ++$this->lastCheckPointNumber, $commitSequence++, $dispatched);
         }
     }
 
@@ -106,5 +106,17 @@ final class InMemoryPersistence implements V2Persistence
         );
 
         $this->storage[] = $committedEvent;
+    }
+
+    /**
+     * @param Bucket $bucket
+     * @param Contract $streamContract
+     * @param Identifier $streamId
+     * @return int
+     */
+    private function getNextStreamRevisionFor(Bucket $bucket, Contract $streamContract, Identifier $streamId)
+    {
+        $committedEvents = $this->fetchFromStream($bucket, $streamContract, $streamId);
+        return count($committedEvents);
     }
 }

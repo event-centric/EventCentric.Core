@@ -22,13 +22,14 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
     private $orderContract;
     private $aStreamId;
     private $amazonBucket;
-    private $pendingEvent1;
     private $ebayBucket;
-    private $pendingEvent2;
     private $invoiceContract;
-    private $pendingEvent3;
     private $otherStreamId;
+    private $pendingEvent1;
+    private $pendingEvent2;
+    private $pendingEvent3;
     private $pendingEvent4;
+    private $pendingEvent5;
 
     /**
      * @return V2Persistence
@@ -80,6 +81,15 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
             $this->amazonBucket,
             $this->orderContract,
             $this->otherStreamId,
+            $this->eventContract,
+            '{"my":"payload"}'
+        );
+
+        $this->pendingEvent5 = new PendingEvent(
+            EventId::generate(),
+            $this->amazonBucket,
+            $this->orderContract,
+            $this->aStreamId,
             $this->eventContract,
             '{"my":"payload"}'
         );
@@ -184,6 +194,21 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(++$checkpointNumber, $committedEvents[3]->getCheckpointNumber());
     }
 
+    /**
+     * @test
+     */
+    public function it_should_give_incremental_streamRevisions_within_a_single_stream()
+    {
+        $this->given_events_are_committed_together();
+        $this->given_event_is_committed_in_existing_stream();
+
+        $committedEvents = $this->persistence->fetchFromStream($this->amazonBucket, $this->orderContract, $this->aStreamId);
+
+        $this->assertCount(2, $committedEvents);
+        $this->assertEquals(1, $committedEvents[0]->getStreamRevision());
+        $this->assertEquals(2, $committedEvents[1]->getStreamRevision());
+    }
+
     private function assertCommittedEventMatchesPendingEvent(PendingEvent $pendingEvent, CommittedEvent $committedEvent)
     {
         $this->assertTrue($pendingEvent->getEventId()->equals($committedEvent->getEventId()));
@@ -236,6 +261,11 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
         $this->persistence->commit(
             $this->pendingEvent4
         );
+    }
+
+    private function given_event_is_committed_in_existing_stream()
+    {
+        $this->persistence->commit($this->pendingEvent5);
     }
 }
  
