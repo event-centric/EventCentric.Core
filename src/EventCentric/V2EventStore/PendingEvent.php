@@ -46,7 +46,7 @@ final class PendingEvent
     private $streamId;
 
     /**
-     * @var Contract
+     * @var Contract|null
      */
     private $eventMetadataContract;
 
@@ -56,15 +56,24 @@ final class PendingEvent
     private $eventMetadata = '';
 
     /**
-     * @var Identifier
+     * @var Identifier|null
      */
     private $causationId;
 
     /**
-     * @var Identifier
+     * @var Identifier|null
      */
     private $correlationId;
 
+    /**
+     * @param EventId $eventId
+     * @param int $expectedStreamRevision
+     * @param Bucket $bucket
+     * @param Contract $streamContract
+     * @param Identifier $streamId
+     * @param Contract $eventContract
+     * @param string $eventPayload
+     */
     public function __construct(
         EventId $eventId,
         $expectedStreamRevision,
@@ -103,7 +112,7 @@ final class PendingEvent
     }
 
     /**
-     * @param Contract $eventMetadataContract
+     * @param Contract|null $eventMetadataContract
      */
     public function setEventMetadataContract(Contract $eventMetadataContract = null)
     {
@@ -111,7 +120,7 @@ final class PendingEvent
     }
 
     /**
-     * @param Identifier $causationId
+     * @param Identifier|null $causationId
      */
     public function setCausationId(Identifier $causationId = null)
     {
@@ -119,7 +128,7 @@ final class PendingEvent
     }
 
     /**
-     * @param Identifier $correlationId
+     * @param Identifier|null $correlationId
      */
     public function setCorrelationId(Identifier $correlationId = null)
     {
@@ -135,7 +144,7 @@ final class PendingEvent
     }
 
     /**
-     * @return Identifier
+     * @return Identifier|null
      */
     public function getCausationId()
     {
@@ -151,7 +160,7 @@ final class PendingEvent
     }
 
     /**
-     * @return Identifier
+     * @return Identifier|null
      */
     public function getCorrelationId()
     {
@@ -191,7 +200,7 @@ final class PendingEvent
     }
 
     /**
-     * @return Contract
+     * @return Contract|null
      */
     public function getEventMetadataContract()
     {
