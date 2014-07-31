@@ -59,4 +59,4 @@ trait EventSourcing
      * @return void
      */
     abstract protected function when(DomainEvent $event);
-} 
+}

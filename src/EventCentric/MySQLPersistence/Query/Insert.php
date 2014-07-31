@@ -15,4 +15,4 @@ MYSQL;
     {
         return sprintf(self::QUERY, $tableName);
     }
-} 
+}

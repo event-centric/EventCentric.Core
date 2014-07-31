@@ -1,5 +1,4 @@
-vendor/
-bin/
+/vendor
+/bin
 composer.lock
 phpunit.xml
-

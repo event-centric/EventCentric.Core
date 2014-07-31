@@ -140,4 +140,3 @@ final class InMemoryRecord
     public $commitSequence;
     public $dispatched;
 }
-

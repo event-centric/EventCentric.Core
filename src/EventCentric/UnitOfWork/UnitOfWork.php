@@ -184,4 +184,4 @@ final class UnitOfWork
         $aggregateRoot = $this->aggregateRootReconstituter->reconstitute($aggregateContract, $domainEvents);
         return $aggregateRoot;
     }
-} 
+}

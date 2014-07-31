@@ -39,7 +39,6 @@ final class EventSourcingTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(
             $this->order->hasChanges()
         );
-
     }
 
     /**

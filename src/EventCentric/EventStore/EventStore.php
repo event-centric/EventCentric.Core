@@ -3,7 +3,6 @@
 namespace EventCentric\EventStore;
 
 use EventCentric\Contracts\Contract;
-use EventCentric\EventStore\EventStream;
 use EventCentric\Identifiers\Identifier;
 use EventCentric\Persistence\Persistence;
 

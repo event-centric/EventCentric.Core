@@ -10,4 +10,4 @@ use EventCentric\Identifiers\UuidIdentifier;
 final class CommitId extends UuidIdentifier
 {
 
-} 
+}

@@ -63,5 +63,4 @@ final class Order extends AggregateRootEntity
     {
         return $this->totalPaidAmount >= $this->price;
     }
-
 }

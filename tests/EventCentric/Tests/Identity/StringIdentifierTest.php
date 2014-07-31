@@ -13,7 +13,6 @@ final class StringIdentifierTest extends PHPUnit_Framework_TestCase
      */
     public function it_should_have_equality()
     {
-
         $id1 = ProductId::fromString('my_id');
         $id2 = new ProductId('my_id');
         $id3 = ProductId::fromString('other_id');
@@ -31,8 +30,6 @@ final class StringIdentifierTest extends PHPUnit_Framework_TestCase
         ProductId::fromString(123);
     }
 }
-
-
 
 final class ProductId extends StringIdentifier
 {

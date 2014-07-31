@@ -111,5 +111,4 @@ abstract class UuidIdentifier implements Identifier, GeneratesIdentifier
             throw new \InvalidArgumentException("UUID of the form nnnnnnnn-nnnn-nnnn-nnnn-nnnnnnnnnnnn expected");
         }
     }
-
-} 
+}

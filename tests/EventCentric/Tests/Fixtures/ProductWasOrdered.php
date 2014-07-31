@@ -49,5 +49,4 @@ final class ProductWasOrdered implements DomainEvent
     {
         return $this->productId;
     }
-
 } 

@@ -37,4 +37,4 @@ final class Bucket
     {
         return $this->name === $other->name;
     }
-} 
+}

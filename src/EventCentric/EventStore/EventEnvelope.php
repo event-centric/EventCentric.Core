@@ -4,7 +4,6 @@ namespace EventCentric\EventStore;
 
 use EventCentric\Contracts\Contract;
 use Assert;
-use EventCentric\EventStore\EventId;
 
 /**
  * A wrapper around a DomainEvent, containing metadata about that Event.
@@ -91,4 +90,4 @@ final class EventEnvelope
             && $this->eventContract->equals($other->eventContract)
             && $this->eventPayload == $other->eventPayload;
     }
-} 
+}

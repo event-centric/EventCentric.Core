@@ -16,5 +16,4 @@ final class V2EventStoreTest extends \PHPUnit_Framework_TestCase
          writeToStream
          */
     }
-
 }

@@ -66,8 +66,5 @@ final class PersistenceTest extends PHPUnit_Framework_TestCase
             $expectedStreamVersion = 1, // in fact two events where committed
             [$eventEnvelope]
         );
-
-
     }
 }
- 

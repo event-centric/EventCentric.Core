@@ -4,7 +4,6 @@ namespace EventCentric\Tests\Fixtures;
 
 use EventCentric\AggregateRoot\AggregateRoot;
 use EventCentric\Contracts\Contract;
-use EventCentric\EventStore\EventStore;
 use EventCentric\Identifiers\Identifier;
 use EventCentric\UnitOfWork\UnitOfWork;
 
@@ -39,12 +38,12 @@ final class OrderRepository
     }
 
     /**
-     * @param AggregateRoot $aggregateRoot
+     * @param Order $order
      * @return Identifier
      */
-    private function extractAggregateId(AggregateRoot $aggregateRoot)
+    private function extractAggregateId(Order $order)
     {
-        return $aggregateRoot->getOrderId();
+        return $order->getOrderId();
     }
 
     /**

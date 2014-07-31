@@ -2,14 +2,16 @@
 
 namespace EventCentric\Commands;
 
-final class ConventionalCommandHandlingTest extends \PHPUnit_Framework_TestCase
+use PHPUnit_Framework_TestCase;
+
+final class ConventionalCommandHandlingTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @test
      */
     public function it_should_delegate_a_Command()
     {
-        $command = new FakeCommand1();
+        $command = new FakeCommand();
         $commandHandler = new SpyingConventionalCommandHandler();
 
         $commandHandler->handle($command);
@@ -24,7 +26,7 @@ final class ConventionalCommandHandlingTest extends \PHPUnit_Framework_TestCase
      */
     public function it_should_throw_when_handle_implementation_is_missing()
     {
-        $command = new FakeCommand1();
+        $command = new FakeCommand();
         $commandHandler = new ConventionalCommandHandlerWithoutHandleImplementation();
 
         $this->setExpectedException(CommandCouldNotBeHandled::class);
@@ -34,7 +36,7 @@ final class ConventionalCommandHandlingTest extends \PHPUnit_Framework_TestCase
 }
 
 
-final class FakeCommand1 implements Command {}
+final class FakeCommand implements Command {}
 
 final class SpyingConventionalCommandHandler implements CommandHandler
 {
@@ -42,7 +44,7 @@ final class SpyingConventionalCommandHandler implements CommandHandler
 
     private $handled;
 
-    protected function handleFakeCommand1(FakeCommand1 $command)
+    protected function handleFakeCommand(FakeCommand $command)
     {
         $this->handled = $command;
     }

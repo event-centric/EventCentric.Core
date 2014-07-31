@@ -24,4 +24,4 @@ final class PhpDomainEventSerializer implements DomainEventSerializer
     {
         return unserialize($data);
     }
-} 
+}

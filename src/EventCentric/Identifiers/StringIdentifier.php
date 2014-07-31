@@ -52,4 +52,4 @@ abstract class StringIdentifier implements Identifier
             throw new InvalidArgumentException("String expected");
         }
     }
-} 
+}

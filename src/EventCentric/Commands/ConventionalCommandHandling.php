@@ -27,4 +27,3 @@ MSG;
         $this->{$method}($command);
     }
 }
-

@@ -3,8 +3,6 @@
 namespace EventCentric\EventStore;
 
 use EventCentric\Contracts\Contract;
-use EventCentric\EventStore\CommitId;
-use EventCentric\EventStore\EventEnvelope;
 use EventCentric\Identifiers\Identifier;
 use EventCentric\Persistence\Persistence;
 
@@ -113,6 +111,4 @@ final class EventStream
         $this->committedEventEnvelopes = array_merge($this->committedEventEnvelopes, $this->pendingEventEnvelopes);
         $this->pendingEventEnvelopes = [];
     }
-
-
-} 
+}

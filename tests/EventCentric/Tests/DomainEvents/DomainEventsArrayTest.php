@@ -17,9 +17,9 @@ final class DomainEventsArrayTest extends PHPUnit_Framework_TestCase
     public function it_should_be_immutable()
     {
         $events = new DomainEventsArray([
-                new SomethingHasHappened,
-                new SomethingHasHappened,
-            ]);
+            new SomethingHasHappened,
+            new SomethingHasHappened,
+        ]);
 
         $this->setExpectedException(DomainEventsAreImmutable::class);
         $events[] = new SomethingHasHappened();
@@ -31,18 +31,18 @@ final class DomainEventsArrayTest extends PHPUnit_Framework_TestCase
     public function it_should_allow_appends_from_different_implementations()
     {
         $events = new DomainEventsArray([
-                new SomethingHasHappened,
-                new SomethingHasHappened,
-            ]);
+            new SomethingHasHappened,
+            new SomethingHasHappened,
+        ]);
 
         $appendedEvents = $events->append(
             new AlternativeDomainEventsImplementation([
-                    new SomethingHasHappened,
-                ])
+                new SomethingHasHappened,
+            ])
         );
 
         $this->assertCount(3, $appendedEvents);
-        $this->assertCount(2,$events);
+        $this->assertCount(2, $events);
     }
 }
 
@@ -63,7 +63,6 @@ final class AlternativeDomainEventsImplementation implements DomainEvents
             $this->dummyEvents[] = $domainEvent;
         }
     }
-
 
     final public function current()
     {

@@ -26,5 +26,4 @@ interface TracksChanges
      * @return void
      */
     public function clearChanges();
-
-} 
+}
