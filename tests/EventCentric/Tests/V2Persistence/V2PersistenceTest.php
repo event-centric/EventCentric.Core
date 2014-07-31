@@ -144,12 +144,7 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
      */
     public function it_should_give_the_same_commitId_to_events_committed_together()
     {
-        $this->persistence->commitAll([
-            $this->pendingEvent1,
-            $this->pendingEvent2,
-            $this->pendingEvent3,
-            $this->pendingEvent4,
-        ]);
+        $this->given_events_are_committed_together();
 
         $committedEvents = $this->persistence->fetchAll();
         $this->assertCount(4, $committedEvents);
@@ -157,7 +152,36 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
         $this->assertCommittedEventMatchesPendingEvent($this->pendingEvent2, $committedEvents[1]);
         $this->assertCommittedEventMatchesPendingEvent($this->pendingEvent3, $committedEvents[2]);
         $this->assertCommittedEventMatchesPendingEvent($this->pendingEvent4, $committedEvents[3]);
+    }
 
+    /**
+     * @test
+     */
+    public function it_should_give_incremental_commitSequences()
+    {
+        $this->given_two_commits();
+
+        $committedEvents = $this->persistence->fetchAll();
+        $this->assertEquals(1, $committedEvents[0]->getCommitSequence());
+        $this->assertEquals(2, $committedEvents[1]->getCommitSequence());
+        $this->assertEquals(3, $committedEvents[2]->getCommitSequence());
+        $this->assertEquals(1, $committedEvents[3]->getCommitSequence());
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_give_incremental_checkpointNumbers()
+    {
+        $this->given_two_commits();
+
+        $committedEvents = $this->persistence->fetchAll();
+
+        // We use relative numbers because we can't guarantee the starting point, eg when using autoincrement in MySQL
+        $checkpointNumber = $committedEvents[0]->getCheckpointNumber();
+        $this->assertEquals(++$checkpointNumber, $committedEvents[1]->getCheckpointNumber());
+        $this->assertEquals(++$checkpointNumber, $committedEvents[2]->getCheckpointNumber());
+        $this->assertEquals(++$checkpointNumber, $committedEvents[3]->getCheckpointNumber());
     }
 
     private function assertCommittedEventMatchesPendingEvent(PendingEvent $pendingEvent, CommittedEvent $committedEvent)
@@ -188,6 +212,30 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
         $this->persistence->commit($this->pendingEvent2);
         $this->persistence->commit($this->pendingEvent3);
         $this->persistence->commit($this->pendingEvent4);
+    }
+
+    private function given_events_are_committed_together()
+    {
+        $this->persistence->commitAll(
+            [
+                $this->pendingEvent1,
+                $this->pendingEvent2,
+                $this->pendingEvent3,
+                $this->pendingEvent4,
+            ]
+        );
+    }
+
+    private function given_two_commits()
+    {
+        $this->persistence->commitAll([
+            $this->pendingEvent1,
+            $this->pendingEvent2,
+            $this->pendingEvent3,
+        ]);
+        $this->persistence->commit(
+            $this->pendingEvent4
+        );
     }
 }
  

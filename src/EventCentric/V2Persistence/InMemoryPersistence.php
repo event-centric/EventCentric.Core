@@ -14,14 +14,11 @@ final class InMemoryPersistence implements V2Persistence
 {
     private $storage = [];
 
+    private $lastCheckPointNumber = 0;
+
     public function commit(PendingEvent $pendingEvent)
     {
-        $streamRevision = 0;
-        $checkpointNumber = 1;
-        $commitSequence = 0;
-        $dispatched = false;
-        $commitId = CommitId::generate();
-        $this->commitAs($commitId, $pendingEvent, $streamRevision, $checkpointNumber, $commitSequence, $dispatched);
+        $this->commitAll([$pendingEvent]);
     }
 
     /**
@@ -33,13 +30,12 @@ final class InMemoryPersistence implements V2Persistence
         Assert\that($pendingEvents)->all()->isInstanceOf(PendingEvent::class);
 
         $streamRevision = 0;
-        $checkpointNumber = 1;
-        $commitSequence = 0;
+        $commitSequence = 1;
         $dispatched = false;
         $commitId = CommitId::generate();
 
         foreach($pendingEvents as $pendingEvent) {
-            $this->commitAs($commitId, $pendingEvent, $streamRevision, $checkpointNumber, $commitSequence, $dispatched);
+            $this->commitAs($commitId, $pendingEvent, $streamRevision, ++$this->lastCheckPointNumber, $commitSequence++, $dispatched);
         }
     }
 
