@@ -207,6 +207,10 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $committedEvents);
         $this->assertEquals(1, $committedEvents[0]->getStreamRevision());
         $this->assertEquals(2, $committedEvents[1]->getStreamRevision());
+
+        $committedEvents = $this->persistence->fetchFromStream($this->ebayBucket, $this->orderContract, $this->aStreamId);
+        $this->assertCount(1, $committedEvents);
+        $this->assertEquals(1, $committedEvents[0]->getStreamRevision());
     }
 
     private function assertCommittedEventMatchesPendingEvent(PendingEvent $pendingEvent, CommittedEvent $committedEvent)
