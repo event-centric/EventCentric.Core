@@ -43,7 +43,7 @@ final class PendingEvent
     /**
      * @var string
      */
-    private $eventMetadata;
+    private $eventMetadata = '';
 
     /**
      * @var Identifier
@@ -66,24 +66,47 @@ final class PendingEvent
         Contract $streamContract,
         Identifier $streamId,
         Contract $eventContract,
-        $eventPayload,
-        Contract $eventMetadataContract = null,
-        $eventMetadata = "",
-        Identifier $causationId = null,
-        Identifier $correlationId = null
+        $eventPayload
     ) {
-        Assert\that($eventMetadata)->string();
         Assert\that($eventPayload)->string();
-
         $this->eventId = $eventId;
         $this->streamContract = $streamContract;
         $this->streamId = $streamId;
         $this->eventContract = $eventContract;
         $this->eventPayload = $eventPayload;
         $this->bucket = $bucket;
+    }
+
+    /**
+     * @param string $eventMetadata
+     */
+    public function setEventMetadata($eventMetadata = '')
+    {
+        Assert\that($eventMetadata)->string();
         $this->eventMetadata = $eventMetadata;
+    }
+
+    /**
+     * @param Contract $eventMetadataContract
+     */
+    public function setEventMetadataContract(Contract $eventMetadataContract = null)
+    {
         $this->eventMetadataContract = $eventMetadataContract;
+    }
+
+    /**
+     * @param Identifier $causationId
+     */
+    public function setCausationId(Identifier $causationId = null)
+    {
         $this->causationId = $causationId;
+    }
+
+    /**
+     * @param Identifier $correlationId
+     */
+    public function setCorrelationId(Identifier $correlationId = null)
+    {
         $this->correlationId = $correlationId;
     }
 
