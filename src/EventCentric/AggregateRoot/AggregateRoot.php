@@ -2,9 +2,6 @@
 
 namespace EventCentric\AggregateRoot;
 
-use EventCentric\AggregateRoot\ReconstitutesFromHistory;
-use EventCentric\AggregateRoot\TracksChanges;
-
 /**
  * An AggregateRoot class is responsible for:
  * - tracking changes to the state of the Aggregate
@@ -14,5 +11,3 @@ interface AggregateRoot extends TracksChanges, ReconstitutesFromHistory
 {
 
 }
-
-
