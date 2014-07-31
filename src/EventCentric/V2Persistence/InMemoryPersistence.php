@@ -23,7 +23,7 @@ final class InMemoryPersistence implements V2Persistence
 
     /**
      * @param PendingEvent[] $pendingEvents
-     * @return CommittedEvent[]
+     * @return void
      */
     public function commitAll($pendingEvents)
     {

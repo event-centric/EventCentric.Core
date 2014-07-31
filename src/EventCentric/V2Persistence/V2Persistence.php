@@ -10,14 +10,16 @@ use EventCentric\V2EventStore\PendingEvent;
 interface V2Persistence
 {
     /**
+     * Commit a single event
      * @param PendingEvent $pendingEvent
      * @return void
      */
     public function commit(PendingEvent $pendingEvent);
 
     /**
+     * Commit a set of events in a transaction.
      * @param PendingEvent[] $pendingEvents
-     * @return CommittedEvent[]
+     * @return void
      */
     public function commitAll($pendingEvents);
 
