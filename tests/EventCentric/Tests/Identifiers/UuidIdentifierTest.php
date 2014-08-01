@@ -1,6 +1,6 @@
 <?php
 
-namespace EventCentric\Tests\Identity;
+namespace EventCentric\Tests\Identifiers;
 
 use EventCentric\Tests\Fixtures\OrderId;
 use PHPUnit_Framework_TestCase;
