@@ -51,9 +51,7 @@ abstract class UuidIdentifier implements Identifier, GeneratesIdentifier
      */
     public function equals(Identifier $other)
     {
-        return
-            get_class($this) == get_class($other)
-            && (string) $this == (string) $other;
+        return $this == $other;
     }
 
     /**

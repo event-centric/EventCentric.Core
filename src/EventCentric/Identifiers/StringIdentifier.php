@@ -43,9 +43,7 @@ abstract class StringIdentifier implements Identifier
      */
     public function equals(Identifier $other)
     {
-        return
-            get_class($this) == get_class($other)
-            && (string) $this->string == (string) $other;
+        return $this == $other;
     }
 
     private static function guardString($string)
