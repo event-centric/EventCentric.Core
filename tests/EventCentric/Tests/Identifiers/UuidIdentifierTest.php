@@ -2,6 +2,7 @@
 
 namespace EventCentric\Tests\Identifiers;
 
+use EventCentric\Identifiers\UuidIdentifier;
 use EventCentric\Tests\Fixtures\OrderId;
 use PHPUnit_Framework_TestCase;
 
@@ -12,15 +13,25 @@ final class UuidIdentityTest extends PHPUnit_Framework_TestCase
      */
     public function it_should_have_equality()
     {
-        $id1 = OrderId::generate();
-        $id2 = OrderId::fromString((string) $id1);
-        $id3 = OrderId::generate();
-        $id4 = OrderId::fromString('c3bc7f4c-804a-4a7c-8313-51fd1b7baf52');
-        $id5 = OrderId::fromString('c3bc7f4c-804a-4a7c-8313-51fd1b7baf52');
+        $id1 = TestUuid1::generate();
+        $id2 = TestUuid1::fromString((string) $id1);
+        $id3 = TestUuid1::generate();
+        $id4 = TestUuid1::fromString('c3bc7f4c-804a-4a7c-8313-51fd1b7baf52');
+        $id5 = TestUuid1::fromString('c3bc7f4c-804a-4a7c-8313-51fd1b7baf52');
 
         $this->assertTrue($id1->equals($id2), "Two generated UuidIdentifier objects with the same value should be equal.");
         $this->assertTrue(!$id1->equals($id3), "Two random UuidIdentifier objects should not be equal.");
         $this->assertTrue($id4->equals($id5), "Two instantiated UuidIdentifier objects with the same value should be equal.");
+    }
+
+    /**
+     * @test
+     */
+    public function same_value_but_different_types_should_not_be_considered_equal()
+    {
+        $id1 = TestUuid1::generate();
+        $id2 = TestId2::fromString((string) $id1);
+        $this->assertFalse($id1->equals($id2));
     }
 
     /**
@@ -44,3 +55,5 @@ final class UuidIdentityTest extends PHPUnit_Framework_TestCase
 
 }
 
+final class TestUuid1 extends UuidIdentifier {}
+final class TestUuid2 extends UuidIdentifier {}
