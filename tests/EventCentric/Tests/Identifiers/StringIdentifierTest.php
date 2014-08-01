@@ -1,6 +1,6 @@
 <?php
 
-namespace EventCentric\Tests\Identity;
+namespace EventCentric\Tests\Identifiers;
 
 use EventCentric\Identifiers\StringIdentifier;
 use InvalidArgumentException;
