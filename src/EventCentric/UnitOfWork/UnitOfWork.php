@@ -110,7 +110,6 @@ final class UnitOfWork
 
     /**
      * @param Aggregate $aggregate
-     * @todo happens if there are no changes to an Aggregate?
      */
     private function persistAggregate(Aggregate $aggregate)
     {
@@ -119,8 +118,7 @@ final class UnitOfWork
         $domainEvents = $aggregate->getChanges();
 
         $wrapInEnvelope = function (DomainEvent $domainEvent) {
-            // @todo The unit of work shouldn't know how to get contracts. Move to Serializer
-            $eventContract = Contract::canonicalFrom($domainEvent);
+            $eventContract = $this->serializer->contractForDomainEvent($domainEvent);
             $payload = $this->serializer->serialize($eventContract, $domainEvent);
             return EventEnvelope::wrap(EventId::generate(), $eventContract, $payload);
         };

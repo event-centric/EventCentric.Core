@@ -25,4 +25,10 @@ interface DomainEventSerializer
      * @return DomainEvent
      */
     public function unserialize(Contract $contract, $data);
+
+    /**
+     * @param \EventCentric\DomainEvents\DomainEvent $domainEvent
+     * @return \EventCentric\Contracts\Contract the contract
+     */
+    public function contractForDomainEvent(DomainEvent $domainEvent);
 }
