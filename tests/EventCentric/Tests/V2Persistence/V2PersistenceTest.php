@@ -14,6 +14,8 @@ use EventCentric\V2Persistence\V2Persistence;
 
 abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
 {
+    use EventAssertions;
+
     /**
      * @var V2Persistence
      */
@@ -279,27 +281,7 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(3, $this->persistence->fetchAll());
     }
 
-    private function assertCommittedEventMatchesPendingEvent(PendingEvent $pendingEvent, CommittedEvent $committedEvent)
-    {
-        $this->assertTrue($pendingEvent->getEventId()->equals($committedEvent->getEventId()));
-        $this->assertTrue($pendingEvent->getStreamContract()->equals($committedEvent->getStreamContract()));
-        $this->assertTrue($pendingEvent->getStreamId()->equals($committedEvent->getStreamId()));
-        $this->assertTrue($pendingEvent->getEventContract()->equals($committedEvent->getEventContract()));
-        $this->assertEquals($pendingEvent->getEventPayload(), $committedEvent->getEventPayload());
-        $this->assertEquals($pendingEvent->getBucket(), $committedEvent->getBucket());
 
-        if ($pendingEvent->hasEventMetadataContract() && $committedEvent->hasEventMetadataContract()) {
-            $this->assertEquals($pendingEvent->getEventMetadataContract(), $committedEvent->getEventMetadataContract());
-        }
-
-        if ($pendingEvent->hasCausationId() && $committedEvent->hasCausationId()) {
-            $this->assertEquals($pendingEvent->getCausationId(), $committedEvent->getCausationId());
-        }
-
-        if ($pendingEvent->hasCorrelationId() && $committedEvent->hasCorrelationId()) {
-            $this->assertEquals($pendingEvent->getCorrelationId(), $committedEvent->getCorrelationId());
-        }
-    }
 
     private function given_events_are_committed_individually()
     {
