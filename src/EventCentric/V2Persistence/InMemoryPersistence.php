@@ -10,6 +10,8 @@ use EventCentric\Persistence\OptimisticConcurrencyFailed;
 use EventCentric\V2EventStore\CommittedEvent;
 use EventCentric\V2EventStore\PendingEvent;
 use Assert;
+use iter as _;
+use iter\fn as __;
 
 final class InMemoryPersistence implements V2Persistence
 {
@@ -63,8 +65,8 @@ final class InMemoryPersistence implements V2Persistence
                 && $streamId->equals($event->getStreamId());
         };
 
-        return array_values(
-            array_filter(
+        return _\values(
+            _\filter(
                 $this->storage,
                 $callback
             )
@@ -76,7 +78,7 @@ final class InMemoryPersistence implements V2Persistence
      */
     public function fetchAll()
     {
-        return array_values($this->storage);
+        return _\values($this->storage);
     }
 
     /**
@@ -126,6 +128,6 @@ final class InMemoryPersistence implements V2Persistence
     private function getStreamRevisionFor(Bucket $bucket, Contract $streamContract, Identifier $streamId)
     {
         $committedEvents = $this->fetchFromStream($bucket, $streamContract, $streamId);
-        return count($committedEvents);
+        return __\count($committedEvents);
     }
 }
