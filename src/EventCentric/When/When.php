@@ -10,7 +10,7 @@ use EventCentric\DomainEvents\DomainEvents;
  * delegating `when($myEvent)` to `whenMyEvent($myEvent)`. This prevents us from having to use conditionals to determine
  * how to react to an event.
  */
-trait When 
+trait When
 {
     /**
      * @param DomainEvent $event

@@ -12,7 +12,4 @@ use EventCentric\AggregateRoot\TracksChanges;
  */
 interface AggregateRoot extends TracksChanges, ReconstitutesFromHistory
 {
-
 }
-
-

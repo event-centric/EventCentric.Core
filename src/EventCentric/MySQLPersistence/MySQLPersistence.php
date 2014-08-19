@@ -47,7 +47,7 @@ final class MySQLPersistence implements Persistence
         );
 
         $eventEnvelopes = array_map(
-            function(array $record){
+            function (array $record) {
                 return EventEnvelope::reconstitute(
                     EventId::fromString($record['eventId']),
                     Contract::with($record['eventContract']),
@@ -76,8 +76,7 @@ final class MySQLPersistence implements Persistence
         Identifier $streamId,
         $expectedStreamRevision,
         array $eventEnvelopes
-    )
-    {
+    ) {
         $this->connection->beginTransaction();
         $now = (new DateTimeImmutable('now', new DateTimeZone('UTC')))->format("Y-m-d H:i:s");
 
@@ -104,7 +103,7 @@ final class MySQLPersistence implements Persistence
 
             $this->connection->commit();
 
-        } catch(Exception $exception) {
+        } catch (Exception $exception) {
             $this->connection->rollback();
             throw $exception;
         }
@@ -135,8 +134,6 @@ final class MySQLPersistence implements Persistence
         Identifier $streamId,
         $expectedStreamRevision
     ) {
-
-
         $result = $this->connection->fetchArray(
             MaxStreamRevision::from(self::TABLE_NAME),
             ['streamContract' => $streamContract, 'streamId' => $streamId]
@@ -148,4 +145,3 @@ final class MySQLPersistence implements Persistence
         }
     }
 }
-

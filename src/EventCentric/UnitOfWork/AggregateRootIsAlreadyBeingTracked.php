@@ -6,7 +6,7 @@ use EventCentric\Contracts\Contract;
 use EventCentric\Identifiers\Identifier;
 use Exception;
 
-final class AggregateRootIsAlreadyBeingTracked  extends Exception
+final class AggregateRootIsAlreadyBeingTracked extends Exception
 {
     public static function identifiedBy(Contract $aggregateContract, Identifier $aggregateId)
     {

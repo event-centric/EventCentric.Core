@@ -30,7 +30,7 @@ final class RegisteringCommandDispatcher implements CommandDispatcher
     public function dispatch(Command $command)
     {
         $commandFqcn = get_class($command);
-        if(!array_key_exists($commandFqcn, $this->commandHandlers)){
+        if (!array_key_exists($commandFqcn, $this->commandHandlers)) {
             throw NoSuitableCommandHandlerWasFound::forCommand($command);
         }
         $this->commandHandlers[$commandFqcn]->handle($command);

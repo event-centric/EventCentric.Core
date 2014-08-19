@@ -14,7 +14,7 @@ trait ConventionalCommandHandling
         $short = ClassFunctions::short($command);
         $method = 'handle' . $short;
 
-        if(!is_callable([$this, $method])) {
+        if (!is_callable([$this, $method])) {
             $message = <<<MSG
 The CommandHandler needs the following code to operate:
 protected function $method($short \$command)
@@ -27,4 +27,3 @@ MSG;
         $this->{$method}($command);
     }
 }
-

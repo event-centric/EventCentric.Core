@@ -107,9 +107,8 @@ abstract class UuidIdentifier implements Identifier, GeneratesIdentifier
     private static function guardUuid($string)
     {
         $pattern = '/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i';
-        if(!preg_match($pattern, $string)) {
+        if (!preg_match($pattern, $string)) {
             throw new \InvalidArgumentException("UUID of the form nnnnnnnn-nnnn-nnnn-nnnn-nnnnnnnnnnnn expected");
         }
     }
-
-} 
+}

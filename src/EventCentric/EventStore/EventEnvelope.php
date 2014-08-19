@@ -91,4 +91,4 @@ final class EventEnvelope
             && $this->eventContract->equals($other->eventContract)
             && $this->eventPayload == $other->eventPayload;
     }
-} 
+}

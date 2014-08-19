@@ -9,7 +9,7 @@ namespace EventCentric\Commands;
  * management is not part of the CommandHandler. (Opinions vary though).
  * ConventionalCommandHandling can be used for the implementations.
  */
-interface CommandHandler 
+interface CommandHandler
 {
     /**
      * @param Command $command

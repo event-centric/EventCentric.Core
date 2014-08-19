@@ -11,6 +11,8 @@ use EventCentric\When\ConventionalWhen;
  */
 abstract class AggregateRootEntity implements AggregateRoot
 {
-    use EventSourcing, Reconstitution, \EventCentric\When\ConventionalWhen;
-    protected function __construct() {}
-} 
+    use EventSourcing, Reconstitution, ConventionalWhen;
+    protected function __construct()
+    {
+    }
+}

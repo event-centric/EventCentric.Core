@@ -24,7 +24,7 @@ use iter\fn as __;
 final class UnitOfWork
 {
     /**
-     * @var \EventCentric\EventStore\EventStore
+     * @var EventStore
      */
     private $eventStore;
 
@@ -44,8 +44,7 @@ final class UnitOfWork
         EventStore $eventStore,
         DomainEventSerializer $serializer,
         AggregateRootReconstituter $aggregateRootReconstituter
-    )
-    {
+    ) {
         $this->eventStore = $eventStore;
         $this->serializer = $serializer;
         $this->aggregateRootReconstituter = $aggregateRootReconstituter;
@@ -65,11 +64,13 @@ final class UnitOfWork
 
         $alreadyTracked =
             _\any(
-                function(Aggregate $foundAggregate) use($aggregate){ return $aggregate->equals($foundAggregate); },
+                function (Aggregate $foundAggregate) use ($aggregate) {
+                    return $aggregate->equals($foundAggregate);
+                },
                 $this->trackedAggregates
             );
 
-        if($alreadyTracked) {
+        if ($alreadyTracked) {
             throw AggregateRootIsAlreadyBeingTracked::identifiedBy($aggregateContract, $aggregateId);
         }
 
@@ -85,7 +86,7 @@ final class UnitOfWork
     {
         $aggregate = $this->findTrackedAggregate($aggregateContract, $aggregateId);
 
-        if(!is_null($aggregate)) {
+        if (!is_null($aggregate)) {
             return $aggregate->getAggregateRoot();
         }
 
@@ -101,8 +102,8 @@ final class UnitOfWork
     public function commit()
     {
         /** @var Aggregate $aggregate */
-        foreach($this->trackedAggregates as $aggregate) {
-            if($aggregate->hasChanges()) {
+        foreach ($this->trackedAggregates as $aggregate) {
+            if ($aggregate->hasChanges()) {
                 $this->persistAggregate($aggregate);
             }
         }
@@ -182,4 +183,4 @@ final class UnitOfWork
         $aggregateRoot = $this->aggregateRootReconstituter->reconstitute($aggregateContract, $domainEvents);
         return $aggregateRoot;
     }
-} 
+}

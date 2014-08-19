@@ -17,7 +17,7 @@ trait ConventionalWhen
     protected function when(DomainEvent $event)
     {
         $method = 'when' . ClassFunctions::short($event);
-        if(is_callable([$this, $method])) {
+        if (is_callable([$this, $method])) {
             $this->{$method}($event);
         }
     }
@@ -28,7 +28,7 @@ trait ConventionalWhen
      */
     protected function whenAll(DomainEvents $events)
     {
-        foreach($events as $event) {
+        foreach ($events as $event) {
             $this->when($event);
         }
     }

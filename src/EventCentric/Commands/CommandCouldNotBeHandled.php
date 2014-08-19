@@ -13,4 +13,4 @@ final class CommandCouldNotBeHandled extends Exception
             sprintf("The command %s could not be handled by %s\n%s", ClassFunctions::fqcn($command), ClassFunctions::fqcn($commandHandler), $message)
         );
     }
-} 
+}

@@ -5,7 +5,7 @@ namespace EventCentric\Commands;
 /**
  * Delivers a Command to the right CommandHandler
  */
-interface CommandDispatcher 
+interface CommandDispatcher
 {
     /**
      * @param Command $command
