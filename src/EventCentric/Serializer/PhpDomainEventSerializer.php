@@ -26,10 +26,10 @@ final class PhpDomainEventSerializer implements DomainEventSerializer
     }
 
     /**
-     * @param \EventCentric\DomainEvents\DomainEvent $domainEvent
-     * @return \EventCentric\Contracts\Contract the contract
+     * @param DomainEvent $domainEvent
+     * @return Contract the contract
      */
-    public function contractForDomainEvent (DomainEvent $domainEvent)
+    public function contractForDomainEvent(DomainEvent $domainEvent)
     {
         return Contract::canonicalFrom($domainEvent);
     }

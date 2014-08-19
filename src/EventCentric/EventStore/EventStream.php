@@ -87,7 +87,7 @@ final class EventStream
      */
     public function appendAll(array $envelopes)
     {
-        foreach($envelopes as $envelope) {
+        foreach ($envelopes as $envelope) {
             $this->append($envelope);
         }
     }
@@ -113,6 +113,4 @@ final class EventStream
         $this->committedEventEnvelopes = array_merge($this->committedEventEnvelopes, $this->pendingEventEnvelopes);
         $this->pendingEventEnvelopes = [];
     }
-
-
-} 
+}

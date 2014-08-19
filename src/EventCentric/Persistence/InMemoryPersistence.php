@@ -7,7 +7,6 @@ use EventCentric\Contracts\Contract;
 use EventCentric\EventStore\CommitId;
 use EventCentric\EventStore\EventEnvelope;
 use EventCentric\Identifiers\Identifier;
-use EventCentric\Persistence\Persistence;
 use iter as _;
 use iter\fn as __;
 
@@ -56,10 +55,9 @@ final class InMemoryPersistence implements Persistence
         Identifier $streamId,
         $expectedStreamRevision,
         array $eventEnvelopes
-    )
-    {
+    ) {
         $actualStreamRevision = $this->revisionFor($streamContract, $streamId);
-        if($actualStreamRevision != $expectedStreamRevision) {
+        if ($actualStreamRevision != $expectedStreamRevision) {
             throw OptimisticConcurrencyFailed::revisionDoesNotMatch($expectedStreamRevision, $actualStreamRevision);
         }
 
@@ -81,7 +79,9 @@ final class InMemoryPersistence implements Persistence
     private function maximum($numbers)
     {
         return _\reduce(
-            function($acc, $x) { return $x > $acc ? $x : $acc;},
+            function ($acc, $x) {
+                return $x > $acc ? $x : $acc;
+            },
             $numbers,
             0
         );
@@ -105,7 +105,7 @@ final class InMemoryPersistence implements Persistence
 
     private function toEventEnvelope()
     {
-        return function(InMemoryRecord $record) {
+        return function (InMemoryRecord $record) {
             return EventEnvelope::reconstitute($record->eventId, $record->eventContract, $record->eventPayload);
         };
     }
@@ -118,26 +118,3 @@ final class InMemoryPersistence implements Persistence
         };
     }
 }
-
-final class InMemoryRecord
-{
-    public $checkpointNumber;
-    public $bucket = '@default';
-    /** @var Contract */
-    public $streamContract;
-    public $eventContract;
-    public $eventPayload;
-    /** @var Identifier */
-    public $streamId;
-    public $streamRevision;
-    public $utcCommittedTime;
-    public $eventMetadataContract = '';
-    public $eventMetadata = '';
-    public $causationId = null;
-    public $correlationId = null;
-    public $eventId;
-    public $commitId;
-    public $commitSequence;
-    public $dispatched;
-}
-
