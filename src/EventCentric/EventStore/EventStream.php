@@ -111,6 +111,4 @@ final class EventStream
         $this->committedEventEnvelopes = array_merge($this->committedEventEnvelopes, $this->pendingEventEnvelopes);
         $this->pendingEventEnvelopes = [];
     }
-
-
-} 
+}
