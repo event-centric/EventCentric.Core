@@ -55,8 +55,7 @@ final class EventStream
      */
     public static function create(Persistence $persistence, Contract $streamContract, Identifier $streamId)
     {
-        $eventStream = new EventStream($persistence, $streamContract, $streamId);
-        return $eventStream;
+        return new EventStream($persistence, $streamContract, $streamId);
     }
 
     /**
@@ -69,6 +68,7 @@ final class EventStream
     {
         $eventStream = new EventStream($persistence, $streamContract, $streamId);
         $eventStream->committedEventEnvelopes = $persistence->fetch($streamContract, $streamId);
+
         return $eventStream;
     }
 
