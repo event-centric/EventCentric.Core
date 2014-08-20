@@ -9,41 +9,16 @@ use EventCentric\Persistence\OptimisticConcurrencyFailed;
 use EventCentric\V2EventStore\CommittedEvent;
 use EventCentric\V2EventStore\PendingEvent;
 
-final class MySQLPersistence implements V2Persistence
+final class DoctrinePersistence implements V2Persistence
 {
-    const TABLE_NAME = 'events'; // @todo make configurable
-
-    const CREATE = <<<MYSQL
-CREATE TABLE `%s` (
-  `checkpointNumber` bigint(20) NOT NULL AUTO_INCREMENT,
-  `bucket` char(64) NOT NULL DEFAULT '@default',
-  `streamContract` varchar(255) NOT NULL,
-  `eventContract` varchar(255) NOT NULL,
-  `eventPayload` text NOT NULL,
-  `streamId` varchar(255) NOT NULL,
-  `streamRevision` int(11) NOT NULL,
-  `utcCommittedTime` DATETIME NOT NULL,
-  `eventMetadataContract` varchar(255) NULL DEFAULT NULL,
-  `eventMetadata` text DEFAULT NULL,
-  `causationId` char(36) DEFAULT NULL,
-  `correlationId` char(36) DEFAULT NULL,
-  `eventId` char(36) NOT NULL,
-  `commitId` char(36) NOT NULL,
-  `commitSequence` int(11) NOT NULL,
-  `dispatched` bit(1) NOT NULL DEFAULT b'0',
-  PRIMARY KEY (`checkpointNumber`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-MYSQL;
-
-    const DROP = <<<MYSQL
-DROP TABLE IF EXISTS `%s`;';
-MYSQL;
-
     /**
      * @var Connection
      */
     private $connection;
 
+    /**
+     * @param Connection $connection
+     */
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
@@ -85,19 +60,5 @@ MYSQL;
     public function fetchAll()
     {
         return [];
-    }
-
-    public function createSchema()
-    {
-        $this->connection->executeQuery(
-            sprintf(self::CREATE, self::TABLE_NAME)
-        );
-    }
-
-    public function dropSchema()
-    {
-        $this->connection->executeQuery(
-            sprintf(self::DROP, self::TABLE_NAME)
-        );
     }
 }

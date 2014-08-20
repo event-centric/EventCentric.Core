@@ -34,5 +34,6 @@
         <env name="testsuite_db_user" value="root"/>
         <env name="testsuite_db_password" value=""/>
         <env name="testsuite_db_host" value="localhost"/>
+        <env name="testsuite_db_eventstore_table" value="events"/>
     </php>
 </phpunit>
