@@ -9,12 +9,14 @@ use EventCentric\Persistence\Persistence;
 use EventCentric\Serializer\PhpDomainEventSerializer;
 use EventCentric\UnitOfWork\ClassNameBasedAggregateRootReconstituter;
 use EventCentric\UnitOfWork\UnitOfWork;
+use EventCentric\UnitOfWork\TracksAggregates;
 
 trait PersistenceProvider
 {
     /**
      * @param Persistence $persistence
-     * @return UnitOfWork
+     *
+     * @return TracksAggregates
      */
     protected static function buildUnitOfWork(Persistence $persistence)
     {

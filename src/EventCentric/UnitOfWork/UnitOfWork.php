@@ -21,7 +21,7 @@ use iter\fn as __;
  * When the Unit of Work is committed, the changes will be persisted using a single commit for each Aggregate.
  * A UnitOfWork can also reconstitute an Aggregate from the Event Store.
  */
-final class UnitOfWork
+final class UnitOfWork implements TracksAggregates
 {
     /**
      * @var \EventCentric\EventStore\EventStore
