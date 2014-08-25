@@ -7,15 +7,16 @@ use EventCentric\Contracts\Contract;
 use EventCentric\EventStore\EventStore;
 use EventCentric\Identifiers\Identifier;
 use EventCentric\UnitOfWork\UnitOfWork;
+use EventCentric\UnitOfWork\TracksAggregates;
 
 final class OrderRepository
 {
     /**
-     * @var UnitOfWork
+     * @var TracksAggregates
      */
     private $unitOfWork;
 
-    public function __construct(UnitOfWork $unitOfWork)
+    public function __construct(TracksAggregates $unitOfWork)
     {
         $this->unitOfWork = $unitOfWork;
     }
