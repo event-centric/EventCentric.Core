@@ -18,6 +18,7 @@ final class MySQLTestConnector
         if(!self::$connection){
             self::$connection = self::create();
         }
+
         return self::$connection;
     }
 

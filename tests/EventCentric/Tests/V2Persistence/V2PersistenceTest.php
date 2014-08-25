@@ -320,4 +320,3 @@ abstract class V2PersistenceTest extends \PHPUnit_Framework_TestCase
         $this->persistence->commit($this->pendingEvent5);
     }
 }
- 
