@@ -87,7 +87,9 @@ final class EventStream
      */
     public function appendAll(array $envelopes)
     {
-        return array_map([$this, 'append'], $envelopes);
+        foreach($envelopes as $envelope) {
+            $this->append($envelope);
+        }
     }
 
     /**
