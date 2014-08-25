@@ -13,10 +13,13 @@ use EventCentric\Persistence\Persistence;
 final class EventStore
 {
     /**
-     * @var \EventCentric\Persistence\Persistence
+     * @var Persistence
      */
     private $persistence;
 
+    /**
+     * @param Persistence $persistence
+     */
     public function __construct(Persistence $persistence)
     {
         $this->persistence = $persistence;
@@ -24,6 +27,7 @@ final class EventStore
 
     /**
      * Creates a new stream.
+     *
      * @param Contract $streamContract
      * @param $streamId
      * @return EventStream
@@ -36,6 +40,7 @@ final class EventStore
     /**
      * Queries the persistence to open a stream. If there was no stream, a new stream is created. Prefer using
      * createStream when you know there is no stream yet.
+     *
      * @param Contract $streamContract
      * @param Identifier $streamId
      * @return EventStream

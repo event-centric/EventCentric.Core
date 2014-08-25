@@ -27,9 +27,13 @@ final class Aggregate
      */
     private $aggregateRoot;
 
+    /**
+     * @param Contract $aggregateContract
+     * @param Identifier $aggregateId
+     * @param TracksChanges $aggregateRoot
+     */
     public function __construct(Contract $aggregateContract, Identifier $aggregateId, TracksChanges $aggregateRoot)
     {
-
         $this->aggregateContract = $aggregateContract;
         $this->aggregateId = $aggregateId;
         $this->aggregateRoot = $aggregateRoot;
@@ -59,6 +63,10 @@ final class Aggregate
         return $this->aggregateRoot;
     }
 
+    /**
+     * @param Aggregate $other
+     * @return bool
+     */
     public function equals(Aggregate $other)
     {
         return $this->isIdentifiedBy($other->aggregateContract, $other->aggregateId);
@@ -95,10 +103,7 @@ final class Aggregate
      */
     public function isIdentifiedBy(Contract $aggregateContract, Identifier $aggregateId)
     {
-        return
-            $this->aggregateContract->equals($aggregateContract)
+        return $this->aggregateContract->equals($aggregateContract)
             && $this->aggregateId->equals($aggregateId);
     }
-
-
-} 
+}
