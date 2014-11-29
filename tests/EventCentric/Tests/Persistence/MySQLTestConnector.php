@@ -3,6 +3,8 @@
 namespace EventCentric\Tests\Persistence;
 
 use Doctrine\DBAL\Configuration;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Logging\EchoSQLLogger;
 
@@ -16,12 +18,13 @@ final class MySQLTestConnector
         if(!self::$connection){
             self::$connection = self::create();
         }
+
         return self::$connection;
     }
 
     /**
-     * @return \Doctrine\DBAL\Connection
-     * @throws \Doctrine\DBAL\DBALException
+     * @return Connection
+     * @throws DBALException
      */
     private static function create()
     {
